@@ -1,6 +1,11 @@
-using Microsoft.Extensions.FileProviders;
+﻿using Microsoft.Extensions.FileProviders;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Backend.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<AnimeContext>(options =>
+    options.UseNpgsql(builder.Configuration["DatabaseConnectionString"] ?? throw new InvalidOperationException("Connection string 'AnimeContext' not found.")));
 
 // Add services to the container.
 
