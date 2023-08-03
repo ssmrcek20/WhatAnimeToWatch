@@ -1,10 +1,13 @@
-﻿namespace Backend.Model
+﻿using System.Text.Json.Serialization;
+
+namespace Backend.Model
 {
     public class MyAnimeListApi
     {
         public class Data
         {
-            public Anime? node { get; set; }
+            [JsonPropertyName("node")]
+            public Anime? A { get; set; }
         }
         public class Paging
         {
