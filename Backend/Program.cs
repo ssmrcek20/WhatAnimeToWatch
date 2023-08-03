@@ -9,11 +9,17 @@ if (databaseKey == null)
 {
     builder.Services.AddDbContext<AnimeContext>(options =>
         options.UseNpgsql(builder.Configuration["DatabaseConnectionString"] ?? throw new InvalidOperationException("Connection string 'AnimeContext' not found.")));
+
+    string ApiKey = builder.Configuration["X-MAL-CLIENT-ID"] ?? throw new InvalidOperationException("API key 'X-MAL-CLIENT-ID' not found.");
+    builder.Services.AddSingleton(ApiKey);
 }
 else
 {
     builder.Services.AddDbContext<AnimeContext>(options =>
         options.UseNpgsql(databaseKey ?? throw new InvalidOperationException("Connection string 'AnimeContext' not found.")));
+
+    string apiKey = Environment.GetEnvironmentVariable("X-MAL-CLIENT-ID");
+    builder.Services.AddSingleton(apiKey);
 }
 // Add services to the container.
 
@@ -22,8 +28,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient();
-string ApiKey = builder.Configuration["X-MAL-CLIENT-ID"] ?? throw new InvalidOperationException("API key 'X-MAL-CLIENT-ID' not found.");
-builder.Services.AddSingleton(ApiKey);
 
 var app = builder.Build();
 
