@@ -2,6 +2,11 @@
 {
     public class Anime
     {
+        public Anime()
+        {
+            Genres = new HashSet<Genre>();
+            Studios = new HashSet<Studio>();
+        }
         public int Id { get; set; }
         public string? Title { get; set; }
         public virtual MainPicture? Main_picture { get; set; }

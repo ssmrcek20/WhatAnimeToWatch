@@ -23,6 +23,36 @@ namespace Backend.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("AnimeGenre", b =>
+                {
+                    b.Property<int>("AnimesId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("GenresId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("AnimesId", "GenresId");
+
+                    b.HasIndex("GenresId");
+
+                    b.ToTable("AnimeGenre");
+                });
+
+            modelBuilder.Entity("AnimeStudio", b =>
+                {
+                    b.Property<int>("AnimesId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("StudiosId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("AnimesId", "StudiosId");
+
+                    b.HasIndex("StudiosId");
+
+                    b.ToTable("AnimeStudio");
+                });
+
             modelBuilder.Entity("Backend.Model.AlternativeTitles", b =>
                 {
                     b.Property<int>("Id")
@@ -159,15 +189,10 @@ namespace Backend.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AnimeId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AnimeId");
 
                     b.ToTable("Genre");
                 });
@@ -218,17 +243,42 @@ namespace Backend.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AnimeId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AnimeId");
-
                     b.ToTable("Studio");
+                });
+
+            modelBuilder.Entity("AnimeGenre", b =>
+                {
+                    b.HasOne("Backend.Model.Anime", null)
+                        .WithMany()
+                        .HasForeignKey("AnimesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Backend.Model.Genre", null)
+                        .WithMany()
+                        .HasForeignKey("GenresId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("AnimeStudio", b =>
+                {
+                    b.HasOne("Backend.Model.Anime", null)
+                        .WithMany()
+                        .HasForeignKey("AnimesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Backend.Model.Studio", null)
+                        .WithMany()
+                        .HasForeignKey("StudiosId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Backend.Model.Anime", b =>
@@ -256,27 +306,6 @@ namespace Backend.Migrations
                     b.Navigation("Main_picture");
 
                     b.Navigation("Start_season");
-                });
-
-            modelBuilder.Entity("Backend.Model.Genre", b =>
-                {
-                    b.HasOne("Backend.Model.Anime", null)
-                        .WithMany("Genres")
-                        .HasForeignKey("AnimeId");
-                });
-
-            modelBuilder.Entity("Backend.Model.Studio", b =>
-                {
-                    b.HasOne("Backend.Model.Anime", null)
-                        .WithMany("Studios")
-                        .HasForeignKey("AnimeId");
-                });
-
-            modelBuilder.Entity("Backend.Model.Anime", b =>
-                {
-                    b.Navigation("Genres");
-
-                    b.Navigation("Studios");
                 });
 #pragma warning restore 612, 618
         }

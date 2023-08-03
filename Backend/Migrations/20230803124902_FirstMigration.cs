@@ -8,7 +8,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Backend.Migrations
 {
     /// <inheritdoc />
-    public partial class firstMigration : Migration
+    public partial class FirstMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -43,6 +43,19 @@ namespace Backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Genre",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Genre", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "MainPicture",
                 columns: table => new
                 {
@@ -68,6 +81,19 @@ namespace Backend.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_StartSeason", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Studio",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Studio", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -125,41 +151,51 @@ namespace Backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Genre",
+                name: "AnimeGenre",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: true),
-                    AnimeId = table.Column<int>(type: "integer", nullable: true)
+                    AnimesId = table.Column<int>(type: "integer", nullable: false),
+                    GenresId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Genre", x => x.Id);
+                    table.PrimaryKey("PK_AnimeGenre", x => new { x.AnimesId, x.GenresId });
                     table.ForeignKey(
-                        name: "FK_Genre_Anime_AnimeId",
-                        column: x => x.AnimeId,
+                        name: "FK_AnimeGenre_Anime_AnimesId",
+                        column: x => x.AnimesId,
                         principalTable: "Anime",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AnimeGenre_Genre_GenresId",
+                        column: x => x.GenresId,
+                        principalTable: "Genre",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Studio",
+                name: "AnimeStudio",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: true),
-                    AnimeId = table.Column<int>(type: "integer", nullable: true)
+                    AnimesId = table.Column<int>(type: "integer", nullable: false),
+                    StudiosId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Studio", x => x.Id);
+                    table.PrimaryKey("PK_AnimeStudio", x => new { x.AnimesId, x.StudiosId });
                     table.ForeignKey(
-                        name: "FK_Studio_Anime_AnimeId",
-                        column: x => x.AnimeId,
+                        name: "FK_AnimeStudio_Anime_AnimesId",
+                        column: x => x.AnimesId,
                         principalTable: "Anime",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AnimeStudio_Studio_StudiosId",
+                        column: x => x.StudiosId,
+                        principalTable: "Studio",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -183,27 +219,33 @@ namespace Backend.Migrations
                 column: "Start_seasonId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Genre_AnimeId",
-                table: "Genre",
-                column: "AnimeId");
+                name: "IX_AnimeGenre_GenresId",
+                table: "AnimeGenre",
+                column: "GenresId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Studio_AnimeId",
-                table: "Studio",
-                column: "AnimeId");
+                name: "IX_AnimeStudio_StudiosId",
+                table: "AnimeStudio",
+                column: "StudiosId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "AnimeGenre");
+
+            migrationBuilder.DropTable(
+                name: "AnimeStudio");
+
+            migrationBuilder.DropTable(
                 name: "Genre");
 
             migrationBuilder.DropTable(
-                name: "Studio");
+                name: "Anime");
 
             migrationBuilder.DropTable(
-                name: "Anime");
+                name: "Studio");
 
             migrationBuilder.DropTable(
                 name: "AlternativeTitles");

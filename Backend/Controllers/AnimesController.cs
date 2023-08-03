@@ -7,6 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Backend.Data;
 using Backend.Model;
+using static Backend.Model.MyAnimeListApi;
+using System.Net.Http;
+using System.Text.Json;
+using Microsoft.AspNetCore.Http.HttpResults;
+using NuGet.Packaging;
+using Humanizer.Localisation;
 
 namespace Backend.Controllers
 {
@@ -15,17 +21,27 @@ namespace Backend.Controllers
     public class AnimesController : ControllerBase
     {
         private readonly AnimeContext _context;
+        private readonly HttpClient _httpClient;
+        private readonly string _apiKey;
+        private readonly IWebHostEnvironment _env;
 
-        public AnimesController(AnimeContext context)
+        public AnimesController(AnimeContext context, HttpClient httpClient, string apiKey, IWebHostEnvironment env)
         {
             _context = context;
+            _httpClient=httpClient;
+            _apiKey=apiKey;
+            _env=env;
         }
 
         // GET: api/Animes
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Anime>>> GetAnime()
         {
-          if (_context.Anime == null)
+            if (!_env.IsDevelopment())
+            {
+                return Forbid(); // Return 403 Forbidden if not in development mode
+            }
+            if (_context.Anime == null)
           {
               return NotFound();
           }
@@ -36,7 +52,11 @@ namespace Backend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Anime>> GetAnime(int id)
         {
-          if (_context.Anime == null)
+            if (!_env.IsDevelopment())
+            {
+                return Forbid(); // Return 403 Forbidden if not in development mode
+            }
+            if (_context.Anime == null)
           {
               return NotFound();
           }
@@ -55,6 +75,10 @@ namespace Backend.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAnime(int id, Anime anime)
         {
+            if (!_env.IsDevelopment())
+            {
+                return Forbid(); // Return 403 Forbidden if not in development mode
+            }
             if (id != anime.Id)
             {
                 return BadRequest();
@@ -84,30 +108,131 @@ namespace Backend.Controllers
         // POST: api/Animes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Anime>> PostAnime(Anime anime)
+        public async Task<ActionResult<List<Anime>>> PostAnime()
         {
-          if (_context.Anime == null)
+            if (!_env.IsDevelopment())
+            {
+                return Forbid(); // Return 403 Forbidden if not in development mode
+            }
+            if (_context.Anime == null)
           {
               return Problem("Entity set 'AnimeContext.Anime'  is null.");
           }
-            _context.Anime.Add(anime);
-            await _context.SaveChangesAsync();
+            string apiUrl = "https://api.myanimelist.net/v2/anime/ranking?ranking_type=all&limit=500&offset=0&fields=id,title,main_picture,alternative_titles,start_date,end_date,synopsis,mean,rank,popularity,num_list_users,num_scoring_users,nsfw,created_at,updated_at,media_type,status,genres,my_list_status,num_episodes,start_season,broadcast,source,average_episode_duration,rating,pictures,background,related_anime,related_manga,recommendations,studios,statistics";
+            _httpClient.DefaultRequestHeaders.Add("X-MAL-CLIENT-ID", _apiKey);
+            var response = await _httpClient.GetAsync(apiUrl);
+            if (response.IsSuccessStatusCode)
+            {
+                var responseData = await response.Content.ReadAsStringAsync();
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true,
+                    IgnoreNullValues = true,
+                    IgnoreReadOnlyProperties = true,
+                };
+                var animes = JsonSerializer.Deserialize<ApiResponse>(responseData, options);
+                List<Anime> animeList = new List<Anime>();
 
-            return CreatedAtAction("GetAnime", new { id = anime.Id }, anime);
+                foreach (var anime in animes.data)
+                {
+                    var existingAnime = _context.Anime.FirstOrDefault(a => a.Id == anime.node.Id);
+                    if(existingAnime == null)
+                    {
+                        var newGenres = new List<Genre>();
+                        foreach (var genre in anime.node.Genres)
+                        {
+                            var existingGenre = _context.Genre.FirstOrDefault(g => g.Id == genre.Id);
+                            if (existingGenre != null)
+                            {
+                               newGenres.Add(existingGenre);
+                            }
+                            else
+                            {
+                                _context.Genre.Add(genre);
+                                await _context.SaveChangesAsync();
+                                newGenres.Add(genre);
+                            }
+                        }
+
+                        anime.node.Genres.Clear();
+                        anime.node.Genres.AddRange(newGenres);
+
+                        var newStudios = new List<Studio>();
+                        foreach (var studio in anime.node.Studios)
+                        {
+                            var existingStudio = _context.Studio.FirstOrDefault(s => s.Id == studio.Id);
+                            if (existingStudio != null)
+                            {
+
+                                newStudios.Add(existingStudio);
+                            }
+                            else
+                            {
+                                _context.Studio.Add(studio);
+                                await _context.SaveChangesAsync();
+                                newStudios.Add(studio);
+                            }
+                        }
+
+                        anime.node.Studios.Clear();
+                        anime.node.Studios.AddRange(newStudios);
+
+                        anime.node.Created_at = anime.node.Created_at?.ToUniversalTime();
+                        anime.node.Updated_at = anime.node.Updated_at?.ToUniversalTime();
+
+                        animeList.Add(anime.node);
+                    }
+                }
+
+                _context.Anime.AddRange(animeList);
+                await _context.SaveChangesAsync();
+                return Ok(animeList);
+            }
+            else
+            {
+                return StatusCode((int)response.StatusCode);
+            }
         }
 
         // DELETE: api/Animes/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAnime(int id)
         {
+            if (!_env.IsDevelopment())
+            {
+                return Forbid(); // Return 403 Forbidden if not in development mode
+            }
             if (_context.Anime == null)
             {
                 return NotFound();
             }
-            var anime = await _context.Anime.FindAsync(id);
+            var anime = await _context.Anime.Include(a => a.Main_picture)
+                                            .Include(a => a.Alternative_titles)
+                                            .Include(a => a.Start_season)
+                                            .Include(a => a.Broadcast)
+                                            .FirstOrDefaultAsync(a => a.Id == id);
             if (anime == null)
             {
                 return NotFound();
+            }
+            if (anime.Main_picture != null)
+            {
+                _context.Remove(anime.Main_picture);
+            }
+
+            if (anime.Alternative_titles != null)
+            {
+                _context.Remove(anime.Alternative_titles);
+            }
+
+            if (anime.Start_season != null)
+            {
+                _context.Remove(anime.Start_season);
+            }
+
+            if (anime.Broadcast != null)
+            {
+                _context.Remove(anime.Broadcast);
             }
 
             _context.Anime.Remove(anime);

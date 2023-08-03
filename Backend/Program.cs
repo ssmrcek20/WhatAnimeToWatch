@@ -3,16 +3,27 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Backend.Data;
 
+string databaseKey = Environment.GetEnvironmentVariable("DatabaseConnectionString");
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<AnimeContext>(options =>
-    options.UseNpgsql(builder.Configuration["DatabaseConnectionString"] ?? throw new InvalidOperationException("Connection string 'AnimeContext' not found.")));
-
+if (databaseKey == null)
+{
+    builder.Services.AddDbContext<AnimeContext>(options =>
+        options.UseNpgsql(builder.Configuration["DatabaseConnectionString"] ?? throw new InvalidOperationException("Connection string 'AnimeContext' not found.")));
+}
+else
+{
+    builder.Services.AddDbContext<AnimeContext>(options =>
+        options.UseNpgsql(databaseKey ?? throw new InvalidOperationException("Connection string 'AnimeContext' not found.")));
+}
 // Add services to the container.
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddHttpClient();
+string ApiKey = builder.Configuration["X-MAL-CLIENT-ID"] ?? throw new InvalidOperationException("API key 'X-MAL-CLIENT-ID' not found.");
+builder.Services.AddSingleton(ApiKey);
 
 var app = builder.Build();
 
