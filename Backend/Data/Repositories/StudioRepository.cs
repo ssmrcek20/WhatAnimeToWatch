@@ -4,7 +4,7 @@ namespace Backend.Data.Repositories
 {
     public class StudioRepository
     {
-        private AnimeContext _context;
+        private readonly AnimeContext _context;
 
         public StudioRepository(AnimeContext context)
         {

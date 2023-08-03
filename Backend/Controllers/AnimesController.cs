@@ -72,7 +72,7 @@ namespace Backend.Controllers
 
         // POST: api/Animes
         [HttpPost]
-        public async Task<ActionResult<List<Anime>>> PostAnime()
+        public async Task<ActionResult<int>> PostAnime()
         {
             if (!_env.IsDevelopment())
             {
@@ -99,7 +99,7 @@ namespace Backend.Controllers
             var animeRepo = new AnimeRepository(_context);
             foreach (var anime in animes)
             {
-                if (await animeRepo.AnimeExists(anime.A.Id))
+                if (!await animeRepo.AnimeExists(anime.A.Id))
                 {
                     var genreRepo = new GenreRepository(_context);
                     var newGenres = await genreRepo.GenreEditAsync(anime);
@@ -119,7 +119,7 @@ namespace Backend.Controllers
             }
 
             await animeRepo.AddAnimeAsync(animeList);
-            return Ok(animeList);
+            return Ok(animeList.Count);
         }
 
         // DELETE: api/Animes/5
@@ -144,7 +144,7 @@ namespace Backend.Controllers
                 return NotFound();
             }
 
-            animeRepo.DeleteAnimeAsync(anime);
+            await animeRepo.DeleteAnimeAsync(anime);
 
             return NoContent();
         }
