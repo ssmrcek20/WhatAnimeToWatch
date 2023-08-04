@@ -1,0 +1,29 @@
+@import '../assets/colors.scss';
+
+app-header {
+    display: flex;
+    padding: 20px 0px;
+}
+
+app-main {
+    margin-top: auto;
+    display: flex;
+    gap: 3em;
+}
+
+footer {
+    display: flex;
+    flex-direction: column;
+    background-color: $primary-color;
+    height: 8em;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    border-radius: 10px 10px 0px 0px;
+    margin-top: auto;
+}
+
+p {
+    padding: 10px;
+    margin: 0px;
+}

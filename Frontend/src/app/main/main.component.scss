@@ -1,0 +1,27 @@
+
+.image {
+    width: 50%;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    gap: 2em;
+    justify-content: center;
+}
+
+h1 {
+    font-size: xx-large;
+    font-weight: bold;
+}
+
+p {
+    font-size: large;
+}
+
+button {
+    width: 50%;
+    font-size: large;
+    padding: 20px;
+}
