@@ -12,6 +12,7 @@ import { HeaderComponent } from './header/header.component';
 import { MainComponent } from './main/main.component';
 import { SvgMainComponent } from './svg-main/svg-main.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { QuizComponent } from './quiz/quiz.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
     HeaderComponent,
     MainComponent,
     SvgMainComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    QuizComponent
   ],
   imports: [
     BrowserModule,
