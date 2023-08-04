@@ -32,23 +32,6 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-
-    string parentDirectory = Directory.GetParent(builder.Environment.ContentRootPath).FullName;
-    app.UseFileServer(new FileServerOptions
-    {
-        FileProvider = new PhysicalFileProvider(Path.Combine(parentDirectory, "Frontend\\dist\\frontend")),
-        RequestPath = "",
-        EnableDefaultFiles = true
-    });
-}
-else if (app.Environment.IsProduction())
-{
-    app.UseFileServer(new FileServerOptions
-    {
-        FileProvider = new PhysicalFileProvider(Path.Combine(builder.Environment.ContentRootPath, "wwwroot")),
-        RequestPath = "",
-        EnableDefaultFiles = true
-    });
 }
 
 app.UseHttpsRedirection();
