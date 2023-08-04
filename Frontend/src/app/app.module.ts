@@ -11,13 +11,15 @@ import {MatButtonModule} from '@angular/material/button';
 import { HeaderComponent } from './header/header.component';
 import { MainComponent } from './main/main.component';
 import { SvgMainComponent } from './svg-main/svg-main.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     MainComponent,
-    SvgMainComponent
+    SvgMainComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

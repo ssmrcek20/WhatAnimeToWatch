@@ -4,7 +4,7 @@
     gap: 3em;
 }
 
-.image {
+img {
     width: 50%;
 }
 
@@ -19,14 +19,17 @@
 h1 {
     font-size: xx-large;
     font-weight: bold;
+    text-align: center;
 }
 
 p {
     font-size: large;
+    text-align: center;
 }
 
 button {
     width: 50%;
     font-size: large;
     padding: 20px;
+    align-self: center;
 }
