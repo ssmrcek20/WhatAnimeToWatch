@@ -3,10 +3,20 @@
 }
 
 button {
-  font-size: large;
-  padding: 20px;
+  cursor: pointer;
+
+  &[disabled] {
+    cursor: default;
+  }
 }
 
 .nav {
   margin: 0px 0px 0px 20px;
+}
+
+.small-icon{
+  padding: 0px;
+  width: 2rem;
+  height: 2rem!important;
+  align-self: center;
 }

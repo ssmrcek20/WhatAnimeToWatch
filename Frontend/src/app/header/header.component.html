@@ -1,15 +1,11 @@
-<button mat-button routerLink="">
-  <span>What Anime To Watch</span>
-</button>
+<button pButton pRipple class="p-button-text " label="What Anime To Watch" routerLink=""></button>
 
 <span class="example-spacer"></span>
 
-<button mat-button class="nav" routerLink="quiz">
-  <span>Quiz</span>
-</button>
-<button mat-button disabled class="nav">
-  <span>Search</span>
-</button>
-<button mat-button disabled class="nav">
-  <span>Import</span>
-</button>
+<button pButton pRipple class="p-button-text nav" label="Quiz" routerLink="quiz"></button>
+
+<button pButton pRipple class="p-button-text nav" label="Search" [disabled]="true"></button>
+
+<button pButton pRipple class="p-button-text nav" label="Import" [disabled]="true"></button>
+
+<button pButton pRipple class=" p-button-sm p-button-rounded p-button-outlined nav small-icon pi pi-moon" #themeButton (click)="toggleTheme(themeButton)"></button>

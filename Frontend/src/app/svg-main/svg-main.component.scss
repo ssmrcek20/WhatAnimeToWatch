@@ -1,0 +1,55 @@
+
+    svg#freepik_stories-movie-night:not(.animated) .animable {
+        opacity: 0;
+    }
+
+    svg#freepik_stories-movie-night.animated #freepik--background-simple--inject-1--inject-2 {
+        animation: 1s 1 forwards cubic-bezier(.36, -0.01, .5, 1.38) slideRight;
+        animation-delay: 0s;
+    }
+
+    svg#freepik_stories-movie-night.animated #freepik--Shadow--inject-1--inject-2 {
+        animation: 1s 1 forwards cubic-bezier(.36, -0.01, .5, 1.38) slideRight;
+        animation-delay: 0s;
+    }
+
+    svg#freepik_stories-movie-night.animated #freepik--Plants--inject-1--inject-2 {
+        animation: 1s 1 forwards cubic-bezier(.36, -0.01, .5, 1.38) slideRight;
+        animation-delay: 0s;
+    }
+
+    svg#freepik_stories-movie-night.animated #freepik--Character--inject-1--inject-2 {
+        animation: 1s 1 forwards cubic-bezier(.36, -0.01, .5, 1.38) slideRight, 3s Infinite linear wind;
+        animation-delay: 0s, 1s;
+    }
+
+    svg#freepik_stories-movie-night.animated #freepik--Device--inject-1--inject-2 {
+        animation: 1s 1 forwards cubic-bezier(.36, -0.01, .5, 1.38) slideRight;
+        animation-delay: 0s;
+    }
+
+    @keyframes slideRight {
+        0% {
+            opacity: 0;
+            transform: translateX(30px);
+        }
+
+        100% {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes wind {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        25% {
+            transform: rotate(1deg);
+        }
+
+        75% {
+            transform: rotate(-1deg);
+        }
+    }

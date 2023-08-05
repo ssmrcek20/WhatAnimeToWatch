@@ -6,6 +6,7 @@
 
 img {
     width: 50%;
+    border-radius: 30px;
 }
 
 .content {
@@ -17,9 +18,10 @@ img {
 }
 
 h1 {
-    font-size: xx-large;
+    font-size: 4rem;
     font-weight: bold;
     text-align: center;
+    margin: 0px;
 }
 
 p {
@@ -29,7 +31,5 @@ p {
 
 button {
     width: 50%;
-    font-size: large;
-    padding: 20px;
     align-self: center;
 }
