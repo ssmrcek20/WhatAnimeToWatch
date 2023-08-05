@@ -1,5 +1,3 @@
-@import '../assets/colors.scss';
-
 app-header {
     display: flex;
     padding: 20px 0px;
@@ -8,7 +6,7 @@ app-header {
 footer {
     display: flex;
     flex-direction: column;
-    background-color: $primary-color;
+    background-color: var(--primary-color);
     height: 8em;
     align-items: center;
     justify-content: center;
