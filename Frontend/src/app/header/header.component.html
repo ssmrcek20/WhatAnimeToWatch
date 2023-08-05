@@ -4,8 +4,13 @@
 
 <button pButton pRipple class="p-button-text nav" label="Quiz" routerLink="quiz"></button>
 
-<button pButton pRipple class="p-button-text nav" label="Search" [disabled]="true"></button>
+<button pButton pRipple class="p-button-text nav" label="Anime List" [disabled]="true"></button>
 
 <button pButton pRipple class="p-button-text nav" label="Import" [disabled]="true"></button>
 
 <button pButton pRipple class=" p-button-sm p-button-rounded p-button-outlined nav small-icon pi pi-moon" #themeButton (click)="toggleTheme(themeButton)"></button>
+
+
+<p-menu #menu [model]="items" [popup]="true"></p-menu>
+<button pButton pRipple (click)="menu.toggle($event)" class="p-button-sm pi pi-bars nav"></button>
+

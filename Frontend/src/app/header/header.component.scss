@@ -11,7 +11,7 @@ button {
 }
 
 .nav {
-  margin: 0px 0px 0px 20px;
+  margin: 0px 10px 0px 10px;
 }
 
 .small-icon{
@@ -19,4 +19,17 @@ button {
   width: 2rem;
   height: 2rem!important;
   align-self: center;
+}
+
+.pi-bars {
+  display: none;
+}
+
+@media screen and (max-width: 800px) {
+  .nav {
+    display: none;
+  }
+  .p-button-sm {
+    display: block;
+  }
 }

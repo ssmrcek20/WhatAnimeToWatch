@@ -7,6 +7,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
+import { StepsModule } from 'primeng/steps';
+import { MenuModule } from 'primeng/menu';
 
 import { HeaderComponent } from './header/header.component';
 import { MainComponent } from './main/main.component';
@@ -29,6 +31,8 @@ import { QuizComponent } from './quiz/quiz.component';
     BrowserAnimationsModule,
     ButtonModule,
     RippleModule,
+    StepsModule,
+    MenuModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -5,13 +5,79 @@ html, body { height: 100%; }
 body { 
   margin: 0;
   font-family: var(--font-family);
+  font-weight: normal;
+  background: var(--surface-ground);
+  color: var(--text-color);
 }
+
+button {
+  cursor: pointer; 
+  font-weight: 700!important;
+}
+
+.card {
+  background: var(--surface-card);
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+
 app-root {
   display: flex;
   flex-direction: column;
   margin: 0 15%;
   min-height: 100vh;
 }
-button {
-  cursor: pointer; 
+@media screen and (max-width: 1400px) {
+  app-root {
+    margin: 0 12%;
+  }
+}
+@media screen and (max-width: 1200px) {
+  app-root {
+    margin: 0 6%;
+  }
+}
+@media screen and (max-width: 1000px) {
+  app-root {
+    margin: 0;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  app-root {
+    margin: 3%;
+    .image {
+      display: none;
+    }
+    .content{
+      width: 100%!important;
+      button{
+        width: 100%;
+      }
+    }
+    main {
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      width:100%;
+      app-not-found{
+        width: 100%;
+        margin: auto;
+      }
+      app-main{
+        width: 100%;
+        margin: auto;
+      }
+    }
+    img {
+      display: none;
+    }
+  }
+  @media screen and (max-width: 400px) {
+    app-root {
+      margin: 0%;
+    }
+  }
 }
