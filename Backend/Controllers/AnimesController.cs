@@ -15,6 +15,7 @@ using NuGet.Packaging;
 using Humanizer.Localisation;
 using Backend.Services;
 using Backend.Data.Repositories;
+using Microsoft.AspNetCore.Mvc.Formatters;
 
 namespace Backend.Controllers
 {
@@ -68,6 +69,30 @@ namespace Backend.Controllers
             }
 
             return anime;
+        }
+
+        // GET: api/Animes/MediaType/tv
+        [HttpGet("MediaType/{name}")]
+        public async Task<ActionResult<List<Anime>>> GetAnimeMediaType(string name)
+        {
+            if (!_env.IsDevelopment())
+            {
+                return Forbid(); // Return 403 Forbidden if not in development mode
+            }
+            if (_context.Anime == null)
+            {
+                return NotFound();
+            }
+            List<Anime> animeList = await _context.Anime
+                .Where(anime => string.Equals(anime.Media_type, name))
+                .ToListAsync();
+
+            if (animeList == null || animeList.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return animeList;
         }
 
         // POST: api/Animes
