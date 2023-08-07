@@ -30,20 +30,39 @@ export class QuizService {
     return this.numEpFormData.value;
   }
 
+  private epDurFormData = new BehaviorSubject<any>({});
+  epDurFormData$ = this.epDurFormData.asObservable();
+  setEpDurFormData(data: any): void {
+    this.epDurFormData.next(data);
+  }
+  getEpDurFormData(): any {
+    return this.epDurFormData.value;
+  }
+
 
 
 
   getAllFormData(): any {
+    //check if somthing is empty, if user skiped some step ilegaly
     return {
       mediaType: this.getMediaTypeFormData(),
       numEp: this.getNumEpFormData(),
+      epDur: this.getEpDurFormData(),
       // Include other form data here
     };
   }
 
   deleteAllFormData(): void {
-    this.mediaTypeFormData.next({});
+    this.mediaTypeFormData.next({
+      tv: [],
+      ova: [],
+      movie: [],
+      special: [],
+      ona: [],
+      music: [],
+    });
     this.numEpFormData.next({});
+    this.epDurFormData.next({});
     // Include other form data here
   }
 }

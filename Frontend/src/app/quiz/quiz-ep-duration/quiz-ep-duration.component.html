@@ -1,1 +1,20 @@
-<p>quiz-ep-duration works!</p>
+<div class="form-container">
+    <h1>How long episodes do you want to watch?</h1>
+    <p>Write minimum and maximum duration episode should last in minutes</p>
+
+    <form [formGroup]="formGroup" class="">
+        <div class="numbers">
+            <label for="min">Minimum duration</label>
+            <p-inputNumber inputId="min" formControlName="min" [min]="1" [max]="180"></p-inputNumber>
+        </div>
+        <div class="numbers">
+            <label for="max">Maximum duration</label>
+            <p-inputNumber inputId="max" formControlName="max" [min]="1" [max]="180"></p-inputNumber>
+        </div>
+    </form>
+
+    <div class="buttons">
+        <button (click)="onBack()" pButton pRipple class=" p-button-outlined" label="Back"></button>
+        <button (click)="onSaveAndNext()" pButton pRipple class=" p-button-raised" label="Next"></button>
+    </div>
+</div>

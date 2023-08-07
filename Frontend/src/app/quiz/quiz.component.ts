@@ -21,7 +21,7 @@ export class QuizComponent implements OnInit {
       },
       {
         label: 'Episodes duration',
-        routerLink: 'duration'
+        routerLink: 'ep-duration'
       },
       {
         label: 'Genre',
@@ -33,7 +33,7 @@ export class QuizComponent implements OnInit {
       },
       {
         label: 'Release date',
-        routerLink: 'rel-date'
+        routerLink: 'release-date'
       },
       {
         label: 'Source',
@@ -45,7 +45,7 @@ export class QuizComponent implements OnInit {
       },
       {
         label: 'Age rating',
-        routerLink: 'rating'
+        routerLink: 'age-rating'
       }
     ];
   }
