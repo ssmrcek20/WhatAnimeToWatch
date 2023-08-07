@@ -1,11 +1,5 @@
 import { Component, Renderer2, OnInit } from '@angular/core';
-
-interface CustomMenuItem {
-  label: string;
-  icon?: string;
-  url?: string;
-  routerLink?: string;
-}
+import { MenuItem } from '../interfaces/MenuItems';
 
 @Component({
   selector: 'app-header',
@@ -14,7 +8,7 @@ interface CustomMenuItem {
 })
 export class HeaderComponent implements OnInit {
   constructor(private renderer: Renderer2) { }
-  items: CustomMenuItem[] | undefined;
+  items: MenuItem[] | undefined;
 
   ngOnInit() {
     this.items = [

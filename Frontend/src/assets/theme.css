@@ -44,6 +44,7 @@
     --focus-ring: 0 0 0 1px #c7bbfa;
     --highlight-bg: #e2dcfc;
     --highlight-text-color: #7254f3;
+    --box-shadow:0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     color-scheme: light
 }
 
@@ -781,6 +782,10 @@ p-cascadeselect.p-cascadeselect-clearable .p-cascadeselect-clear-icon {
 
 .p-overlay-modal .p-cascadeselect-item-active>.p-cascadeselect-item-content .p-cascadeselect-group-icon {
     transform: rotate(90deg)
+}
+
+.p-hidden-accessible {
+    display: none;
 }
 
 .p-checkbox {
@@ -6751,12 +6756,18 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
     background: transparent;
     transition: box-shadow .2s;
     border-radius: 6px;
-    background: #fff
+    background: #fff;
+    max-width: 6.2rem;
+    padding: 0 0.5rem;
+    padding-top: 1.2rem;
+    @media screen and (max-width: 800px) {
+        padding-top: 0rem;
+    }
 }
 
 .p-steps .p-steps-item .p-menuitem-link .p-steps-number {
     color: #043d75;
-    border: 1px solid #f6f9fc;
+    border: 1px solid #dfe7ef;
     background: #fff;
     min-width: 2rem;
     height: 2rem;
@@ -6768,7 +6779,9 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
 
 .p-steps .p-steps-item .p-menuitem-link .p-steps-title {
     margin-top: .5rem;
-    color: #708da9
+    color: #708da9;
+    white-space: normal;
+    text-align: center;
 }
 
 .p-steps .p-steps-item .p-menuitem-link:not(.p-disabled):focus {
@@ -6796,6 +6809,12 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
     display: block;
     position: absolute;
     margin-top: -1rem
+}
+
+.p-steps ul{
+    @media screen and (max-width: 800px) {
+        flex-direction: column;
+    }
 }
 
 .p-tabmenu .p-tabmenu-nav {
@@ -6834,6 +6853,7 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
     border-top-left-radius: 6px;
     transition: box-shadow .2s;
     margin: 0 0 -2px 0
+    
 }
 
 .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link .p-menuitem-icon {
