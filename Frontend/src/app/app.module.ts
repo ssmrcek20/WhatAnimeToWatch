@@ -20,8 +20,15 @@ import { MainComponent } from './main/main.component';
 import { SvgMainComponent } from './svg-main/svg-main.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { QuizComponent } from './quiz/quiz.component';
-import { QuizMediaTypeComponent } from './quiz-media-type/quiz-media-type.component';
-import { QuizNummberEpComponent } from './quiz-nummber-ep/quiz-nummber-ep.component';
+import { QuizMediaTypeComponent } from './quiz/quiz-media-type/quiz-media-type.component';
+import { QuizNummberEpComponent } from './quiz/quiz-nummber-ep/quiz-nummber-ep.component';
+import { QuizEpDurationComponent } from './quiz/quiz-ep-duration/quiz-ep-duration.component';
+import { QuizGenreComponent } from './quiz/quiz-genre/quiz-genre.component';
+import { QuizStatusComponent } from './quiz/quiz-status/quiz-status.component';
+import { QuizRealeaseDateComponent } from './quiz/quiz-realease-date/quiz-realease-date.component';
+import { QuizSourceComponent } from './quiz/quiz-source/quiz-source.component';
+import { QuizStudioComponent } from './quiz/quiz-studio/quiz-studio.component';
+import { QuizAgeRatingComponent } from './quiz/quiz-age-rating/quiz-age-rating.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +40,13 @@ import { QuizNummberEpComponent } from './quiz-nummber-ep/quiz-nummber-ep.compon
     QuizComponent,
     QuizMediaTypeComponent,
     QuizNummberEpComponent,
+    QuizEpDurationComponent,
+    QuizGenreComponent,
+    QuizStatusComponent,
+    QuizRealeaseDateComponent,
+    QuizSourceComponent,
+    QuizStudioComponent,
+    QuizAgeRatingComponent,
   ],
   imports: [
     BrowserModule,
