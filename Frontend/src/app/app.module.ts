@@ -13,6 +13,7 @@ import { MenuModule } from 'primeng/menu';
 import { CheckboxModule } from 'primeng/checkbox';
 import { TooltipModule } from 'primeng/tooltip';
 import { InputTextModule } from 'primeng/inputtext';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 import { HeaderComponent } from './header/header.component';
 import { MainComponent } from './main/main.component';
@@ -45,6 +46,7 @@ import { QuizNummberEpComponent } from './quiz-nummber-ep/quiz-nummber-ep.compon
     CheckboxModule,
     TooltipModule,
     InputTextModule,
+    InputNumberModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

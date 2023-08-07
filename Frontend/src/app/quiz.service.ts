@@ -7,7 +7,6 @@ import { BehaviorSubject } from 'rxjs';
 export class QuizService {
   private mediaTypeFormData = new BehaviorSubject<any>({});
   mediaTypeFormData$ = this.mediaTypeFormData.asObservable();
-
   setMediaTypeFormData(data: any): void {
     this.mediaTypeFormData.next(data);
   }
@@ -15,12 +14,29 @@ export class QuizService {
     return this.mediaTypeFormData.value;
   }
 
-  // Implement similar methods for other steps
+  private numEpFormData = new BehaviorSubject<any>({});
+  numEpFormData$ = this.numEpFormData.asObservable();
+  setNumEpFormData(data: any): void {
+    this.numEpFormData.next(data);
+  }
+  getNumEpFormData(): any {
+    return this.numEpFormData.value;
+  }
+
+
+
 
   getAllFormData(): any {
     return {
       mediaType: this.getMediaTypeFormData(),
+      numEp: this.getNumEpFormData(),
       // Include other form data here
     };
+  }
+
+  deleteAllFormData(): void {
+    this.mediaTypeFormData.next({});
+    this.numEpFormData.next({});
+    // Include other form data here
   }
 }

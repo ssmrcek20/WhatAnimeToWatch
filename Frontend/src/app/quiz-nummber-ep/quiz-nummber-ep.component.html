@@ -1,31 +1,15 @@
 <div class="form-container">
-    <h1>What media type you want to watch?</h1>
-    <p>Select your preferred media types or just click next if you like all media type:</p>
+    <h1>How many episodes do you want to watch?</h1>
+    <p>If you want to get anime that have unknown number of episodes because it is currently airing left minimum as 0</p>
 
     <form [formGroup]="formGroup" class="">
-        <div class="checkbox">
-            <p-checkbox formControlName="movie" value=true inputId="movie"></p-checkbox>
-            <label for="movie">Movie</label>
+        <div class="numbers">
+            <label for="min">Minimum number of episodes</label>
+            <p-inputNumber inputId="min" formControlName="min" [min]="0" [max]="5000"></p-inputNumber>
         </div>
-        <div class="checkbox">
-            <p-checkbox formControlName="tv" value=true inputId="tv"></p-checkbox>
-            <label for="tv">TV series</label>
-        </div>
-        <div class="checkbox">
-            <p-checkbox formControlName="ova" value=true inputId="ova"></p-checkbox>
-            <label for="ova">OVA</label>
-        </div>
-        <div class="checkbox">
-            <p-checkbox formControlName="ona" value=true inputId="ona"></p-checkbox>
-            <label for="ona">ONA</label>
-        </div>
-        <div class="checkbox">
-            <p-checkbox formControlName="special" value=true inputId="special"></p-checkbox>
-            <label for="special">Special</label>
-        </div>
-        <div class="checkbox">
-            <p-checkbox formControlName="music" value=true inputId="music"></p-checkbox>
-            <label for="music">Music</label>
+        <div class="numbers">
+            <label for="max">Maximum number of episodes</label>
+            <p-inputNumber inputId="max" formControlName="max" [min]="0" [max]="5000"></p-inputNumber>
         </div>
     </form>
 

@@ -25,7 +25,6 @@ export class QuizMediaTypeComponent implements OnInit {
       music: [],
     });
   
-    // Update the FormGroup values based on stored data
     this.formGroup.patchValue({
       tv: storedMediaTypeData.tv || [],
       ova: storedMediaTypeData.ova || [],
@@ -51,7 +50,6 @@ export class QuizMediaTypeComponent implements OnInit {
       this.quizService.setMediaTypeFormData(formValue);
     }
 
-  
     this.router.navigate(['quiz', 'num-ep']);
   }
 }

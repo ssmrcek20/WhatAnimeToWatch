@@ -14,32 +14,33 @@ export class QuizNummberEpComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private quizService: QuizService, private router: Router) {}
 
   ngOnInit(): void {
-    const storedMediaTypeData = this.quizService.getMediaTypeFormData();
-    
+    const storedNumEpData = this.quizService.getNumEpFormData();
+
     this.formGroup = this.formBuilder.group({
-      tv: storedMediaTypeData?.tv || false,
-      ova: storedMediaTypeData?.ova || false,
-      movie: storedMediaTypeData?.movie || false,
-      special: storedMediaTypeData?.special || false,
-      ona: storedMediaTypeData?.ona || false,
-      music: storedMediaTypeData?.music || false,
+      min: 0,
+      max: 5000,
+    });
+  
+    // Update the FormGroup values based on stored data
+    this.formGroup.patchValue({
+      min: storedNumEpData.min || 0,
+      max: storedNumEpData.max || 5000,
     });
   }
 
   onSaveAndNext(): void {
     const formValue = this.formGroup.value;
-    const anyChecked = Object.values(formValue).some((isChecked) => isChecked);
   
-    if (anyChecked) {
-      this.quizService.setMediaTypeFormData(formValue);
-    } else {
-      Object.keys(formValue).forEach((key) => {
-        formValue[key] = true;
-      });
-      this.quizService.setMediaTypeFormData(formValue);
+    if (formValue.min == null) {
+      formValue.min = 0;
     }
-  
-    this.router.navigate(['quiz', 'num-ep']);
+    if(formValue.max == null) {
+      formValue.max = 5000;
+    }
+
+    this.quizService.setNumEpFormData(formValue);
+    
+    this.router.navigate(['quiz', 'ep-duration']);
   }
 
   onBack(): void {

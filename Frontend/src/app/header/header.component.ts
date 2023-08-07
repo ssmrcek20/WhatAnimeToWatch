@@ -1,5 +1,6 @@
 import { Component, Renderer2, OnInit } from '@angular/core';
 import { MenuItem } from '../interfaces/MenuItems';
+import { QuizService } from '../quiz.service';
 
 @Component({
   selector: 'app-header',
@@ -7,7 +8,7 @@ import { MenuItem } from '../interfaces/MenuItems';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  constructor(private renderer: Renderer2) { }
+  constructor(private renderer: Renderer2, private quizService: QuizService) { }
   items: MenuItem[] | undefined;
 
   ngOnInit() {
@@ -41,5 +42,9 @@ export class HeaderComponent implements OnInit {
       button.classList.remove('pi-moon');
       button.classList.add('pi-sun');
     }
+  }
+
+  resetQuiz(): void {
+    this.quizService.deleteAllFormData();
   }
 }
