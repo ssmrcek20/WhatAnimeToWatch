@@ -15,42 +15,42 @@ export class QuizMediaTypeComponent implements OnInit {
 
   ngOnInit(): void {
     const storedMediaTypeData = this.quizService.getMediaTypeFormData();
-    console.log(storedMediaTypeData);
 
     this.formGroup = this.formBuilder.group({
-      tv: false,
-      ova: false,
-      movie: false,
-      special: false,
-      ona: false,
-      music: false,
+      tv: [],
+      ova: [],
+      movie: [],
+      special: [],
+      ona: [],
+      music: [],
     });
   
     // Update the FormGroup values based on stored data
     this.formGroup.patchValue({
-      tv: storedMediaTypeData.tv || false,
-      ova: storedMediaTypeData.ova || false,
-      movie: storedMediaTypeData.movie || false,
-      special: storedMediaTypeData.special || false,
-      ona: storedMediaTypeData.ona || false,
-      music: storedMediaTypeData.music || false,
+      tv: storedMediaTypeData.tv || [],
+      ova: storedMediaTypeData.ova || [],
+      movie: storedMediaTypeData.movie || [],
+      special: storedMediaTypeData.special || [],
+      ona: storedMediaTypeData.ona || [],
+      music: storedMediaTypeData.music || [],
     });
   }
 
   onSaveAndNext(): void {
     const formValue = this.formGroup.value;
-    const anyChecked = Object.values(formValue).some((isChecked) => isChecked);
+    const anyChecked = Object.keys(formValue).some((key) => formValue[key].length > 0);
   
     if (!anyChecked) {
-      const allTrueValues = {};
+      const allTrueValues: { [key: string]: string[] } = {};
       Object.keys(formValue).forEach((key) => {
-        //allTrueValues[key] = true;
-      });
-  
-      this.formGroup.patchValue(allTrueValues);
+      allTrueValues[key] = [key];
+    });
+      this.quizService.setMediaTypeFormData(allTrueValues);
+    }
+    else {
+      this.quizService.setMediaTypeFormData(formValue);
     }
 
-    this.quizService.setMediaTypeFormData(formValue);
   
     this.router.navigate(['quiz', 'num-ep']);
   }

@@ -10,7 +10,6 @@ export class QuizService {
 
   setMediaTypeFormData(data: any): void {
     this.mediaTypeFormData.next(data);
-    console.log(this.mediaTypeFormData.value);
   }
   getMediaTypeFormData(): any {
     return this.mediaTypeFormData.value;

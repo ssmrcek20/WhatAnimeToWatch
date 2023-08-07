@@ -30,13 +30,17 @@
             display: flex;
             border: 2px solid var(--surface-d);
             border-radius: 6px;
-            padding: 0.2em 0.2em;
             transition: background-color .2s, color .2s, border-color .2s, box-shadow .2s;
+
+            p-checkbox {
+                padding-left: 0.5em;
+            }
 
             label {
                 width: 100%;
                 font-size: large;
                 padding-left: 1rem;
+                padding: 0.5rem 1rem;
             }
 
             label:hover {
