@@ -21,7 +21,6 @@ export class QuizNummberEpComponent implements OnInit {
       max: 5000,
     });
   
-    // Update the FormGroup values based on stored data
     this.formGroup.patchValue({
       min: storedNumEpData.min || 0,
       max: storedNumEpData.max || 5000,

@@ -5,7 +5,14 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class QuizService {
-  private mediaTypeFormData = new BehaviorSubject<any>({});
+  private mediaTypeFormData = new BehaviorSubject<any>({
+    tv: [],
+    ova: [],
+    movie: [],
+    special: [],
+    ona: [],
+    music: [],
+  });
   mediaTypeFormData$ = this.mediaTypeFormData.asObservable();
   setMediaTypeFormData(data: any): void {
     this.mediaTypeFormData.next(data);

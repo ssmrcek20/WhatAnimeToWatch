@@ -24,15 +24,31 @@ export class QuizMediaTypeComponent implements OnInit {
       ona: [],
       music: [],
     });
-  
-    this.formGroup.patchValue({
-      tv: storedMediaTypeData.tv || [],
-      ova: storedMediaTypeData.ova || [],
-      movie: storedMediaTypeData.movie || [],
-      special: storedMediaTypeData.special || [],
-      ona: storedMediaTypeData.ona || [],
-      music: storedMediaTypeData.music || [],
-    });
+    
+    const everythingChecked = Object.keys(storedMediaTypeData).every((key) => storedMediaTypeData[key].length > 0);
+    if (everythingChecked) {
+      const allFalseValues: { [key: string]: string[] } = {};
+      Object.keys(this.formBuilder.group).forEach((key) => {
+      allFalseValues[key] = [];});
+      this.formGroup.patchValue({
+        tv: [],
+        ova: [],
+        movie: [],
+        special:[],
+        ona: [],
+        music:[],
+      });
+    }
+    else{
+      this.formGroup.patchValue({
+        tv: storedMediaTypeData.tv || [],
+        ova: storedMediaTypeData.ova || [],
+        movie: storedMediaTypeData.movie || [],
+        special: storedMediaTypeData.special || [],
+        ona: storedMediaTypeData.ona || [],
+        music: storedMediaTypeData.music || [],
+      });
+    }
   }
 
   onSaveAndNext(): void {
