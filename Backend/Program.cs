@@ -27,7 +27,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       policy =>
                       {
-                          policy.WithOrigins("whatanimetowatch.onrender.com")
+                          policy.WithOrigins("whatanimetowatch-8jac.onrender.com")
                           .AllowAnyHeader()
                           .AllowAnyMethod();
                       });
