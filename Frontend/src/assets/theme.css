@@ -1548,7 +1548,8 @@ p-listbox.ng-dirty.ng-invalid>.p-listbox {
     background: #fff;
     border: 1px solid #d3dbe3;
     transition: background-color .2s, color .2s, border-color .2s, box-shadow .2s;
-    border-radius: 6px
+    border-radius: 6px;
+    width: 100%;
 }
 
 .p-multiselect:not(.p-disabled):hover {

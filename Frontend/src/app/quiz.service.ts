@@ -39,6 +39,21 @@ export class QuizService {
     return this.epDurFormData.value;
   }
 
+  private genreFormData = new BehaviorSubject<any>({
+    tv: [],
+    ova: [],
+    movie: [],
+    special: [],
+    ona: [],
+    music: [],
+  });
+  genreFormData$ = this.genreFormData.asObservable();
+  setGenreFormData(data: any): void {
+    this.genreFormData.next(data);
+  }
+  getGenreFormData(): any {
+    return this.genreFormData.value;
+  }
 
 
 
@@ -48,6 +63,7 @@ export class QuizService {
       mediaType: this.getMediaTypeFormData(),
       numEp: this.getNumEpFormData(),
       epDur: this.getEpDurFormData(),
+      genre: this.getGenreFormData(),
       // Include other form data here
     };
   }
@@ -63,6 +79,7 @@ export class QuizService {
     });
     this.numEpFormData.next({});
     this.epDurFormData.next({});
+    this.genreFormData.next({});
     // Include other form data here
   }
 }
