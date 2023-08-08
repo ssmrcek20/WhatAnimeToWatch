@@ -22,16 +22,6 @@ else
     builder.Services.AddSingleton(apiKey);
 }
 
-
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(builder =>
-    {
-        builder.AllowAnyOrigin()
-               .AllowAnyMethod()
-               .AllowAnyHeader();
-    });
-});
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyAllowSpecificOrigins,
@@ -55,11 +45,11 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    app.UseCors();
+
 }
-else {
-    app.UseCors(MyAllowSpecificOrigins);
-}
+
+app.UseCors(MyAllowSpecificOrigins);
+
 
 app.UseAuthorization();
 
