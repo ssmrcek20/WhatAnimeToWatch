@@ -2,6 +2,7 @@
     <h1>What Genres do you like?</h1>
     <p>neke?</p>
 
+    <p-progressSpinner strokeWidth="4" *ngIf="isLoading"></p-progressSpinner>    
     <form [formGroup]="formGroup" class="">
         <p-multiSelect [options]="genres" formControlName="selectedGenres" optionLabel="name" defaultLabel="Select genres" display="chip"></p-multiSelect>
     </form>
@@ -11,3 +12,4 @@
         <button (click)="onSaveAndNext()" pButton pRipple class=" p-button-raised" label="Next" [disabled]="isNextDisabled()"></button>
     </div>
 </div>
+<p-toast></p-toast>

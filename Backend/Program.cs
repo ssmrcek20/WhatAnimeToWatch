@@ -3,7 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Backend.Data;
 
-var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+var ProductionPolicy = "ProductionPolicy";
+var DevelopmentPolicy = "DevelopmentPolicy";
 string databaseKey = Environment.GetEnvironmentVariable("DatabaseConnectionString");
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,13 +25,20 @@ else
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: MyAllowSpecificOrigins,
-                      policy =>
-                      {
-                          policy.WithOrigins("https://whatanimetowatch-8jac.onrender.com")
-                          .AllowAnyHeader()
-                          .AllowAnyMethod();
-                      });
+    options.AddPolicy(name: ProductionPolicy,
+        policy =>
+        {
+            policy.WithOrigins("https://whatanimetowatch-8jac.onrender.com")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+    options.AddPolicy(name: DevelopmentPolicy,
+        policy =>
+        {
+            policy.AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
 });
 
 builder.Services.AddControllers();
@@ -47,10 +55,13 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseCors(DevelopmentPolicy);
 
 }
-
-app.UseCors(MyAllowSpecificOrigins);
+else
+{
+    app.UseCors(ProductionPolicy);
+}
 
 
 app.UseAuthorization();

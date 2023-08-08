@@ -29,7 +29,7 @@ namespace Backend.Controllers
           {
               return NotFound();
           }
-            return await _context.Genre.ToListAsync();
+            return await _context.Genre.OrderBy(g => g.Name).ToListAsync();
         }
 
         // GET: api/Genres/5

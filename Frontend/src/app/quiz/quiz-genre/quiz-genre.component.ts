@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { QuizService } from '../../quiz.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { MessageService } from 'primeng/api';
 
 interface Genre {
   id: number,
@@ -17,26 +19,21 @@ interface Genre {
 export class QuizGenreComponent implements OnInit {
   formGroup!: FormGroup;
   genres!: Genre[];
+  isLoading = true;
 
-  constructor(private formBuilder: FormBuilder, private quizService: QuizService, private router: Router, private http: HttpClient) { }
+  constructor(private formBuilder: FormBuilder, private quizService: QuizService, private router: Router, private http: HttpClient, private messageService: MessageService) { }
 
   ngOnInit(): void {
     const storedGenreData = this.quizService.getGenreFormData();
 
-    this.genres = [
-      { id: 1, name: 'Action' },
-      { id: 2, name: 'Adventure' },
-      { id: 3, name: 'Cars' },
-      { id: 4, name: 'Comedy' },
-      { id: 5, name: 'Dementia' },
-      { id: 6, name: 'Demons' },
-    ];
-    this.http.get<Genre[]>('https://whatanimetowatch.onrender.com/api/Genres').subscribe({
+    this.http.get<Genre[]>(environment.backendUrl + '/api/Genres').subscribe({
       next: (data) => {
         this.genres = data;
+        this.isLoading = false;
       },
       error: (error) => {
-        console.error('Error fetching genres:', error);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: "Genres couldn't load" });
+        this.isLoading = false;
       }
     });
 

@@ -58,3 +58,7 @@
         }
     }
 }
+
+::ng-deep .p-multiselect-items-wrapper {
+    max-height: 250px!important;
+}
