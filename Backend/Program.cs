@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Backend.Data;
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 string databaseKey = Environment.GetEnvironmentVariable("DatabaseConnectionString");
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,25 @@ else
     builder.Services.AddSingleton(apiKey);
 }
 
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins("whatanimetowatch.onrender.com");
+                      });
+});
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -28,13 +48,18 @@ builder.Services.AddHttpClient();
 
 var app = builder.Build();
 
+
+app.UseHttpsRedirection();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseCors();
 }
-
-app.UseHttpsRedirection();
+else {
+    app.UseCors(MyAllowSpecificOrigins);
+}
 
 app.UseAuthorization();
 
