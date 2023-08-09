@@ -386,14 +386,14 @@ p-calendar.ng-dirty.ng-invalid>.p-calendar>.p-inputtext {
 
 .p-datepicker {
     padding: .5rem;
-    background: linear-gradient(90deg, #7254f3 0%, #9554f3 100%);
-    color: #fff;
+    background: var(--surface-card);
+    color: var(--text-color);
     border: 0 none;
     border-radius: 6px
 }
 
 .p-datepicker:not(.p-datepicker-inline) {
-    background: linear-gradient(90deg, #7254f3 0%, #9554f3 100%);
+    background: var(--surface-card);
     border: 0 none;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1)
 }
@@ -404,11 +404,11 @@ p-calendar.ng-dirty.ng-invalid>.p-calendar>.p-inputtext {
 
 .p-datepicker .p-datepicker-header {
     padding: .5rem;
-    color: #fff;
-    background: linear-gradient(90deg, #7254f3 0%, #9554f3 100%);
+    color: var(--text-color);
+    background: var(--surface-card);
     font-weight: 700;
     margin: 0;
-    border-bottom: 1px solid rgba(255, 255, 255, .2);
+    border-bottom: 1px solid var(--text-color-secondary);
     border-top-right-radius: 6px;
     border-top-left-radius: 6px
 }
@@ -417,7 +417,7 @@ p-calendar.ng-dirty.ng-invalid>.p-calendar>.p-inputtext {
 .p-datepicker .p-datepicker-header .p-datepicker-next {
     width: 2rem;
     height: 2rem;
-    color: #708da9;
+    color: var(--text-color)!important;
     border: 0 none;
     background: transparent;
     border-radius: 50%;
@@ -444,7 +444,7 @@ p-calendar.ng-dirty.ng-invalid>.p-calendar>.p-inputtext {
 
 .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year,
 .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month {
-    color: #fff;
+    color: var(--text-color);
     transition: background-color .2s, color .2s, box-shadow .2s;
     font-weight: 700;
     padding: .5rem
@@ -497,8 +497,7 @@ p-calendar.ng-dirty.ng-invalid>.p-calendar>.p-inputtext {
 }
 
 .p-datepicker table td.p-datepicker-today>span {
-    background: rgba(255, 255, 255, .1);
-    color: #fff;
+    color: var(--primary-color);
     border-color: transparent
 }
 
@@ -7755,22 +7754,22 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
 }
 
 .p-datepicker table th {
-    color: rgba(255, 255, 255, .7)
+    color: var(--text-color)
 }
 
 .p-datepicker table td>span.p-highlight {
-    color: #fff;
-    background: rgba(255, 255, 255, .3)
+    color: var(--primary-color);
+    background: var(--primary-100)
 }
 
 .p-datepicker table td.p-datepicker-today>span.p-highlight {
-    color: #fff;
-    background: rgba(255, 255, 255, .3)
+    color: var(--primary-color);
+    background: var(--primary-100)
 }
 
 .p-datepicker .p-monthpicker .p-monthpicker-month.p-highlight {
-    color: #fff;
-    background: rgba(255, 255, 255, .3)
+    color: var(--primary-color);
+    background: var(--primary-100)
 }
 
 .p-button .p-button-label {

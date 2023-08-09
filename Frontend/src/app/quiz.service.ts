@@ -39,20 +39,35 @@ export class QuizService {
     return this.epDurFormData.value;
   }
 
-  private genreFormData = new BehaviorSubject<any>({
-    tv: [],
-    ova: [],
-    movie: [],
-    special: [],
-    ona: [],
-    music: [],
-  });
+  private genreFormData = new BehaviorSubject<any>({});
   genreFormData$ = this.genreFormData.asObservable();
   setGenreFormData(data: any): void {
     this.genreFormData.next(data);
   }
   getGenreFormData(): any {
     return this.genreFormData.value;
+  }
+
+  private statusFormData = new BehaviorSubject<any>({
+    finished_airing: [],
+    currently_airing: [],
+    not_yet_aired: [],
+  });
+  statusFormData$ = this.statusFormData.asObservable();
+  setStatusFormData(data: any): void {
+    this.statusFormData.next(data);
+  }
+  getStatusFormData(): any {
+    return this.statusFormData.value;
+  }
+
+  private relDateFormData = new BehaviorSubject<any>({});
+  relDateFormData$ = this.relDateFormData.asObservable();
+  setRelDateFormData(data: any): void {
+    this.relDateFormData.next(data);
+  }
+  getRelDateFormData(): any {
+    return this.relDateFormData.value;
   }
 
 
@@ -64,6 +79,8 @@ export class QuizService {
       numEp: this.getNumEpFormData(),
       epDur: this.getEpDurFormData(),
       genre: this.getGenreFormData(),
+      status: this.getStatusFormData(),
+      relDate: this.getRelDateFormData(),
       // Include other form data here
     };
   }
@@ -80,6 +97,12 @@ export class QuizService {
     this.numEpFormData.next({});
     this.epDurFormData.next({});
     this.genreFormData.next({});
+    this.statusFormData.next({
+      finished_airing: [],
+      currently_airing: [],
+      not_yet_aired: [],
+    });
+    this.relDateFormData.next({});
     // Include other form data here
   }
 }

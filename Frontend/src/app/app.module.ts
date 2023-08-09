@@ -20,6 +20,7 @@ import { ChipsModule } from 'primeng/chips';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { CalendarModule } from 'primeng/calendar';
 
 import { HeaderComponent } from './header/header.component';
 import { MainComponent } from './main/main.component';
@@ -72,6 +73,7 @@ import { QuizAgeRatingComponent } from './quiz/quiz-age-rating/quiz-age-rating.c
     HttpClientModule,
     ProgressSpinnerModule,
     ToastModule,
+    CalendarModule,
   ],
   providers: [MessageService],
   bootstrap: [AppComponent]

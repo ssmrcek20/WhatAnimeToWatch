@@ -1,1 +1,20 @@
-<p>quiz-realease-date works!</p>
+<div class="form-container">
+    <h1>How old anime do you want to watch?</h1>
+    <p>Choose starting and ending date when anime should start airing</p>
+
+    <form [formGroup]="formGroup" class="">
+        <div class="dates">
+            <label for="startDate">Start date</label>
+            <p-calendar formControlName="startDate" [showIcon]="true" [touchUI]="isMobile" [readonlyInput]="isMobile"></p-calendar>
+        </div>
+        <div class="dates">
+            <label for="endDate">End date</label>
+            <p-calendar formControlName="endDate" [showIcon]="true" [touchUI]="isMobile" [readonlyInput]="isMobile"></p-calendar>
+        </div>
+    </form>
+
+    <div class="buttons">
+        <button (click)="onBack()" pButton pRipple class=" p-button-outlined" label="Back"></button>
+        <button (click)="onSaveAndNext()" pButton pRipple class=" p-button-raised" label="Next"></button>
+    </div>
+</div>

@@ -1,1 +1,24 @@
-<p>quiz-status works!</p>
+<div class="form-container">
+    <h1>Do you want to watch already finished anime or one that is still airing?</h1>
+    <p>Select your preferred status of anime or just click next if you don't care about status</p>
+
+    <form [formGroup]="formGroup" class="">
+        <div class="checkbox">
+            <p-checkbox formControlName="finished_airing" value=finished_airing inputId="finished_airing"></p-checkbox>
+            <label for="finished_airing">Finished airing</label>
+        </div>
+        <div class="checkbox">
+            <p-checkbox formControlName="currently_airing" value=currently_airing inputId="currently_airing"></p-checkbox>
+            <label for="currently_airing">Currently airing</label>
+        </div>
+        <div class="checkbox">
+            <p-checkbox formControlName="not_yet_aired" value=not_yet_aired inputId="not_yet_aired"></p-checkbox>
+            <label for="not_yet_aired">Not yet aired</label>
+        </div>
+    </form>
+
+    <div class="buttons">
+        <button (click)="onBack()" pButton pRipple class=" p-button-outlined" label="Back"></button>
+        <button (click)="onSaveAndNext()" pButton pRipple class=" p-button-raised" label="Next"></button>
+    </div>
+</div>
