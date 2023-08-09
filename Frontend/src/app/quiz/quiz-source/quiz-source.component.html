@@ -1,1 +1,13 @@
-<p>quiz-source works!</p>
+<div class="form-container">
+    <h1>From what source do you want for anime to be made?</h1>
+    <p>Choose as many as you want</p>
+  
+    <form [formGroup]="formGroup" class="">
+        <p-multiSelect [options]="source" formControlName="selectedSources" defaultLabel="Select source" display="chip"></p-multiSelect>
+    </form>
+
+    <div class="buttons">
+        <button (click)="onBack()" pButton pRipple class=" p-button-outlined" label="Back"></button>
+        <button (click)="onSaveAndNext()" pButton pRipple class=" p-button-raised" label="Next" [disabled]="isNextDisabled()"></button>
+    </div>
+</div>

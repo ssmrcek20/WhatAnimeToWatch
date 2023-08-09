@@ -70,7 +70,14 @@ export class QuizService {
     return this.relDateFormData.value;
   }
 
-
+  private sourceFormData = new BehaviorSubject<any>({});
+  sourceFormData$ = this.sourceFormData.asObservable();
+  setSourceFormData(data: any): void {
+    this.sourceFormData.next(data);
+  }
+  getSourceFormData(): any {
+    return this.sourceFormData.value;
+  }
 
   getAllFormData(): any {
     //check if somthing is empty, if user skiped some step ilegaly
@@ -81,6 +88,7 @@ export class QuizService {
       genre: this.getGenreFormData(),
       status: this.getStatusFormData(),
       relDate: this.getRelDateFormData(),
+      source: this.getSourceFormData(),
       // Include other form data here
     };
   }
@@ -103,6 +111,7 @@ export class QuizService {
       not_yet_aired: [],
     });
     this.relDateFormData.next({});
+    this.sourceFormData.next({});
     // Include other form data here
   }
 }
