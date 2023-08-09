@@ -27,9 +27,6 @@ export class QuizMediaTypeComponent implements OnInit {
     
     const everythingChecked = Object.keys(storedMediaTypeData).every((key) => storedMediaTypeData[key].length > 0);
     if (everythingChecked) {
-      const allFalseValues: { [key: string]: string[] } = {};
-      Object.keys(this.formBuilder.group).forEach((key) => {
-      allFalseValues[key] = [];});
       this.formGroup.patchValue({
         tv: [],
         ova: [],

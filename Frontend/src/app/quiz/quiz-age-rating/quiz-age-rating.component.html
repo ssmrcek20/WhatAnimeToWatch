@@ -1,1 +1,36 @@
-<p>quiz-age-rating works!</p>
+<div class="form-container">
+    <h1>Do you want violence or nudity in anime?</h1>
+    <p>Select your preferred age rating of anime or just click next if you don't care about rating</p>
+
+    <form [formGroup]="formGroup" class="">
+        <div class="checkbox">
+            <p-checkbox formControlName="g" value=g inputId="g"></p-checkbox>
+            <label for="g">G - All ages</label>
+        </div>
+        <div class="checkbox">
+            <p-checkbox formControlName="pg" value=pg inputId="pg"></p-checkbox>
+            <label for="pg">PG - Suggested parental guidence</label>
+        </div>
+        <div class="checkbox">
+            <p-checkbox formControlName="pg13" value=pg13 inputId="pg13"></p-checkbox>
+            <label for="pg13">PG-13 - Inappropriate for pre-teenagers</label>
+        </div>
+        <div class="checkbox">
+            <p-checkbox formControlName="r" value=r inputId="r"></p-checkbox>
+            <label for="r">R - 17+ (violence & profanity)</label>
+        </div>
+        <div class="checkbox">
+            <p-checkbox formControlName="rPlus" value=rPlus inputId="rPlus"></p-checkbox>
+            <label for="rPlus">R+ - Profanity & mild nudity</label>
+        </div>
+        <div class="checkbox">
+            <p-checkbox formControlName="rx" value=rx inputId="rx"></p-checkbox>
+            <label for="rx">Rx - Hentai</label>
+        </div>
+    </form>
+
+    <div class="buttons">
+        <button (click)="onBack()" pButton pRipple class=" p-button-outlined" label="Back"></button>
+        <button (click)="onSaveAndNext()" pButton pRipple class=" p-button-raised" label="Next"></button>
+    </div>
+</div>

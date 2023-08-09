@@ -88,6 +88,22 @@ export class QuizService {
     return this.studioFormData.value;
   }
 
+  private ageRFormData = new BehaviorSubject<any>({
+    g: [],
+    pg: [],
+    pg13: [],
+    r: [],
+    rPlus: [],
+    rx: [],
+  });
+  ageRFormData$ = this.ageRFormData.asObservable();
+  setAgeRFormData(data: any): void {
+    this.ageRFormData.next(data);
+  }
+  getAgeRFormData(): any {
+    return this.ageRFormData.value;
+  }
+
 
   getAllFormData(): any {
     //check if somthing is empty, if user skiped some step ilegaly
@@ -100,7 +116,7 @@ export class QuizService {
       relDate: this.getRelDateFormData(),
       source: this.getSourceFormData(),
       studio: this.getStudioFormData(),
-      // Include other form data here
+      ageR: this.getAgeRFormData(),
     };
   }
 
@@ -124,6 +140,13 @@ export class QuizService {
     this.relDateFormData.next({});
     this.sourceFormData.next({});
     this.studioFormData.next({});
-    // Include other form data here
+    this.ageRFormData.next({
+      g: [],
+      pg: [],
+      pg13: [],
+      r: [],
+      rPlus: [],
+      rx: [],   
+    });
   }
 }
