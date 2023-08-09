@@ -1,1 +1,15 @@
-<p>quiz-studio works!</p>
+<div class="form-container">
+    <h1>From what studio do you want to watch anime?</h1>
+    <p>Choose as many as you like</p>
+
+    <p-progressSpinner strokeWidth="4" *ngIf="isLoading"></p-progressSpinner>    
+    <form [formGroup]="formGroup" class="">
+        <p-multiSelect [options]="studios" formControlName="selectedStudios" optionLabel="name" defaultLabel="Select studios" display="chip"></p-multiSelect>
+    </form>
+
+    <div class="buttons">
+        <button (click)="onBack()" pButton pRipple class=" p-button-outlined" label="Back"></button>
+        <button (click)="onSaveAndNext()" pButton pRipple class=" p-button-raised" label="Next" [disabled]="isNextDisabled()"></button>
+    </div>
+</div>
+<p-toast></p-toast>

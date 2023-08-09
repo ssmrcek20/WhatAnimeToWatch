@@ -79,6 +79,16 @@ export class QuizService {
     return this.sourceFormData.value;
   }
 
+  private studioFormData = new BehaviorSubject<any>({});
+  studioFormData$ = this.studioFormData.asObservable();
+  setStudioFormData(data: any): void {
+    this.studioFormData.next(data);
+  }
+  getStudioFormData(): any {
+    return this.studioFormData.value;
+  }
+
+
   getAllFormData(): any {
     //check if somthing is empty, if user skiped some step ilegaly
     return {
@@ -89,6 +99,7 @@ export class QuizService {
       status: this.getStatusFormData(),
       relDate: this.getRelDateFormData(),
       source: this.getSourceFormData(),
+      studio: this.getStudioFormData(),
       // Include other form data here
     };
   }
@@ -112,6 +123,7 @@ export class QuizService {
     });
     this.relDateFormData.next({});
     this.sourceFormData.next({});
+    this.studioFormData.next({});
     // Include other form data here
   }
 }
