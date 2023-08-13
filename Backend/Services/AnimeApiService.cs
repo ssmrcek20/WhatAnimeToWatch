@@ -1,9 +1,9 @@
-﻿using static Backend.Model.MyAnimeListApi;
+﻿using static Backend.ViewModels.MyAnimeListApi;
 using System.Net.Http;
 using System.Text.Json;
-using Backend.Model;
 using System.Net;
 using System.Text.Json.Serialization;
+using Backend.ViewModels;
 
 namespace Backend.Services
 {

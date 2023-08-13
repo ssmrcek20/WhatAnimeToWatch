@@ -1,4 +1,6 @@
-﻿namespace Backend.Model
+﻿using System.Text.Json.Serialization;
+
+namespace Backend.Model
 {
     public class Studio
     {
@@ -8,6 +10,7 @@
         }
         public int Id { get; set; }
         public string? Name { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Anime>? Animes { get; set; }
     }
 }

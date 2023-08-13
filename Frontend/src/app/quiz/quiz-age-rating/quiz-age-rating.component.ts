@@ -63,8 +63,7 @@ export class QuizAgeRatingComponent implements OnInit {
       this.quizService.setAgeRFormData(formValue);
     }
 
-    console.log(this.quizService.getAllFormData());
-    this.router.navigate(['quiz', '']);
+    this.router.navigate(['', 'anime-list']);
   }
 
   onBack(): void {

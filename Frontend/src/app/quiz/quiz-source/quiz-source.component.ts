@@ -25,7 +25,8 @@ export class QuizSourceComponent implements OnInit {
     'picture_book',
     'radio',
     'visual_novel',
-    'web_manga'
+    'web_manga',
+    'web_novel'
   ];
 
   constructor(private formBuilder: FormBuilder, private quizService: QuizService, private router: Router) { }

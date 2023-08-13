@@ -1,5 +1,11 @@
 ﻿using Backend.Model;
+using Backend.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol;
+using System.Globalization;
+using static Backend.ViewModels.AnimeFilters;
+using static NuGet.Packaging.PackagingConstants;
 
 namespace Backend.Data.Repositories
 {
@@ -57,6 +63,146 @@ namespace Backend.Data.Repositories
 
             _context.Anime.Remove(anime);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<ActionResult<List<Anime>>> GetFilteredAnimeAsync(AnimeFilter animeFilter)
+        {
+            IQueryable<Anime> query = _context.Anime.Include(a => a.Genres).Include(a => a.Studios);
+
+            if (animeFilter.mediaType != null)
+            {
+                var ageRatings = new List<string>();
+
+                if (animeFilter.mediaType.tv?.Any() == true)
+                {
+                    ageRatings.AddRange(animeFilter.mediaType.tv);
+                }
+                if (animeFilter.mediaType.ova?.Any() == true)
+                {
+                    ageRatings.AddRange(animeFilter.mediaType.ova);
+                }
+                if (animeFilter.mediaType.movie?.Any() == true)
+                {
+                    ageRatings.AddRange(animeFilter.mediaType.movie);
+                }
+                if (animeFilter.mediaType.special?.Any() == true)
+                {
+                    ageRatings.AddRange(animeFilter.mediaType.special);
+                }
+                if (animeFilter.mediaType.ona?.Any() == true)
+                {
+                    ageRatings.AddRange(animeFilter.mediaType.ona);
+                }
+                if (animeFilter.mediaType.music?.Any() == true)
+                {
+                    ageRatings.AddRange(animeFilter.mediaType.music);
+                }
+
+                if (ageRatings.Any())
+                {
+                    query = query.Where(a => ageRatings.Contains(a.Media_type));
+                }
+            }
+
+            if (animeFilter.numEp.min != null && animeFilter.numEp.max != null)
+            {
+                query = query.Where(a => a.Num_episodes >= animeFilter.numEp.min && a.Num_episodes <= animeFilter.numEp.max);
+            }
+
+            if (animeFilter.epDur.min != null && animeFilter.epDur.max != null)
+            {
+                query = query.Where(a => a.Average_episode_duration >= animeFilter.epDur.min*60 && a.Average_episode_duration <= animeFilter.epDur.max*60);
+            }
+
+            if (animeFilter.genre != null && animeFilter.genre.selectedGenres?.Any() == true)
+            {
+                var genreIds = animeFilter.genre.selectedGenres.Select(g => g.id);
+                query = query.Where(a => a.Genres.Any(g => genreIds.Contains(g.Id)));
+            }
+
+            if (animeFilter.status != null)
+            {
+                var Statuses = new List<string>();
+
+                if (animeFilter.status.finished_airing?.Any() == true)
+                {
+                    Statuses.AddRange(animeFilter.status.finished_airing);
+                }
+                if (animeFilter.status.currently_airing?.Any() == true)
+                {
+                    Statuses.AddRange(animeFilter.status.currently_airing);
+                }
+                if (animeFilter.status.not_yet_aired?.Any() == true)
+                {
+                    Statuses.AddRange(animeFilter.status.not_yet_aired);
+                }
+
+                if (Statuses.Any())
+                {
+                    query = query.Where(a => Statuses.Contains(a.Status));
+                }
+            }
+
+            if (animeFilter.source != null && animeFilter.source.selectedSources?.Any() == true)
+            {
+                query = query.Where(a => animeFilter.source.selectedSources.Contains(a.Source));
+            }
+
+            if (animeFilter.studio != null && animeFilter.studio.selectedStudios?.Any() == true)
+            {
+                var studioIds = animeFilter.studio.selectedStudios.Select(s => s.id);
+                query = query.Where(a => a.Studios.Any(s => studioIds.Contains(s.Id)));
+            }
+
+            if (animeFilter.ageR != null)
+            {
+                var ageRatings = new List<string>();
+
+                if (animeFilter.ageR.g?.Any() == true)
+                {
+                    ageRatings.AddRange(animeFilter.ageR.g);
+                }
+                if (animeFilter.ageR.pg?.Any() == true)
+                {
+                    ageRatings.AddRange(animeFilter.ageR.pg);
+                }
+                if (animeFilter.ageR.pg13?.Any() == true)
+                {
+                    ageRatings.AddRange(animeFilter.ageR.pg13);
+                }
+                if (animeFilter.ageR.r?.Any() == true)
+                {
+                    ageRatings.AddRange(animeFilter.ageR.r);
+                }
+                if (animeFilter.ageR.rPlus?.Any() == true)
+                {
+                    ageRatings.AddRange(animeFilter.ageR.rPlus);
+                }
+                if (animeFilter.ageR.rx?.Any() == true)
+                {
+                    ageRatings.AddRange(animeFilter.ageR.rx);
+                }
+
+                if (ageRatings.Any())
+                {
+                    query = query.Where(a => ageRatings.Contains(a.Rating));
+                }
+            }
+
+            List<Anime> filteredAnime = await query.ToListAsync();
+
+            if (animeFilter.relDate.startDate != null && animeFilter.relDate.endDate != null)
+            {
+                filteredAnime = filteredAnime
+                    .Where(a =>
+                        a.Start_date != null &&
+                        DateTime.ParseExact(a.Start_date, "yyyy-MM-dd", CultureInfo.InvariantCulture) >= animeFilter.relDate.startDate &&
+                        DateTime.ParseExact(a.Start_date, "yyyy-MM-dd", CultureInfo.InvariantCulture) <= animeFilter.relDate.endDate)
+                    .ToList();
+            }
+            System.Diagnostics.Debug.WriteLine("> > > " + filteredAnime.Count());
+
+            return filteredAnime;
         }
     }
 }

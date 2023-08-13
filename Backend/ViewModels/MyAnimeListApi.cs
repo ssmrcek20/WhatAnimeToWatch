@@ -1,6 +1,7 @@
 ﻿using System.Text.Json.Serialization;
+using Backend.Model;
 
-namespace Backend.Model
+namespace Backend.ViewModels
 {
     public class MyAnimeListApi
     {

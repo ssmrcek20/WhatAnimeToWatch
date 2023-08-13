@@ -1,4 +1,5 @@
 ﻿using Backend.Model;
+using Backend.ViewModels;
 
 namespace Backend.Data.Repositories
 {

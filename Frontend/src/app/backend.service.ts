@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders  } from '@angular/common/http';
 import { Genre } from './interfaces/Genre';
 import { Studio } from './interfaces/Studio';
 import { environment } from 'src/environments/environment';
 import { lastValueFrom } from 'rxjs';
+import { Anime } from './interfaces/Anime';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +29,7 @@ export class BackendService {
     }
   }
 
-  async getStudios(): Promise<Genre[]> {
+  async getStudios(): Promise<Studio[]> {
     if (this.studios.length > 0) {
       return this.studios;
     } else {
@@ -39,6 +40,20 @@ export class BackendService {
       } catch (error) {
         throw error;
       }
+    }
+  }
+
+  async getFilteredAnime(filters: any): Promise<Anime[]> {
+    try {
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+        }),
+      };
+      console.log(filters);
+      return await lastValueFrom(this.http.post<Anime[]>(environment.backendUrl + '/api/Animes/Filter', filters, httpOptions));
+    } catch (error) {
+      throw error;
     }
   }
 }

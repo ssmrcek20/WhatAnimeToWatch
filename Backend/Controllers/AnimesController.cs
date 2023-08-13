@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Backend.Data;
 using Backend.Model;
-using static Backend.Model.MyAnimeListApi;
+using static Backend.ViewModels.MyAnimeListApi;
 using System.Net.Http;
 using System.Text.Json;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -16,6 +16,9 @@ using Humanizer.Localisation;
 using Backend.Services;
 using Backend.Data.Repositories;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Backend.ViewModels;
+using System.Text.Json.Serialization;
+using static Backend.ViewModels.AnimeFilters;
 
 namespace Backend.Controllers
 {
@@ -93,6 +96,26 @@ namespace Backend.Controllers
             }
 
             return animeList;
+        }
+
+        // POST: api/Animes/Filter
+        [HttpPost("Filter")]
+        public async Task<ActionResult<List<Anime>>> GetFilteredAnime([FromBody] AnimeFilter animeFilter)
+        {
+            if (_context.Anime == null)
+            {
+                return NotFound();
+            }
+            
+            var animeRepo = new AnimeRepository(_context);
+            var animes = await animeRepo.GetFilteredAnimeAsync(animeFilter);
+
+            if (animes == null || animes.Value.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return animes;
         }
 
         // POST: api/Animes
