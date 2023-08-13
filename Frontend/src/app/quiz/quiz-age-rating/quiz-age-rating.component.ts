@@ -55,7 +55,15 @@ export class QuizAgeRatingComponent implements OnInit {
     if (!anyChecked) {
       const allTrueValues: { [key: string]: string[] } = {};
       Object.keys(formValue).forEach((key) => {
-      allTrueValues[key] = [key];
+        if(key === 'pg13'){
+          allTrueValues[key] = ['pg_13'];
+        }
+        else if(key === 'rPlus'){
+          allTrueValues[key] = ['r+'];
+        }
+        else{
+          allTrueValues[key] = [key];
+        }
     });
       this.quizService.setAgeRFormData(allTrueValues);
     }

@@ -71,36 +71,11 @@ namespace Backend.Data.Repositories
 
             if (animeFilter.mediaType != null)
             {
-                var ageRatings = new List<string>();
+                var mediaTypes = checkMediaTypes(animeFilter);
 
-                if (animeFilter.mediaType.tv?.Any() == true)
+                if (mediaTypes.Any())
                 {
-                    ageRatings.AddRange(animeFilter.mediaType.tv);
-                }
-                if (animeFilter.mediaType.ova?.Any() == true)
-                {
-                    ageRatings.AddRange(animeFilter.mediaType.ova);
-                }
-                if (animeFilter.mediaType.movie?.Any() == true)
-                {
-                    ageRatings.AddRange(animeFilter.mediaType.movie);
-                }
-                if (animeFilter.mediaType.special?.Any() == true)
-                {
-                    ageRatings.AddRange(animeFilter.mediaType.special);
-                }
-                if (animeFilter.mediaType.ona?.Any() == true)
-                {
-                    ageRatings.AddRange(animeFilter.mediaType.ona);
-                }
-                if (animeFilter.mediaType.music?.Any() == true)
-                {
-                    ageRatings.AddRange(animeFilter.mediaType.music);
-                }
-
-                if (ageRatings.Any())
-                {
-                    query = query.Where(a => ageRatings.Contains(a.Media_type));
+                    query = query.Where(a => mediaTypes.Contains(a.Media_type));
                 }
             }
 
@@ -122,20 +97,7 @@ namespace Backend.Data.Repositories
 
             if (animeFilter.status != null)
             {
-                var Statuses = new List<string>();
-
-                if (animeFilter.status.finished_airing?.Any() == true)
-                {
-                    Statuses.AddRange(animeFilter.status.finished_airing);
-                }
-                if (animeFilter.status.currently_airing?.Any() == true)
-                {
-                    Statuses.AddRange(animeFilter.status.currently_airing);
-                }
-                if (animeFilter.status.not_yet_aired?.Any() == true)
-                {
-                    Statuses.AddRange(animeFilter.status.not_yet_aired);
-                }
+                List<string> Statuses = checkStatuses(animeFilter);
 
                 if (Statuses.Any())
                 {
@@ -156,32 +118,7 @@ namespace Backend.Data.Repositories
 
             if (animeFilter.ageR != null)
             {
-                var ageRatings = new List<string>();
-
-                if (animeFilter.ageR.g?.Any() == true)
-                {
-                    ageRatings.AddRange(animeFilter.ageR.g);
-                }
-                if (animeFilter.ageR.pg?.Any() == true)
-                {
-                    ageRatings.AddRange(animeFilter.ageR.pg);
-                }
-                if (animeFilter.ageR.pg13?.Any() == true)
-                {
-                    ageRatings.AddRange(animeFilter.ageR.pg13);
-                }
-                if (animeFilter.ageR.r?.Any() == true)
-                {
-                    ageRatings.AddRange(animeFilter.ageR.r);
-                }
-                if (animeFilter.ageR.rPlus?.Any() == true)
-                {
-                    ageRatings.AddRange(animeFilter.ageR.rPlus);
-                }
-                if (animeFilter.ageR.rx?.Any() == true)
-                {
-                    ageRatings.AddRange(animeFilter.ageR.rx);
-                }
+                List<string> ageRatings = checkRatings(animeFilter);
 
                 if (ageRatings.Any())
                 {
@@ -203,6 +140,90 @@ namespace Backend.Data.Repositories
             System.Diagnostics.Debug.WriteLine("> > > " + filteredAnime.Count());
 
             return filteredAnime;
+        }
+
+        private static List<string> checkRatings(AnimeFilter animeFilter)
+        {
+            var ageRatings = new List<string>();
+
+            if (animeFilter.ageR.g?.Any() == true)
+            {
+                ageRatings.AddRange(animeFilter.ageR.g);
+            }
+            if (animeFilter.ageR.pg?.Any() == true)
+            {
+                ageRatings.AddRange(animeFilter.ageR.pg);
+            }
+            if (animeFilter.ageR.pg13?.Any() == true)
+            {
+                ageRatings.AddRange(animeFilter.ageR.pg13);
+            }
+            if (animeFilter.ageR.r?.Any() == true)
+            {
+                ageRatings.AddRange(animeFilter.ageR.r);
+            }
+            if (animeFilter.ageR.rPlus?.Any() == true)
+            {
+                ageRatings.AddRange(animeFilter.ageR.rPlus);
+            }
+            if (animeFilter.ageR.rx?.Any() == true)
+            {
+                ageRatings.AddRange(animeFilter.ageR.rx);
+            }
+
+            return ageRatings;
+        }
+
+        private static List<string> checkStatuses(AnimeFilter animeFilter)
+        {
+            var Statuses = new List<string>();
+
+            if (animeFilter.status.finished_airing?.Any() == true)
+            {
+                Statuses.AddRange(animeFilter.status.finished_airing);
+            }
+            if (animeFilter.status.currently_airing?.Any() == true)
+            {
+                Statuses.AddRange(animeFilter.status.currently_airing);
+            }
+            if (animeFilter.status.not_yet_aired?.Any() == true)
+            {
+                Statuses.AddRange(animeFilter.status.not_yet_aired);
+            }
+
+            return Statuses;
+        }
+
+        private static List<string> checkMediaTypes(AnimeFilter animeFilter)
+        {
+            var mediaTypes = new List<string>();
+
+            if (animeFilter.mediaType.tv?.Any() == true)
+            {
+                mediaTypes.AddRange(animeFilter.mediaType.tv);
+            }
+            if (animeFilter.mediaType.ova?.Any() == true)
+            {
+                mediaTypes.AddRange(animeFilter.mediaType.ova);
+            }
+            if (animeFilter.mediaType.movie?.Any() == true)
+            {
+                mediaTypes.AddRange(animeFilter.mediaType.movie);
+            }
+            if (animeFilter.mediaType.special?.Any() == true)
+            {
+                mediaTypes.AddRange(animeFilter.mediaType.special);
+            }
+            if (animeFilter.mediaType.ona?.Any() == true)
+            {
+                mediaTypes.AddRange(animeFilter.mediaType.ona);
+            }
+            if (animeFilter.mediaType.music?.Any() == true)
+            {
+                mediaTypes.AddRange(animeFilter.mediaType.music);
+            }
+
+            return mediaTypes;
         }
     }
 }
