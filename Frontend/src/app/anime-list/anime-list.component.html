@@ -1,1 +1,24 @@
-<p>anime-list works!</p>
+<p-toast></p-toast>
+<p-progressSpinner strokeWidth="4" *ngIf="isLoading"></p-progressSpinner>  
+
+<p-dataView
+  [value]="animeList"
+  [layout]="'grid'"
+  [paginator]="false"
+  [emptyMessage]="'Loading...'"
+>
+  <ng-template pTemplate="gridItem" let-anime>
+    <div class="anime-card">
+      <div class="anime-image">
+        <img [src]="anime.main_picture?.medium" [alt]="anime.title" class="anime-img" />
+      </div>
+      <div class="anime-title">{{ anime.title }}</div>
+    </div>
+  </ng-template>
+</p-dataView>
+<p-paginator
+  [totalRecords]="totalPages"
+  [rows]="36"
+  [pageLinkSize]="3"
+  (onPageChange)="onPageChange($event)"
+></p-paginator>

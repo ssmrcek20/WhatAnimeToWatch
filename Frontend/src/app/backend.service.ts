@@ -43,15 +43,14 @@ export class BackendService {
     }
   }
 
-  async getFilteredAnime(filters: any): Promise<Anime[]> {
+  async getFilteredAnime(filters: any, page: number): Promise<Anime[]> {
     try {
       const httpOptions = {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
         }),
       };
-      console.log(filters);
-      return await lastValueFrom(this.http.post<Anime[]>(environment.backendUrl + '/api/Animes/Filter', filters, httpOptions));
+      return await lastValueFrom(this.http.post<Anime[]>(environment.backendUrl + '/api/Animes/Filter/' + page, filters, httpOptions));
     } catch (error) {
       throw error;
     }

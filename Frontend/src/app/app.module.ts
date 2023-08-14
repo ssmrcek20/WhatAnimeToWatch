@@ -21,6 +21,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { CalendarModule } from 'primeng/calendar';
+import { DataViewModule } from 'primeng/dataview';
+import { PaginatorModule } from 'primeng/paginator';
 
 import { HeaderComponent } from './header/header.component';
 import { MainComponent } from './main/main.component';
@@ -76,6 +78,8 @@ import { AnimeListComponent } from './anime-list/anime-list.component';
     ProgressSpinnerModule,
     ToastModule,
     CalendarModule,
+    DataViewModule,
+    PaginatorModule,
   ],
   providers: [MessageService],
   bootstrap: [AppComponent]

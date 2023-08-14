@@ -3,6 +3,7 @@ using Backend.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol;
+using System.Drawing.Printing;
 using System.Globalization;
 using static Backend.ViewModels.AnimeFilters;
 using static NuGet.Packaging.PackagingConstants;
@@ -65,9 +66,15 @@ namespace Backend.Data.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<ActionResult<List<Anime>>> GetFilteredAnimeAsync(AnimeFilter animeFilter)
+        public async Task<ActionResult<FilteredAnime>> GetFilteredAnimeAsync(AnimeFilter animeFilter, int page)
         {
-            IQueryable<Anime> query = _context.Anime.Include(a => a.Genres).Include(a => a.Studios);
+            IQueryable<Anime> query = _context.Anime
+                .Include(a => a.Genres)
+                .Include(a => a.Studios)
+                .Include(a => a.Main_picture)
+                .Include(a => a.Alternative_titles)
+                .Include(a => a.Start_season)
+                .Include(a => a.Broadcast);
 
             if (animeFilter.mediaType != null)
             {
@@ -126,8 +133,31 @@ namespace Backend.Data.Repositories
                 }
             }
 
-            List<Anime> filteredAnime = await query.ToListAsync();
+            /*  ---Make Start_date to DateTime---
+            if (animeFilter.relDate.startDate != null && animeFilter.relDate.endDate != null)
+            { 
+                DateTime? startDate = animeFilter.relDate.startDate;
+                DateTime? endDate = animeFilter.relDate.endDate;
 
+                query = query
+                    .Where(a =>
+                        a.Start_date != null &&
+                        a.Start_date >= startDate &&
+                        a.Start_date <= endDate);
+            }*/
+
+            var totalAnimes = await query.CountAsync();
+            var totalPages = (int)Math.Ceiling(totalAnimes / 36.0);
+
+            List<Anime> filteredAnime = await query
+                .OrderBy(a => a.Rank)
+                .Skip((page - 1) * 36)
+                .Take(36)
+                .ToListAsync();
+
+            return new FilteredAnime { animes=filteredAnime, totalPages=totalPages };
+
+            /*
             if (animeFilter.relDate.startDate != null && animeFilter.relDate.endDate != null)
             {
                 filteredAnime = filteredAnime
@@ -136,10 +166,7 @@ namespace Backend.Data.Repositories
                         DateTime.ParseExact(a.Start_date, "yyyy-MM-dd", CultureInfo.InvariantCulture) >= animeFilter.relDate.startDate &&
                         DateTime.ParseExact(a.Start_date, "yyyy-MM-dd", CultureInfo.InvariantCulture) <= animeFilter.relDate.endDate)
                     .ToList();
-            }
-            System.Diagnostics.Debug.WriteLine("> > > " + filteredAnime.Count());
-
-            return filteredAnime;
+            }*/
         }
 
         private static List<string> checkRatings(AnimeFilter animeFilter)

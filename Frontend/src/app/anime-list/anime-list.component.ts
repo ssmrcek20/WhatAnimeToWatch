@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BackendService } from '../backend.service';
 import { QuizService } from '../quiz.service';
+import { MessageService } from 'primeng/api';
+import { Anime } from '../interfaces/Anime';
 
 @Component({
   selector: 'app-anime-list',
@@ -8,18 +10,33 @@ import { QuizService } from '../quiz.service';
   styleUrls: ['./anime-list.component.scss']
 })
 export class AnimeListComponent implements OnInit {
+  animeList: Anime[] = [];
+  isLoading = true;
+  currentPage = 1;
+  totalPages = 0;
 
-  constructor(private quizService: QuizService, private backendService: BackendService) { }
+  constructor(private quizService: QuizService, private backendService: BackendService, private messageService: MessageService) { }
 
   async ngOnInit(): Promise<void> {
-      try {
-        console.log(this.quizService.getAllFormData());
-        const animeList = await this.backendService.getFilteredAnime(this.quizService.getAllFormData());
-        console.log(animeList);
-      } catch (error) {
-        console.log(error);
-      }
+      await this.loadAnime(this.currentPage);
   }
-  
 
+  private async loadAnime(page: number) {
+    try {
+      this.isLoading = true;
+      const data: any = await this.backendService.getFilteredAnime(this.quizService.getAllFormData(), page);
+      this.animeList = data.animes;
+      this.totalPages = data.totalPages*36;
+      this.isLoading = false;
+    } catch (error) {
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: "Anime couldn't load" });
+      this.isLoading = false;
+    }
+  }
+
+  async onPageChange(event: any): Promise<void> {
+    this.currentPage = event.page + 1;
+    window.scrollTo(0, 0);
+    await this.loadAnime(this.currentPage);
+  }
 }

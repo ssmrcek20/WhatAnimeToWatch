@@ -98,9 +98,9 @@ namespace Backend.Controllers
             return animeList;
         }
 
-        // POST: api/Animes/Filter
-        [HttpPost("Filter")]
-        public async Task<ActionResult<List<Anime>>> GetFilteredAnime([FromBody] AnimeFilter animeFilter)
+        // POST: api/Animes/Filter/page
+        [HttpPost("Filter/{page}")]
+        public async Task<ActionResult<FilteredAnime>> GetFilteredAnime(int page, [FromBody] AnimeFilter animeFilter)
         {
             if (_context.Anime == null)
             {
@@ -108,14 +108,14 @@ namespace Backend.Controllers
             }
             
             var animeRepo = new AnimeRepository(_context);
-            var animes = await animeRepo.GetFilteredAnimeAsync(animeFilter);
+            var data = await animeRepo.GetFilteredAnimeAsync(animeFilter, page);
 
-            if (animes == null || animes.Value.Count == 0)
+            if (data.Value.animes == null || data.Value.animes.Count == 0)
             {
                 return NotFound();
             }
 
-            return animes;
+            return data;
         }
 
         // POST: api/Animes

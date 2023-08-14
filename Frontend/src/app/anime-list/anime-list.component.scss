@@ -1,0 +1,56 @@
+::ng-deep .p-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+    grid-gap: 2rem; 
+
+    .anime-card {
+
+        .anime-image {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: calc(318 / 225 * 100%); 
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            border-radius: 1rem;
+
+            img.anime-img {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        .anime-title {
+            text-align: center;
+            margin-top: 0.5rem;
+            font-weight: bold;
+            font-size: large;
+        }
+    }
+}
+
+::ng-deep app-anime-list {
+    display: grid;
+}
+p-progressSpinner {
+    justify-self: center;
+}
+
+::ng-deep p-paginator {
+    margin: 0.5rem;
+}
+
+::ng-deep .p-ink {
+    display: none;
+}
+
+@media screen and (max-width: 800px) {
+    ::ng-deep .p-grid {
+        grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+        grid-gap: 1rem;
+        img {
+            display: block;
+        }
+    }
+}
