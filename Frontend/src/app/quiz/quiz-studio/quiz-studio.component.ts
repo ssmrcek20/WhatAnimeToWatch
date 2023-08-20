@@ -53,8 +53,4 @@ export class QuizStudioComponent implements OnInit {
   onBack(): void {
     this.router.navigate(['quiz', 'source']);
   }
-
-  isNextDisabled(): boolean {
-    return !this.formGroup.get('selectedStudios')?.value || this.formGroup.get('selectedStudios')?.value.length === 0;
-  }
 }

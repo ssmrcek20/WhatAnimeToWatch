@@ -52,8 +52,4 @@ export class QuizSourceComponent implements OnInit {
   onBack(): void {
     this.router.navigate(['quiz', 'release-date']);
   }
-
-  isNextDisabled(): boolean {
-    return !this.formGroup.get('selectedSources')?.value || this.formGroup.get('selectedSources')?.value.length === 0;
-  }
 }

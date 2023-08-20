@@ -1,6 +1,6 @@
 <div class="form-container">
     <h1>What Genres do you like?</h1>
-    <p>neke?</p>
+    <p>Choose as many as you want or just click next if it doesn't matter to you</p>
 
     <p-progressSpinner strokeWidth="4" *ngIf="isLoading"></p-progressSpinner>    
     <form [formGroup]="formGroup" class="">
@@ -9,7 +9,7 @@
 
     <div class="buttons">
         <button (click)="onBack()" pButton pRipple class=" p-button-outlined" label="Back"></button>
-        <button (click)="onSaveAndNext()" pButton pRipple class=" p-button-raised" label="Next" [disabled]="isNextDisabled()"></button>
+        <button (click)="onSaveAndNext()" pButton pRipple class=" p-button-raised" label="Next"></button>
     </div>
 </div>
 <p-toast></p-toast>

@@ -19,11 +19,7 @@ export class HeaderComponent implements OnInit {
           },
           {
             label: 'Anime List',
-            routerLink: ''
-          },
-          {
-            label: 'Import',
-            routerLink: ''
+            routerLink: 'anime-list'
           }
     ];
   }

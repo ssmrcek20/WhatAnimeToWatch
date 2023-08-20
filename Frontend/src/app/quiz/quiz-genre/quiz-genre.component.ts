@@ -53,8 +53,4 @@ export class QuizGenreComponent implements OnInit {
   onBack(): void {
     this.router.navigate(['quiz', 'ep-duration']);
   }
-
-  isNextDisabled(): boolean {
-    return !this.formGroup.get('selectedGenres')?.value || this.formGroup.get('selectedGenres')?.value.length === 0;
-  }
 }

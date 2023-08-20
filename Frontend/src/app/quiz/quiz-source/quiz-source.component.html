@@ -1,6 +1,6 @@
 <div class="form-container">
     <h1>From what source do you want for anime to be made?</h1>
-    <p>Choose as many as you want</p>
+    <p>Choose as many as you want or just click next if it doesn't matter to you</p>
   
     <form [formGroup]="formGroup" class="">
         <p-multiSelect [options]="source" formControlName="selectedSources" defaultLabel="Select source" display="chip"></p-multiSelect>
@@ -8,6 +8,6 @@
 
     <div class="buttons">
         <button (click)="onBack()" pButton pRipple class=" p-button-outlined" label="Back"></button>
-        <button (click)="onSaveAndNext()" pButton pRipple class=" p-button-raised" label="Next" [disabled]="isNextDisabled()"></button>
+        <button (click)="onSaveAndNext()" pButton pRipple class=" p-button-raised" label="Next"></button>
     </div>
 </div>
