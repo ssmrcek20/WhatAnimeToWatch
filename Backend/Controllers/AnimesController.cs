@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 using Backend.ViewModels;
 using System.Text.Json.Serialization;
 using static Backend.ViewModels.AnimeFilters;
+using System.Globalization;
 
 namespace Backend.Controllers
 {
@@ -158,9 +159,13 @@ namespace Backend.Controllers
                     var newStudios = await studioRepo.StudioEditAsync(anime);
                     anime.A.Studios.Clear();
                     anime.A.Studios.AddRange(newStudios);
-               
+
                     anime.A.Created_at = anime.A.Created_at?.ToUniversalTime();
                     anime.A.Updated_at = anime.A.Updated_at?.ToUniversalTime();
+
+                    anime.A.Start = ConvertStartDate(anime);
+
+                    anime.A.End = ConvertEndDate(anime);
 
                     animeList.Add(anime.A);
                 }
@@ -168,6 +173,52 @@ namespace Backend.Controllers
 
             await animeRepo.AddAnimeAsync(animeList);
             return Ok(animeList.Count);
+        }
+
+        private static DateTime ConvertStartDate(MyAnimeListApi.Data anime)
+        {
+            if (!string.IsNullOrEmpty(anime.A.Start_date))
+            {
+                if (DateTime.TryParseExact(anime.A.Start_date, "yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime yearDate))
+                {
+                    return yearDate.ToUniversalTime();
+                }
+                else if (DateTime.TryParseExact(anime.A.Start_date, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime fullDate))
+                {
+                    return fullDate.ToUniversalTime();
+                }
+                else
+                {
+                    return new DateTime(1960, 1, 1).ToUniversalTime();
+                }
+            }
+            else
+            {
+                return new DateTime(1960, 1, 1).ToUniversalTime();
+            }
+        }
+
+        private static DateTime ConvertEndDate(MyAnimeListApi.Data anime)
+        {
+            if (!string.IsNullOrEmpty(anime.A.End_date))
+            {
+                if (DateTime.TryParseExact(anime.A.End_date, "yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime yearDate))
+                {
+                    return yearDate.ToUniversalTime();
+                }
+                else if (DateTime.TryParseExact(anime.A.End_date, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime fullDate))
+                {
+                    return fullDate.ToUniversalTime();
+                }
+                else
+                {
+                    return new DateTime(1960, 1, 1).ToUniversalTime();
+                }
+            }
+            else
+            {
+                return new DateTime(1960, 1, 1).ToUniversalTime();
+            }
         }
 
         // DELETE: api/Animes/5

@@ -32,5 +32,7 @@
         public int? Average_episode_duration { get; set; }
         public string? Rating { get; set; }
         public virtual ICollection<Studio>? Studios { get; set; }
+        public DateTime? Start { get; set; }
+        public DateTime? End { get; set; }
     }
 }

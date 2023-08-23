@@ -133,7 +133,6 @@ namespace Backend.Data.Repositories
                 }
             }
 
-            /*  ---Make Start_date to DateTime---
             if (animeFilter.relDate.startDate != null && animeFilter.relDate.endDate != null)
             { 
                 DateTime? startDate = animeFilter.relDate.startDate;
@@ -141,10 +140,10 @@ namespace Backend.Data.Repositories
 
                 query = query
                     .Where(a =>
-                        a.Start_date != null &&
-                        a.Start_date >= startDate &&
-                        a.Start_date <= endDate);
-            }*/
+                        a.Start != null &&
+                        a.Start >= startDate &&
+                        a.Start <= endDate);
+            }
 
             var totalAnimes = await query.CountAsync();
             var totalPages = (int)Math.Ceiling(totalAnimes / 36.0);
@@ -156,17 +155,6 @@ namespace Backend.Data.Repositories
                 .ToListAsync();
 
             return new FilteredAnime { animes=filteredAnime, totalPages=totalPages };
-
-            /*
-            if (animeFilter.relDate.startDate != null && animeFilter.relDate.endDate != null)
-            {
-                filteredAnime = filteredAnime
-                    .Where(a =>
-                        a.Start_date != null &&
-                        DateTime.ParseExact(a.Start_date, "yyyy-MM-dd", CultureInfo.InvariantCulture) >= animeFilter.relDate.startDate &&
-                        DateTime.ParseExact(a.Start_date, "yyyy-MM-dd", CultureInfo.InvariantCulture) <= animeFilter.relDate.endDate)
-                    .ToList();
-            }*/
         }
 
         private static List<string> checkRatings(AnimeFilter animeFilter)
