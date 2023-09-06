@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders  } from '@angular/common/http';
 import { Genre } from './interfaces/Genre';
 import { Studio } from './interfaces/Studio';
 import { environment } from 'src/environments/environment';
-import { lastValueFrom } from 'rxjs';
+import { Observable, lastValueFrom } from 'rxjs';
 import { Anime } from './interfaces/Anime';
 
 @Injectable({
@@ -54,5 +54,9 @@ export class BackendService {
     } catch (error) {
       throw error;
     }
+  }
+
+  async wakeUpServer(): Promise<any> {
+    return this.http.get(environment.backendUrl + "/api/Animes/test");
   }
 }

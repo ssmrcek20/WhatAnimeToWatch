@@ -75,6 +75,13 @@ namespace Backend.Controllers
             return anime;
         }
 
+        // GET: api/Animes/test
+        [HttpGet("test")]
+        public IActionResult WakeUpServer()
+        {
+            return Ok("Server is awake!");
+        }
+
         // GET: api/Animes/MediaType/tv
         [HttpGet("MediaType/{name}")]
         public async Task<ActionResult<List<Anime>>> GetAnimeMediaType(string name)

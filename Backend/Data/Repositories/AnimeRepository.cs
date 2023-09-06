@@ -181,10 +181,6 @@ namespace Backend.Data.Repositories
             {
                 ageRatings.AddRange(animeFilter.ageR.rPlus);
             }
-            if (animeFilter.ageR.rx?.Any() == true)
-            {
-                ageRatings.AddRange(animeFilter.ageR.rx);
-            }
 
             return ageRatings;
         }

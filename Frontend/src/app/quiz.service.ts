@@ -93,8 +93,7 @@ export class QuizService {
     pg: [],
     pg13: [],
     r: [],
-    rPlus: [],
-    rx: [],
+    rPlus: []
   });
   ageRFormData$ = this.ageRFormData.asObservable();
   setAgeRFormData(data: any): void {
@@ -145,8 +144,7 @@ export class QuizService {
       pg: [],
       pg13: [],
       r: [],
-      rPlus: [],
-      rx: [],   
+      rPlus: []
     });
   }
 }

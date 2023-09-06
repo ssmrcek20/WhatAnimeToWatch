@@ -10,6 +10,17 @@ button {
   }
 }
 
+#logo {
+  display: flex;
+  align-items: center;
+  padding: 0.25rem;
+
+  img {
+    width: 2.5rem;
+    display: block;
+  }
+}
+
 .nav {
   margin: 0px 10px 0px 10px;
 }
