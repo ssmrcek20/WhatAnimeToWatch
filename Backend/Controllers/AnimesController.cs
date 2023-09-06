@@ -120,7 +120,7 @@ namespace Backend.Controllers
 
             if (data.Value.animes == null || data.Value.animes.Count == 0)
             {
-                return NotFound();
+                return NoContent();
             }
 
             return data;

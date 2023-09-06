@@ -11,7 +11,7 @@
 
 <button pButton pRipple class="p-button-text nav" label="Import" [disabled]="true"></button>
 
-<button pButton pRipple class=" p-button-sm p-button-rounded p-button-outlined nav small-icon pi pi-moon" #themeButton (click)="toggleTheme(themeButton)"></button>
+<button pButton pRipple class=" p-button-sm p-button-rounded p-button-outlined nav small-icon pi pi-moon" id="themeButton" (click)="toggleTheme()"></button>
 
 
 <p-menu #menu [model]="items" [popup]="true"></p-menu>
