@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { BackendService } from '../backend.service';
 import { QuizService } from '../quiz.service';
 import { MessageService } from 'primeng/api';
@@ -15,11 +15,18 @@ export class AnimeListComponent implements OnInit {
   currentPage = 1;
   totalPages = 0;
   message: string = "Loading...";
+  pageLinkSize = 5;
 
   constructor(private quizService: QuizService, private backendService: BackendService, private messageService: MessageService) { }
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event): void {
+    this.checkScreenSize();
+  }
+
   async ngOnInit(): Promise<void> {
       await this.loadAnime(this.currentPage);
+      this.checkScreenSize();
   }
 
   private async loadAnime(page: number) {
@@ -47,5 +54,16 @@ export class AnimeListComponent implements OnInit {
     this.currentPage = event.page + 1;
     window.scrollTo(0, 0);
     await this.loadAnime(this.currentPage);
+  }
+
+  checkScreenSize(): void {
+    const screenWidth = window.innerWidth;
+
+    if (screenWidth <= 650) {
+      this.pageLinkSize = 1;
+    }
+    else {
+      this.pageLinkSize = 5;
+    }
   }
 }
