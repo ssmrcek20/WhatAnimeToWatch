@@ -56,7 +56,11 @@ export class BackendService {
     }
   }
 
-  async wakeUpServer(): Promise<any> {
-    return this.http.get(environment.backendUrl + "/api/Animes/test");
+  async wakeUpServer(): Promise<string> {
+    try {
+      return await lastValueFrom(this.http.get<string>(environment.backendUrl + "/api/Animes/test", {responseType: 'text' as 'json'}));
+    } catch (error) {
+      throw error;
+    }
   }
 }

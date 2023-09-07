@@ -18,7 +18,7 @@ export class AppComponent {
     wakeUpServer(): void {
       this.backendService.wakeUpServer()
       .then(response => {
-        console.log('Server is awake!');
+        console.log(response);
       })
       .catch(error => {
         console.error('Error waking up the server:', error.message);

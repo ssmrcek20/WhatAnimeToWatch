@@ -79,7 +79,7 @@ namespace Backend.Controllers
         [HttpGet("test")]
         public IActionResult WakeUpServer()
         {
-            return Ok("Server is awake!");
+            return Content("Server is awake!", "text/plain");
         }
 
         // GET: api/Animes/MediaType/tv
