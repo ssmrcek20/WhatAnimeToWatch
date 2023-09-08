@@ -13,6 +13,12 @@
             overflow: hidden;
             box-shadow: var(--box-shadow);
             border-radius: 1rem;
+            transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+
+            &:hover {
+                box-shadow: var(--box-shadow-hover);
+                cursor: pointer;
+            }
 
             img.anime-img {
                 position: absolute;
@@ -27,6 +33,7 @@
             font-weight: bold;
             font-size: large;
         }
+
     }
 }
 
@@ -51,6 +58,41 @@ p-progressSpinner {
         grid-gap: 1rem;
         img {
             display: block;
+        }
+    }
+}
+
+::ng-deep .p-dialog-content {
+    display: grid;
+    grid-template-areas:
+        "date media mean" 
+        "duration studios rating"
+        "image synopsis synopsis"
+        "genre genre genre"
+        "status links links";
+    font-size: clamp(0.8rem, 2vw, 1rem);
+
+    img {
+        width: 100%;
+        display: inline;
+        grid-area: image;
+
+    }
+
+    .synopsis {
+        grid-area: synopsis;
+    }
+
+    @media screen and (max-width: 600px) {
+        grid-template-areas: 
+        "date media mean" 
+        "duration studios rating"
+        "synopsis synopsis synopsis"
+        "genre genre genre"
+        "status links links";
+            grid-template-columns: auto;
+        img {
+            display: none;
         }
     }
 }

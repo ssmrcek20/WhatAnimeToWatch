@@ -23,6 +23,7 @@ import { MessageService } from 'primeng/api';
 import { CalendarModule } from 'primeng/calendar';
 import { DataViewModule } from 'primeng/dataview';
 import { PaginatorModule } from 'primeng/paginator';
+import { DialogModule } from 'primeng/dialog';
 
 import { HeaderComponent } from './header/header.component';
 import { MainComponent } from './main/main.component';
@@ -80,6 +81,7 @@ import { AnimeListComponent } from './anime-list/anime-list.component';
     CalendarModule,
     DataViewModule,
     PaginatorModule,
+    DialogModule,
   ],
   providers: [MessageService],
   bootstrap: [AppComponent]
