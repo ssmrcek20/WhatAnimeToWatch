@@ -65,34 +65,92 @@ p-progressSpinner {
 ::ng-deep .p-dialog-content {
     display: grid;
     grid-template-areas:
-        "date media mean" 
-        "duration studios rating"
-        "image synopsis synopsis"
-        "genre genre genre"
-        "status links links";
+        "duration-media mean" 
+        "date-studios date-studios"
+        "image synopsis"
+        "genre genre";
     font-size: clamp(0.8rem, 2vw, 1rem);
+    grid-template-columns: 1fr 2fr;
+    gap: 1rem;
+
+    .mean{
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+
+        .pi{
+            font-size: 1.3rem;
+            margin-right: 0.5rem;
+            color: gold;
+        }
+
+        .score{
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+    }
+
+    .studio-date{
+        grid-area: date-studios;
+        font-weight: bold;
+    }
+
+    .media-duration{
+        grid-area: duration-media;
+        font-weight: bold;
+        align-self: end;
+    }
 
     img {
         width: 100%;
         display: inline;
         grid-area: image;
-
+        max-width: 20rem;
+        border-radius: 0.5rem;
     }
 
     .synopsis {
         grid-area: synopsis;
     }
 
+    .genres {
+        grid-area: genre;
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        max-width: 100%;
+        align-items: center;
+        & > * {
+            margin: 0.5rem; 
+            white-space: nowrap;
+          }
+    }
+
     @media screen and (max-width: 600px) {
         grid-template-areas: 
-        "date media mean" 
-        "duration studios rating"
-        "synopsis synopsis synopsis"
-        "genre genre genre"
-        "status links links";
-            grid-template-columns: auto;
+            "duration-media mean" 
+            "date-studios date-studios"
+            "synopsis synopsis"
+            "genre genre";
+        grid-template-columns: 1fr 1fr;
         img {
             display: none;
         }
+    }
+}
+
+.header-dialog {
+
+    .title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        vertical-align: bottom;
+        color: var(--text-color);
+    }
+
+    .rating-img {
+        height: 1.3rem;
+        margin-left: 0.5rem;
+        display: inline-block!important;
     }
 }

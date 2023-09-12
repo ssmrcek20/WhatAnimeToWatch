@@ -24,6 +24,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { DataViewModule } from 'primeng/dataview';
 import { PaginatorModule } from 'primeng/paginator';
 import { DialogModule } from 'primeng/dialog';
+import { ChipModule } from 'primeng/chip';
 
 import { HeaderComponent } from './header/header.component';
 import { MainComponent } from './main/main.component';
@@ -40,6 +41,7 @@ import { QuizSourceComponent } from './quiz/quiz-source/quiz-source.component';
 import { QuizStudioComponent } from './quiz/quiz-studio/quiz-studio.component';
 import { QuizAgeRatingComponent } from './quiz/quiz-age-rating/quiz-age-rating.component';
 import { AnimeListComponent } from './anime-list/anime-list.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -82,8 +84,12 @@ import { AnimeListComponent } from './anime-list/anime-list.component';
     DataViewModule,
     PaginatorModule,
     DialogModule,
+    ChipModule,
   ],
-  providers: [MessageService],
+  providers: [
+    MessageService,
+    DatePipe,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

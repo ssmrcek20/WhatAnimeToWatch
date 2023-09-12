@@ -3,6 +3,7 @@ import { BackendService } from '../backend.service';
 import { QuizService } from '../quiz.service';
 import { MessageService } from 'primeng/api';
 import { Anime } from '../interfaces/Anime';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-anime-list',
@@ -23,15 +24,15 @@ export class AnimeListComponent implements OnInit {
   synopsis: string | undefined = "";
   meanScore: number | undefined = 0;
   genres: (string | undefined)[] | undefined = [];
-  startDate: string | undefined = "";
+  startDate: string | null = "";
   studios: (string | undefined)[] | undefined = [];
   mediaType: string | undefined = "";
   status: string | undefined = "";
-  numEpisodes: number | undefined = 0;
+  numEpisodes: string | undefined = "";
   rating: string | undefined = "";
-  duration: number | undefined = 0;
+  duration: string | undefined = "";
 
-  constructor(private quizService: QuizService, private backendService: BackendService, private messageService: MessageService) { }
+  constructor(private quizService: QuizService, private backendService: BackendService, private messageService: MessageService, private datePipe: DatePipe) { }
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event): void {
@@ -86,17 +87,75 @@ export class AnimeListComponent implements OnInit {
     this.visible = true;
     this.header = anime.title;
 
-    this.startDate = anime.start_date;
-    this.mediaType = anime.media_type;
+    this.startDate = this.datePipe.transform(anime.start_date, 'mediumDate');
+
+    switch (anime.media_type) {
+      case 'tv':
+        this.mediaType = 'TV Show';
+        break;
+      case 'ova':
+      case 'ona':
+        this.mediaType = anime.media_type.toUpperCase();
+        break;
+      default:
+        if (anime.media_type !== undefined) {
+          this.mediaType = anime.media_type?.charAt(0).toUpperCase() + anime.media_type?.slice(1);
+        }
+        else {
+          this.mediaType = "N/A";
+        }
+    }
+
     this.meanScore = anime.mean;
-    this.numEpisodes = anime.num_episodes;
-    this.duration = anime.average_episode_duration;
-    this.studios = anime.studios?.map(studio => studio.name);
-    this.rating = anime.rating;
+
+    this.numEpisodes = anime.num_episodes?.toString() + " ep" ;
+    if (anime.average_episode_duration !== undefined) {
+      this.duration = (anime.average_episode_duration / 60).toFixed(0) + " min";
+    } else {
+      this.duration = "N/A";
+    }
+
+    this.studios = anime.studios?.map(studio => " " + studio.name);
+
+    switch (anime.rating) {
+      case 'g':
+        this.rating = "../../assets/ratings/G.svg"
+        break;
+      case 'pg':
+        this.rating = "../../assets/ratings/PG.svg"
+        break;
+      case 'pg_13':
+        this.rating = "../../assets/ratings/PG13.svg"
+        break;
+      case 'r':
+        this.rating = "../../assets/ratings/R.svg"
+        break;
+      case 'r+':
+        this.rating = "../../assets/ratings/R+.svg"
+        break;
+      default:
+        this.status = "N/A";
+    }
+
     this.image = anime.main_picture?.large;
+
     this.synopsis = anime.synopsis;
-    this.genres = anime.genres?.map(genre => genre.name);
-    this.status = anime.status;
+
+    this.genres = anime.genres?.map(genre => genre.name) || [];
+
+    switch (anime.status) {
+      case 'finished_airing':
+        this.status = 'Finished Airing';
+        break;
+      case 'currently_airing':
+        this.status = 'Currently Airing';
+        break;
+      case 'not_yet_aired':
+        this.status = 'Not Yet Aired';
+        break;
+      default:
+        this.status = "N/A";
+    }
     
   }
 }

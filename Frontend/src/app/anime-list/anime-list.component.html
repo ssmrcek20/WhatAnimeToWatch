@@ -23,21 +23,29 @@
   (onPageChange)="onPageChange($event)"
 ></p-paginator>
 
-<p-dialog [header]="header" [(visible)]="visible" [modal]="true" [breakpoints]="{'900px': '100vw'}" [style]="{ width: '75vw' }" [draggable]="false" [resizable]="false">
-<div class="date">{{startDate}}</div>
-<div class="media">{{mediaType}}</div>
-<div class="mean">{{meanScore}}</div>
+<p-dialog [(visible)]="visible" [modal]="true" [breakpoints]="{'1400px': '75vw', '1000px': '100vw'}" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+<ng-template pTemplate="header">
+  <div class="header-dialog">
+    <span class="title">{{header}}</span>
+    <img class="rating-img" src={{rating}}>
+  </div>
+</ng-template>
 
-<div class="duration">{{numEpisodes}}, {{duration}}</div>
-<div class="studio">{{studios}}</div>
-<div class="rating">{{rating}}</div>
+<div class="media-duration">{{mediaType}} • {{numEpisodes}}, {{duration}}</div>
+<div class="mean">
+  <span  class="pi pi-star-fill"></span>
+  <span class="score"> {{meanScore}}</span>
+</div>
+
+<div class="studio-date">{{studios}} • {{startDate}}</div>
 
 <img [src]="image" [alt]="header" class="anime-img-details">
 <div class="synopsis">{{synopsis}}</div>
 
-<div class="genres">{{genres}}</div>
-
-<div class="status">{{status}}</div>
-<div class="links"></div>
+<div class="genres">
+  <ng-container *ngFor="let genre of genres">
+    <p-chip [label]="genre"></p-chip>
+  </ng-container>
+</div>
 
 </p-dialog>
