@@ -145,22 +145,21 @@ export class AnimeListComponent implements OnInit {
     this.synopsis = anime.synopsis;
 
     this.genres = anime.genres?.map(genre => genre.name) || [];
-
-    switch (anime.status) {
-      case 'finished_airing':
-        this.status = 'Finished Airing';
-        break;
-      case 'currently_airing':
-        this.status = 'Currently Airing';
-        break;
-      case 'not_yet_aired':
-        this.status = 'Not Yet Aired';
-        break;
-      default:
-        this.status = "N/A";
-    }
     
     this.animeURL = "https://myanimelist.net/anime/" + anime.id;
+
+    this.status = this.showStatus(anime);
+  }
+
+  showStatus(anime: Anime): string{
+    switch (anime.status) {
+      case 'currently_airing':
+        return 'Currently Airing';
+      case 'not_yet_aired':
+        return 'Not Yet Aired';
+      default:
+        return '';
+    }
   }
 
   openMAL(): void {

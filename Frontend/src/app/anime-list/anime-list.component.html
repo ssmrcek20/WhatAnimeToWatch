@@ -10,6 +10,7 @@
   <ng-template pTemplate="gridItem" let-anime>
     <div class="anime-card">
       <div class="anime-image">
+        <div *ngIf="showStatus(anime) != ''" class="status-banner">{{showStatus(anime)}}</div>
         <img [src]="anime.main_picture?.medium" [alt]="anime.title" class="anime-img" (click)="showAnimeInfo(anime)" />
       </div>
       <div class="anime-title">{{ anime.title }}</div>
@@ -23,6 +24,9 @@
   (onPageChange)="onPageChange($event)"
   [alwaysShow]="false"
 ></p-paginator>
+
+
+
 
 <p-dialog [(visible)]="visible" [modal]="true" [breakpoints]="{'1400px': '75vw', '1000px': '100vw'}" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
 <ng-template pTemplate="header">
@@ -40,6 +44,7 @@
 
 <div class="studio-date">{{studios}} • {{startDate}}</div>
 
+<div *ngIf="status != ''" class="status-banner">{{status}}</div>
 <img [src]="image" [alt]="header" class="anime-img-details">
 <div class="synopsis">{{synopsis}}</div>
 

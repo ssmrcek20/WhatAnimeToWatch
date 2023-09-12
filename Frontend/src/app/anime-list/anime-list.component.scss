@@ -25,6 +25,19 @@
                 width: 100%;
                 height: 100%;
             }
+
+            .status-banner {
+                position: absolute;
+                z-index: 1;
+                bottom: 1.5rem;
+                right: -3rem;
+                background-color: var(--primary-color);
+                color: var(--primary-color-text);
+                padding: 0.25rem 3rem;
+                font-size: 0.8rem;
+                transform: rotate(318deg);
+                box-shadow: var(--box-shadow);
+            }
         }
 
         .anime-title {
