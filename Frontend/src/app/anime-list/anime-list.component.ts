@@ -17,6 +17,7 @@ export class AnimeListComponent implements OnInit {
   totalPages = 0;
   message: string = "Loading...";
   pageLinkSize = 5;
+  showPaginator: boolean = false;
 
   visible: boolean = false;
   header: string | undefined = "";
@@ -31,6 +32,7 @@ export class AnimeListComponent implements OnInit {
   numEpisodes: string | undefined = "";
   rating: string | undefined = "";
   duration: string | undefined = "";
+  animeURL: string | undefined = "";
 
   constructor(private quizService: QuizService, private backendService: BackendService, private messageService: MessageService, private datePipe: DatePipe) { }
 
@@ -55,6 +57,7 @@ export class AnimeListComponent implements OnInit {
       else{
         this.animeList = data.animes;
         this.totalPages = data.totalPages*36;
+        this.showPaginator = true;
       }
 
       this.isLoading = false;
@@ -157,5 +160,10 @@ export class AnimeListComponent implements OnInit {
         this.status = "N/A";
     }
     
+    this.animeURL = "https://myanimelist.net/anime/" + anime.id;
+  }
+
+  openMAL(): void {
+    window.open(this.animeURL, "_blank");
   }
 }

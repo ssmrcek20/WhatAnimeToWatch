@@ -16,11 +16,12 @@
     </div>
   </ng-template>
 </p-dataView>
-<p-paginator
+<p-paginator *ngIf="showPaginator"
   [totalRecords]="totalPages"
   [rows]="36"
   [pageLinkSize]="pageLinkSize"
   (onPageChange)="onPageChange($event)"
+  [alwaysShow]="false"
 ></p-paginator>
 
 <p-dialog [(visible)]="visible" [modal]="true" [breakpoints]="{'1400px': '75vw', '1000px': '100vw'}" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
@@ -48,4 +49,10 @@
   </ng-container>
 </div>
 
+<ng-template pTemplate="footer">
+  <div class="footer-dialog">
+    <p-button icon="pi pi-external-link" (click)="openMAL()" label="More info" styleClass="p-button-text"></p-button>
+    <p-button icon="pi pi-check" (click)="visible = false" label="Ok" styleClass="p-button-text"></p-button>
+  </div>
+</ng-template>
 </p-dialog>
