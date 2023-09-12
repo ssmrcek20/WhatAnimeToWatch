@@ -1,6 +1,9 @@
 <div class="form-container">
     <h1>What media type you want to watch?</h1>
-    <p>Select your preferred media types or just click next if you like all media types</p>
+    <div class="mediaText">
+        <p>Select your preferred media types or just click next if you like all media types.</p>
+        <p-button icon="pi pi-info-circle" styleClass="p-button-rounded p-button-text" (click) = "visible = true"></p-button>
+    </div>
 
     <form [formGroup]="formGroup" class="">
         <div class="checkbox">
@@ -23,13 +26,24 @@
             <p-checkbox formControlName="special" value=special inputId="special"></p-checkbox>
             <label for="special">Special</label>
         </div>
-        <div class="checkbox">
-            <p-checkbox formControlName="music" value=music inputId="music"></p-checkbox>
-            <label for="music">Music</label>
-        </div>
     </form>
 
     <div class="buttons">
         <button (click)="onSaveAndNext()" pButton pRipple class=" p-button-raised" label="Next"></button>
     </div>
 </div>
+
+<p-dialog header="What is OVA and ONA?" [breakpoints]="{'1400px': '75vw', '1000px': '100vw'}" [(visible)]="visible" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+    <div class="textExplained">
+        <p>
+            <b>OVA (Original Video Animation)</b> is anime that is released on DVD and Blu-ray rather than being broadcast on television. 
+            Because they aren't on television they don't have censorhip. 
+            They usually add additional content or alternative storylines for existing series.
+        </p>
+        <p>
+            <b>ONA (Original Net Animation)</b> is anime that is first released on online streaming platform like Netflix, Amazon Prime Video, etc. 
+            They usually are bonus side-stories or short promotional content for already existing series. 
+            But lately there are more and more full anime series that are ONA, like Cyberpunk: Edgerunners and JoJo's Bizarre Adventure: Stone Ocean.
+        </p>
+    </div>
+</p-dialog>

@@ -11,7 +11,6 @@ export class QuizService {
     movie: [],
     special: [],
     ona: [],
-    music: [],
   });
   mediaTypeFormData$ = this.mediaTypeFormData.asObservable();
   setMediaTypeFormData(data: any): void {
@@ -126,7 +125,6 @@ export class QuizService {
       movie: [],
       special: [],
       ona: [],
-      music: [],
     });
     this.numEpFormData.next({});
     this.epDurFormData.next({});

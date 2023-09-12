@@ -36,22 +36,24 @@
   </div>
 </ng-template>
 
-<div class="media-duration">{{mediaType}} • {{numEpisodes}}, {{duration}}</div>
-<div class="mean">
-  <span  class="pi pi-star-fill"></span>
-  <span class="score"> {{meanScore}}</span>
-</div>
-
-<div class="studio-date">{{studios}} • {{startDate}}</div>
-
-<div *ngIf="status != ''" class="status-banner">{{status}}</div>
-<img [src]="image" [alt]="header" class="anime-img-details">
-<div class="synopsis">{{synopsis}}</div>
-
-<div class="genres">
-  <ng-container *ngFor="let genre of genres">
-    <p-chip [label]="genre"></p-chip>
-  </ng-container>
+<div class="dialog-table">
+  <div class="media-duration">{{mediaType}} • {{numEpisodes}}, {{duration}}</div>
+  <div class="mean">
+    <span  class="pi pi-star-fill"></span>
+    <span class="score"> {{meanScore}}</span>
+  </div>
+  
+  <div class="studio-date">{{studios}} • {{startDate}}</div>
+  
+  <div *ngIf="status != ''" class="status-banner">{{status}}</div>
+  <img [src]="image" [alt]="header" class="anime-img-details">
+  <div class="synopsis">{{synopsis}}</div>
+  
+  <div class="genres">
+    <ng-container *ngFor="let genre of genres">
+      <p-chip [label]="genre"></p-chip>
+    </ng-container>
+  </div>
 </div>
 
 <ng-template pTemplate="footer">

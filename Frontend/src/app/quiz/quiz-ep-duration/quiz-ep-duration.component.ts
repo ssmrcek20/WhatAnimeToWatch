@@ -27,6 +27,11 @@ export class QuizEpDurationComponent implements OnInit {
     });
   }
 
+  selectAllText(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    inputElement.select();
+  }
+
   onSaveAndNext(): void {
     const formValue = this.formGroup.value;
   

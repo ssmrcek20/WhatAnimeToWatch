@@ -12,9 +12,16 @@
         margin-bottom: 0;
     }
 
-    p {
+    .mediaText {
         margin: 0;
-        margin-bottom: 2rem;
+        margin-bottom: 1rem;
+
+        p {
+            margin: 0;
+            display: inline;
+            margin-right: 0.5rem;
+        }
+
     }
 
     form {

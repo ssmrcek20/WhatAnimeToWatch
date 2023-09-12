@@ -229,10 +229,6 @@ namespace Backend.Data.Repositories
             {
                 mediaTypes.AddRange(animeFilter.mediaType.ona);
             }
-            if (animeFilter.mediaType.music?.Any() == true)
-            {
-                mediaTypes.AddRange(animeFilter.mediaType.music);
-            }
 
             return mediaTypes;
         }

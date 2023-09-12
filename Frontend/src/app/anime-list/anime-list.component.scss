@@ -75,7 +75,7 @@ p-progressSpinner {
     }
 }
 
-::ng-deep .p-dialog-content {
+.dialog-table {
     display: grid;
     grid-template-areas:
         "duration-media mean" 

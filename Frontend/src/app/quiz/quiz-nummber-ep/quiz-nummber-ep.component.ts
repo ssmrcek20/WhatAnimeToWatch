@@ -18,13 +18,18 @@ export class QuizNummberEpComponent implements OnInit {
 
     this.formGroup = this.formBuilder.group({
       min: 0,
-      max: 5000,
+      max: 2000,
     });
   
     this.formGroup.patchValue({
       min: storedNumEpData.min || 0,
-      max: storedNumEpData.max || 5000,
+      max: storedNumEpData.max || 2000,
     });
+  }
+
+  selectAllText(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    inputElement.select();
   }
 
   onSaveAndNext(): void {
@@ -34,7 +39,7 @@ export class QuizNummberEpComponent implements OnInit {
       formValue.min = 0;
     }
     if(formValue.max == null) {
-      formValue.max = 5000;
+      formValue.max = 2000;
     }
 
     this.quizService.setNumEpFormData(formValue);

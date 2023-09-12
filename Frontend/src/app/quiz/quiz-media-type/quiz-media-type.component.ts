@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class QuizMediaTypeComponent implements OnInit {
   formGroup!: FormGroup;
+  visible = false;
 
   constructor(private formBuilder: FormBuilder, private quizService: QuizService, private router: Router) {}
 
@@ -22,7 +23,6 @@ export class QuizMediaTypeComponent implements OnInit {
       movie: [],
       special: [],
       ona: [],
-      music: [],
     });
     
     const everythingChecked = Object.keys(storedMediaTypeData).every((key) => storedMediaTypeData[key].length > 0);
@@ -33,7 +33,6 @@ export class QuizMediaTypeComponent implements OnInit {
         movie: [],
         special:[],
         ona: [],
-        music:[],
       });
     }
     else{
@@ -43,7 +42,6 @@ export class QuizMediaTypeComponent implements OnInit {
         movie: storedMediaTypeData.movie || [],
         special: storedMediaTypeData.special || [],
         ona: storedMediaTypeData.ona || [],
-        music: storedMediaTypeData.music || [],
       });
     }
   }
