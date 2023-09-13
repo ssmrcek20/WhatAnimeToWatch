@@ -10,7 +10,14 @@ import { Router } from '@angular/router';
 })
 export class QuizRealeaseDateComponent implements OnInit {
   formGroup!: FormGroup;
-  isMobile = false;
+  source: string[] = [
+    'Winter',
+    'Spring',
+    'Summer',
+    'Fall',
+  ];
+  minDate = new Date(1950, 0, 1, 0, 0, 0);
+  maxDate = new Date(new Date().getFullYear(), 0, 1, 0, 0, 0);
 
   constructor(private formBuilder: FormBuilder, private quizService: QuizService, private router: Router) {}
 
@@ -18,26 +25,22 @@ export class QuizRealeaseDateComponent implements OnInit {
     const storedRelDateData = this.quizService.getRelDateFormData();
 
     this.formGroup = this.formBuilder.group({
-      startDate: new Date(1960, 0, 1),
-      endDate: new Date(),
+      season: "",
+      years: [this.minDate, this.maxDate],
     });
   
     this.formGroup.patchValue({
-      startDate: storedRelDateData.startDate || new Date(1960, 0, 1),
-      endDate: storedRelDateData.endDate || new Date(),
+      season: storedRelDateData.season || "",
+      years: storedRelDateData.years || [this.minDate, this.maxDate],
     });
 
-    this.updateCalendarProperties(window.innerWidth);
   }
 
   onSaveAndNext(): void {
     const formValue = this.formGroup.value;
   
-    if (formValue.startDate == null) {
-      formValue.startDate = new Date(1960, 0, 1);
-    }
-    if(formValue.endDate == null) {
-      formValue.endDate = new Date();
+    if(formValue.years == null) {
+      formValue.years = [this.minDate, this.maxDate];
     }
 
     this.quizService.setRelDateFormData(formValue);
@@ -47,13 +50,5 @@ export class QuizRealeaseDateComponent implements OnInit {
 
   onBack(): void {
     this.router.navigate(['quiz', 'status']);
-  }
-
-  private updateCalendarProperties(screenWidth: number) {
-    if (screenWidth <= 800) {
-      this.isMobile = true;
-    } else {
-      this.isMobile = false;
-    }
   }
 }

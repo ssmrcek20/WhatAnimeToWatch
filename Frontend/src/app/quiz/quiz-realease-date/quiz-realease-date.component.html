@@ -1,15 +1,15 @@
 <div class="form-container">
     <h1>How old anime do you want to watch?</h1>
-    <p>Choose starting and ending date when anime should start airing</p>
+    <p>Choose seasons and years range when anime should start airing.</p>
 
     <form [formGroup]="formGroup" class="">
         <div class="dates">
-            <label for="startDate">Start date</label>
-            <p-calendar formControlName="startDate" [showIcon]="true" [touchUI]="isMobile" [readonlyInput]="isMobile"></p-calendar>
+            <label for="years">Years range</label>
+            <p-calendar [readonlyInput]="true" dateFormat="yy" [minDate]="minDate" [maxDate]="maxDate" selectionMode="range" view="year" formControlName="years" [showIcon]="true"></p-calendar>
         </div>
         <div class="dates">
-            <label for="endDate">End date</label>
-            <p-calendar formControlName="endDate" [showIcon]="true" [touchUI]="isMobile" [readonlyInput]="isMobile"></p-calendar>
+            <label for="season">Season</label>
+            <p-dropdown  formControlName="season" [options]="source" placeholder="Select Season"></p-dropdown>
         </div>
     </form>
 

@@ -2,7 +2,9 @@
 using Backend.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using NuGet.Protocol;
+using System.Diagnostics;
 using System.Drawing.Printing;
 using System.Globalization;
 using static Backend.ViewModels.AnimeFilters;
@@ -132,11 +134,50 @@ namespace Backend.Data.Repositories
                     query = query.Where(a => ageRatings.Contains(a.Rating));
                 }
             }
+            
+            if (animeFilter.relDate.years != null)
+            {
+                TimeSpan timeStart = TimeSpan.FromMilliseconds(animeFilter.relDate.years[0]);
+                DateTime? startDate = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).Add(timeStart);
+                DateTime? endDate = null;
 
-            if (animeFilter.relDate.startDate != null && animeFilter.relDate.endDate != null)
-            { 
-                DateTime? startDate = animeFilter.relDate.startDate;
-                DateTime? endDate = animeFilter.relDate.endDate;
+                if (animeFilter.relDate.years.Count == 2)
+                {
+                    TimeSpan timeEnd = TimeSpan.FromMilliseconds(animeFilter.relDate.years[1]);
+                    endDate = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).Add(timeEnd);
+                }
+                else
+                {
+                    endDate = startDate;
+                }
+
+                if (startDate == endDate && !string.IsNullOrEmpty(animeFilter.relDate.season))
+                {
+                    switch (animeFilter.relDate.season)
+                    {
+                        case "Winter":
+                            startDate = new DateTime(startDate.Value.Year, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+                            endDate = new DateTime(endDate.Value.Year, 3, 31, 23, 59, 59, DateTimeKind.Utc);
+                            break;
+                        case "Spring":
+                            startDate = new DateTime(startDate.Value.Year, 4, 1, 0, 0, 0, DateTimeKind.Utc);
+                            endDate = new DateTime(endDate.Value.Year, 6, 30, 23, 59, 59, DateTimeKind.Utc);
+                            break;
+                        case "Summer":
+                            startDate = new DateTime(startDate.Value.Year, 7, 1, 0, 0, 0, DateTimeKind.Utc);
+                            endDate = new DateTime(endDate.Value.Year, 9, 30, 23, 59, 59, DateTimeKind.Utc);
+                            break;
+                        case "Fall":
+                            startDate = new DateTime(startDate.Value.Year, 10, 1, 0, 0, 0, DateTimeKind.Utc);
+                            endDate = new DateTime(endDate.Value.Year, 12, 31, 23, 59, 59, DateTimeKind.Utc);
+                            break;
+                    }   
+
+                }
+                else
+                {
+                    endDate = new DateTime(endDate.Value.Year, 12, 31, 23, 59, 59, DateTimeKind.Utc);
+                }
 
                 query = query
                     .Where(a =>

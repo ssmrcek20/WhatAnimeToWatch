@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-
+import { cloneDeep } from 'lodash';
 @Injectable({
   providedIn: 'root'
 })
@@ -104,6 +104,15 @@ export class QuizService {
 
 
   getAllFormData(): any {
+    const date = cloneDeep(this.getRelDateFormData());
+    if(date.years != null && date.years.length > 1 && date.years[0] != null && date.years[1] != null) {
+      date.years[0] = date.years[0].getTime() - date.years[0].getTimezoneOffset() * 60000;
+      date.years[1] = date.years[1].getTime() - date.years[1].getTimezoneOffset() * 60000;
+    }
+    else if(date.years != null && date.years[1] == null){
+      date.years.splice(1, 1);
+      date.years[0] = date.years[0].getTime() - date.years[0].getTimezoneOffset() * 60000;
+    }
     //check if somthing is empty, if user skiped some step ilegaly
     return {
       mediaType: this.getMediaTypeFormData(),
@@ -111,7 +120,7 @@ export class QuizService {
       epDur: this.getEpDurFormData(),
       genre: this.getGenreFormData(),
       status: this.getStatusFormData(),
-      relDate: this.getRelDateFormData(),
+      relDate: date,
       source: this.getSourceFormData(),
       studio: this.getStudioFormData(),
       ageR: this.getAgeRFormData(),

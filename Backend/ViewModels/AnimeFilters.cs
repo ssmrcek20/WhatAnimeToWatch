@@ -41,8 +41,8 @@
 
         public class RelDate
         {
-            public DateTime? startDate { get; set; }
-            public DateTime? endDate { get; set; }
+            public string? season { get; set; }
+            public List<long>? years { get; set; }
         }
 
         public class AnimeFilter

@@ -30,13 +30,22 @@
         .dates {
             display: flex;
             flex-direction: column;
+            width: 100%;
 
             label {
                 margin-bottom: 0.5rem;
                 width: 100%;
             }
+
+            p-calendar {
+                width: 100%;
+            }
         }
     }
+}
+
+::ng-deep span.p-calendar.p-calendar-w-btn {
+    width: 100%;
 }
 
 ::ng-deep .p-ink {
@@ -71,7 +80,6 @@
     border-color: var(--primary-color);
 }
 
-::ng-deep .p-datepicker-month {
-    background-color: transparent;
-    border-color: var(--primary-color);
+::ng-deep .p-dropdown.p-component {
+    width: 100%;
 }
