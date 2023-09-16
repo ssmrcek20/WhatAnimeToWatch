@@ -137,47 +137,8 @@ namespace Backend.Data.Repositories
             
             if (animeFilter.relDate.years != null)
             {
-                TimeSpan timeStart = TimeSpan.FromMilliseconds(animeFilter.relDate.years[0]);
-                DateTime? startDate = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).Add(timeStart);
-                DateTime? endDate = null;
-
-                if (animeFilter.relDate.years.Count == 2)
-                {
-                    TimeSpan timeEnd = TimeSpan.FromMilliseconds(animeFilter.relDate.years[1]);
-                    endDate = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).Add(timeEnd);
-                }
-                else
-                {
-                    endDate = startDate;
-                }
-
-                if (startDate == endDate && !string.IsNullOrEmpty(animeFilter.relDate.season))
-                {
-                    switch (animeFilter.relDate.season)
-                    {
-                        case "Winter":
-                            startDate = new DateTime(startDate.Value.Year, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-                            endDate = new DateTime(endDate.Value.Year, 3, 31, 23, 59, 59, DateTimeKind.Utc);
-                            break;
-                        case "Spring":
-                            startDate = new DateTime(startDate.Value.Year, 4, 1, 0, 0, 0, DateTimeKind.Utc);
-                            endDate = new DateTime(endDate.Value.Year, 6, 30, 23, 59, 59, DateTimeKind.Utc);
-                            break;
-                        case "Summer":
-                            startDate = new DateTime(startDate.Value.Year, 7, 1, 0, 0, 0, DateTimeKind.Utc);
-                            endDate = new DateTime(endDate.Value.Year, 9, 30, 23, 59, 59, DateTimeKind.Utc);
-                            break;
-                        case "Fall":
-                            startDate = new DateTime(startDate.Value.Year, 10, 1, 0, 0, 0, DateTimeKind.Utc);
-                            endDate = new DateTime(endDate.Value.Year, 12, 31, 23, 59, 59, DateTimeKind.Utc);
-                            break;
-                    }   
-
-                }
-                else
-                {
-                    endDate = new DateTime(endDate.Value.Year, 12, 31, 23, 59, 59, DateTimeKind.Utc);
-                }
+                DateTime? startDate, endDate;
+                checkDate(animeFilter, out startDate, out endDate);
 
                 query = query
                     .Where(a =>
@@ -196,6 +157,50 @@ namespace Backend.Data.Repositories
                 .ToListAsync();
 
             return new FilteredAnime { animes=filteredAnime, totalPages=totalPages };
+        }
+
+        private static void checkDate(AnimeFilter animeFilter, out DateTime? startDate, out DateTime? endDate)
+        {
+            TimeSpan timeStart = TimeSpan.FromMilliseconds(animeFilter.relDate.years[0]);
+            startDate =new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).Add(timeStart);
+
+            if (animeFilter.relDate.years.Count == 2)
+            {
+                TimeSpan timeEnd = TimeSpan.FromMilliseconds(animeFilter.relDate.years[1]);
+                endDate = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).Add(timeEnd);
+            }
+            else
+            {
+                endDate = startDate;
+            }
+
+            if (startDate == endDate && !string.IsNullOrEmpty(animeFilter.relDate.season))
+            {
+                switch (animeFilter.relDate.season)
+                {
+                    case "Winter":
+                        startDate = new DateTime(startDate.Value.Year, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+                        endDate = new DateTime(endDate.Value.Year, 3, 31, 23, 59, 59, DateTimeKind.Utc);
+                        break;
+                    case "Spring":
+                        startDate = new DateTime(startDate.Value.Year, 4, 1, 0, 0, 0, DateTimeKind.Utc);
+                        endDate = new DateTime(endDate.Value.Year, 6, 30, 23, 59, 59, DateTimeKind.Utc);
+                        break;
+                    case "Summer":
+                        startDate = new DateTime(startDate.Value.Year, 7, 1, 0, 0, 0, DateTimeKind.Utc);
+                        endDate = new DateTime(endDate.Value.Year, 9, 30, 23, 59, 59, DateTimeKind.Utc);
+                        break;
+                    case "Fall":
+                        startDate = new DateTime(startDate.Value.Year, 10, 1, 0, 0, 0, DateTimeKind.Utc);
+                        endDate = new DateTime(endDate.Value.Year, 12, 31, 23, 59, 59, DateTimeKind.Utc);
+                        break;
+                }
+
+            }
+            else
+            {
+                endDate = new DateTime(endDate.Value.Year, 12, 31, 23, 59, 59, DateTimeKind.Utc);
+            }
         }
 
         private static List<string> checkRatings(AnimeFilter animeFilter)

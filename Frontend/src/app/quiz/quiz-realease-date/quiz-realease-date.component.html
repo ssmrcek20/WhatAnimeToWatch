@@ -1,20 +1,49 @@
 <div class="form-container">
-    <h1>How old anime do you want to watch?</h1>
-    <p>Choose seasons and years range when anime should start airing.</p>
+  <h1>How old anime do you want to watch?</h1>
+  <p>
+    Choose years range or one year and season when anime should start airing.
+  </p>
 
-    <form [formGroup]="formGroup" class="">
-        <div class="dates">
-            <label for="years">Years range</label>
-            <p-calendar [readonlyInput]="true" dateFormat="yy" [minDate]="minDate" [maxDate]="maxDate" selectionMode="range" view="year" formControlName="years" [showIcon]="true"></p-calendar>
-        </div>
-        <div class="dates">
-            <label for="season">Season</label>
-            <p-dropdown  formControlName="season" [options]="source" placeholder="Select Season"></p-dropdown>
-        </div>
-    </form>
-
-    <div class="buttons">
-        <button (click)="onBack()" pButton pRipple class=" p-button-outlined" label="Back"></button>
-        <button (click)="onSaveAndNext()" pButton pRipple class=" p-button-raised" label="Next"></button>
+  <form [formGroup]="formGroup" class="">
+    <div class="dates">
+      <label for="years">Years range</label>
+      <p-calendar
+        (ngModelChange)="checkYear()"
+        [readonlyInput]="true"
+        dateFormat="yy"
+        [minDate]="minDate"
+        [maxDate]="maxDate"
+        selectionMode="range"
+        view="year"
+        formControlName="years"
+        [showIcon]="true"
+      ></p-calendar>
     </div>
+    <div class="dates">
+      <label for="season">Season</label>
+      <p-dropdown
+        formControlName="season"
+        [options]="source"
+        placeholder="Select Season"
+        scrollHeight="210px"
+      ></p-dropdown>
+    </div>
+  </form>
+
+  <div class="buttons">
+    <button
+      (click)="onBack()"
+      pButton
+      pRipple
+      class="p-button-outlined"
+      label="Back"
+    ></button>
+    <button
+      (click)="onSaveAndNext()"
+      pButton
+      pRipple
+      class="p-button-raised"
+      label="Next"
+    ></button>
+  </div>
 </div>

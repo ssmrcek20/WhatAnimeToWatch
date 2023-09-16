@@ -19,7 +19,7 @@ export class QuizRealeaseDateComponent implements OnInit {
   minDate = new Date(1950, 0, 1, 0, 0, 0);
   maxDate = new Date(new Date().getFullYear(), 0, 1, 0, 0, 0);
 
-  constructor(private formBuilder: FormBuilder, private quizService: QuizService, private router: Router) {}
+  constructor(private formBuilder: FormBuilder, private quizService: QuizService, private router: Router) { }
 
   ngOnInit(): void {
     const storedRelDateData = this.quizService.getRelDateFormData();
@@ -28,27 +28,36 @@ export class QuizRealeaseDateComponent implements OnInit {
       season: "",
       years: [this.minDate, this.maxDate],
     });
-  
+
     this.formGroup.patchValue({
       season: storedRelDateData.season || "",
       years: storedRelDateData.years || [this.minDate, this.maxDate],
     });
 
+    this.checkYear();
   }
 
   onSaveAndNext(): void {
     const formValue = this.formGroup.value;
-  
-    if(formValue.years == null) {
+
+    if (formValue.years == null) {
       formValue.years = [this.minDate, this.maxDate];
     }
 
     this.quizService.setRelDateFormData(formValue);
-    
+
     this.router.navigate(['quiz', 'source']);
   }
 
   onBack(): void {
     this.router.navigate(['quiz', 'status']);
+  }
+
+  checkYear(): void {
+    if (this.formGroup.value.years[1] == null || this.formGroup.value.years[0].getTime() === this.formGroup.value.years[1].getTime()) {
+      this.formGroup.get('season')?.enable();
+    } else {
+      this.formGroup.get('season')?.disable();
+    }
   }
 }
