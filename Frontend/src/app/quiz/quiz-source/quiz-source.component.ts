@@ -11,21 +11,21 @@ import { Router } from '@angular/router';
 export class QuizSourceComponent implements OnInit {
   formGroup!: FormGroup;
   source: string[] = [
-    '4_koma_manga',
-    'book',
-    'card_game',
-    'game',
-    'light_novel',
-    'manga',
-    'mixed_media',
-    'music',
-    'novel',
-    'original',
-    'other',
-    'picture_book',
-    'visual_novel',
-    'web_manga',
-    'web_novel'
+    '4 Koma Manga',
+    'Book',
+    'Card Game',
+    'Game',
+    'Light Novel',
+    'Manga',
+    'Mixed Media',
+    'Music',
+    'Novel',
+    'Original',
+    'Other',
+    'Picture Book',
+    'Visual Novel',
+    'Web Manga',
+    'Web Novel'
   ];
 
   constructor(private formBuilder: FormBuilder, private quizService: QuizService, private router: Router) { }

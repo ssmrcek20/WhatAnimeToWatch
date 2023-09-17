@@ -116,7 +116,10 @@ namespace Backend.Data.Repositories
 
             if (animeFilter.source != null && animeFilter.source.selectedSources?.Any() == true)
             {
-                query = query.Where(a => animeFilter.source.selectedSources.Contains(a.Source));
+                var normalizedSources = animeFilter.source.selectedSources
+                    .Select(source => source.ToLower().Replace(" ", "_"))
+                    .ToList();
+                query = query.Where(a => normalizedSources.Contains(a.Source));
             }
 
             if (animeFilter.studio != null && animeFilter.studio.selectedStudios?.Any() == true)
