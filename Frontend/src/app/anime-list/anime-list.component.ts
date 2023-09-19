@@ -42,26 +42,27 @@ export class AnimeListComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-      await this.loadAnime(this.currentPage);
-      this.checkScreenSize();
+    await this.loadAnime(this.currentPage);
+    this.checkScreenSize();
   }
 
   private async loadAnime(page: number) {
     try {
       this.isLoading = true;
+      console.log(this.quizService.getAllFormData());
       const data: any = await this.backendService.getFilteredAnime(this.quizService.getAllFormData(), page);
-      if(data == null){
+      if (data == null) {
         this.messageService.add({ severity: 'info', summary: 'Anime not found', detail: "Try different quiz answers" });
         this.message = "Anime not found :(";
       }
-      else{
+      else {
         this.animeList = data.animes;
-        this.totalPages = data.totalPages*36;
+        this.totalPages = data.totalPages * 36;
         this.showPaginator = true;
       }
 
       this.isLoading = false;
-      
+
     } catch (error) {
       this.messageService.add({ severity: 'error', summary: 'Error', detail: "Anime couldn't load" });
       this.isLoading = false;
@@ -111,7 +112,7 @@ export class AnimeListComponent implements OnInit {
 
     this.meanScore = anime.mean;
 
-    this.numEpisodes = anime.num_episodes?.toString() + " ep" ;
+    this.numEpisodes = anime.num_episodes?.toString() + " ep";
     if (anime.average_episode_duration !== undefined) {
       this.duration = (anime.average_episode_duration / 60).toFixed(0) + " min";
     } else {
@@ -145,13 +146,13 @@ export class AnimeListComponent implements OnInit {
     this.synopsis = anime.synopsis;
 
     this.genres = anime.genres?.map(genre => genre.name) || [];
-    
+
     this.animeURL = "https://myanimelist.net/anime/" + anime.id;
 
     this.status = this.showStatus(anime);
   }
 
-  showStatus(anime: Anime): string{
+  showStatus(anime: Anime): string {
     switch (anime.status) {
       case 'currently_airing':
         return 'Currently Airing';

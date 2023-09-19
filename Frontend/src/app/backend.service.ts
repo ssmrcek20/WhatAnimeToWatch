@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders  } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Genre } from './interfaces/Genre';
 import { Studio } from './interfaces/Studio';
 import { environment } from 'src/environments/environment';
@@ -14,20 +14,6 @@ export class BackendService {
   private studios: Studio[] = [];
 
   constructor(private http: HttpClient) { }
-
-  async getGenres(): Promise<Genre[]> {
-    if (this.genres.length > 0) {
-      return this.genres;
-    } else {
-      try {
-        const data = await lastValueFrom(this.http.get<Genre[]>(environment.backendUrl + '/api/Genres'));
-        this.genres = data;
-        return this.genres;
-      } catch (error) {
-        throw error;
-      }
-    }
-  }
 
   async getStudios(): Promise<Studio[]> {
     if (this.studios.length > 0) {
@@ -58,7 +44,7 @@ export class BackendService {
 
   async wakeUpServer(): Promise<string> {
     try {
-      return await lastValueFrom(this.http.get<string>(environment.backendUrl + "/api/Animes/test", {responseType: 'text' as 'json'}));
+      return await lastValueFrom(this.http.get<string>(environment.backendUrl + "/api/Animes/test", { responseType: 'text' as 'json' }));
     } catch (error) {
       throw error;
     }

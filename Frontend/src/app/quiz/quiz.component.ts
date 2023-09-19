@@ -24,8 +24,8 @@ export class QuizComponent implements OnInit {
         routerLink: 'ep-duration'
       },
       {
-        label: 'Genre',
-        routerLink: 'genre'
+        label: 'Anime type',
+        routerLink: 'type'
       },
       {
         label: 'Status',

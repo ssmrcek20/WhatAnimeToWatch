@@ -21,6 +21,7 @@
         public class GenreF
         {
             public List<SelectedGenre>? selectedGenres { get; set; }
+            public SelectedGenre? demographic { get; set; }
         }
 
         public class MediaType

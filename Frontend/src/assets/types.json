@@ -1,0 +1,288 @@
+[
+  {
+    "label": "Genres",
+    "items": [
+      {
+        "Id": 1,
+        "Name": "Action"
+      },
+      {
+        "Id": 2,
+        "Name": "Adventure"
+      },
+      {
+        "Id": 5,
+        "Name": "Avant Garde"
+      },
+      {
+        "Id": 46,
+        "Name": "Award Winning"
+      },
+      {
+        "Id": 28,
+        "Name": "Boys Love"
+      },
+      {
+        "Id": 4,
+        "Name": "Comedy"
+      },
+      {
+        "Id": 8,
+        "Name": "Drama"
+      },
+      {
+        "Id": 9,
+        "Name": "Ecchi"
+      },
+      {
+        "Id": 10,
+        "Name": "Fantasy"
+      },
+      {
+        "Id": 26,
+        "Name": "Girls Love"
+      },
+      {
+        "Id": 47,
+        "Name": "Gourmet"
+      },
+      {
+        "Id": 14,
+        "Name": "Horror"
+      },
+      {
+        "Id": 7,
+        "Name": "Mystery"
+      },
+      {
+        "Id": 22,
+        "Name": "Romance"
+      },
+      {
+        "Id": 24,
+        "Name": "Sci-Fi"
+      },
+      {
+        "Id": 36,
+        "Name": "Slice of Life"
+      },
+      {
+        "Id": 30,
+        "Name": "Sports"
+      },
+      {
+        "Id": 37,
+        "Name": "Supernatural"
+      },
+      {
+        "Id": 41,
+        "Name": "Suspense"
+      }
+    ]
+  },
+  {
+    "label": "Themes",
+    "items": [
+      {
+        "Id": 50,
+        "Name": "Adult Cast"
+      },
+      {
+        "Id": 51,
+        "Name": "Anthropomorphic"
+      },
+      {
+        "Id": 52,
+        "Name": "CGDCT"
+      },
+      {
+        "Id": 53,
+        "Name": "Childcare"
+      },
+      {
+        "Id": 54,
+        "Name": "Combat Sports"
+      },
+      {
+        "Id": 81,
+        "Name": "Crossdressing"
+      },
+      {
+        "Id": 55,
+        "Name": "Delinquents"
+      },
+      {
+        "Id": 39,
+        "Name": "Detective"
+      },
+      {
+        "Id": 56,
+        "Name": "Educational"
+      },
+      {
+        "Id": 57,
+        "Name": "Gag Humor"
+      },
+      {
+        "Id": 58,
+        "Name": "Gore"
+      },
+      {
+        "Id": 35,
+        "Name": "Harem"
+      },
+      {
+        "Id": 59,
+        "Name": "High Stakes Game"
+      },
+      {
+        "Id": 13,
+        "Name": "Historical"
+      },
+      {
+        "Id": 60,
+        "Name": "Idols (Female)"
+      },
+      {
+        "Id": 61,
+        "Name": "Idols (Male)"
+      },
+      {
+        "Id": 62,
+        "Name": "Isekai"
+      },
+      {
+        "Id": 63,
+        "Name": "Iyashikei"
+      },
+      {
+        "Id": 64,
+        "Name": "Love Polygon"
+      },
+      {
+        "Id": 65,
+        "Name": "Magical Sex Shift"
+      },
+      {
+        "Id": 66,
+        "Name": "Mahou Shoujo"
+      },
+      {
+        "Id": 17,
+        "Name": "Martial Arts"
+      },
+      {
+        "Id": 18,
+        "Name": "Mecha"
+      },
+      {
+        "Id": 67,
+        "Name": "Medical"
+      },
+      {
+        "Id": 38,
+        "Name": "Military"
+      },
+      {
+        "Id": 19,
+        "Name": "Music"
+      },
+      {
+        "Id": 6,
+        "Name": "Mythology"
+      },
+      {
+        "Id": 68,
+        "Name": "Organized Crime"
+      },
+      {
+        "Id": 69,
+        "Name": "Otaku Culture"
+      },
+      {
+        "Id": 20,
+        "Name": "Parody"
+      },
+      {
+        "Id": 70,
+        "Name": "Performing Arts"
+      },
+      {
+        "Id": 71,
+        "Name": "Pets"
+      },
+      {
+        "Id": 40,
+        "Name": "Psychological"
+      },
+      {
+        "Id": 3,
+        "Name": "Racing"
+      },
+      {
+        "Id": 72,
+        "Name": "Reincarnation"
+      },
+      {
+        "Id": 73,
+        "Name": "Reverse Harem"
+      },
+      {
+        "Id": 74,
+        "Name": "Romantic Subtext"
+      },
+      {
+        "Id": 21,
+        "Name": "Samurai"
+      },
+      {
+        "Id": 23,
+        "Name": "School"
+      },
+      {
+        "Id": 75,
+        "Name": "Showbiz"
+      },
+      {
+        "Id": 29,
+        "Name": "Space"
+      },
+      {
+        "Id": 11,
+        "Name": "Strategy Game"
+      },
+      {
+        "Id": 31,
+        "Name": "Super Power"
+      },
+      {
+        "Id": 76,
+        "Name": "Survival"
+      },
+      {
+        "Id": 77,
+        "Name": "Team Sports"
+      },
+      {
+        "Id": 78,
+        "Name": "Time Travel"
+      },
+      {
+        "Id": 32,
+        "Name": "Vampire"
+      },
+      {
+        "Id": 79,
+        "Name": "Video Game"
+      },
+      {
+        "Id": 80,
+        "Name": "Visual Arts"
+      },
+      {
+        "Id": 48,
+        "Name": "Workplace"
+      }
+    ]
+  }
+]

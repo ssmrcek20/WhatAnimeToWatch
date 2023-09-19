@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class QuizEpDurationComponent implements OnInit {
   formGroup!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private quizService: QuizService, private router: Router) {}
+  constructor(private formBuilder: FormBuilder, private quizService: QuizService, private router: Router) { }
 
   ngOnInit(): void {
     const storedEpDurData = this.quizService.getEpDurFormData();
@@ -20,7 +20,7 @@ export class QuizEpDurationComponent implements OnInit {
       min: 1,
       max: 180,
     });
-  
+
     this.formGroup.patchValue({
       min: storedEpDurData.min || 1,
       max: storedEpDurData.max || 180,
@@ -34,17 +34,17 @@ export class QuizEpDurationComponent implements OnInit {
 
   onSaveAndNext(): void {
     const formValue = this.formGroup.value;
-  
+
     if (formValue.min == null) {
       formValue.min = 1;
     }
-    if(formValue.max == null) {
+    if (formValue.max == null) {
       formValue.max = 180;
     }
 
     this.quizService.setEpDurFormData(formValue);
-    
-    this.router.navigate(['quiz', 'genre']);
+
+    this.router.navigate(['quiz', 'type']);
   }
 
   onBack(): void {

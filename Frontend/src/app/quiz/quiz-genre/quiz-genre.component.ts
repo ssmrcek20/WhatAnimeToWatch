@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { QuizService } from '../../quiz.service';
 import { Router } from '@angular/router';
-import { BackendService } from 'src/app/backend.service';
-import { MessageService } from 'primeng/api';
-import { Genre } from '../../interfaces/Genre';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-quiz-genre',
@@ -13,35 +11,48 @@ import { Genre } from '../../interfaces/Genre';
 })
 export class QuizGenreComponent implements OnInit {
   formGroup!: FormGroup;
-  genres!: Genre[];
-  isLoading = true;
+  types!: any[];
+  demo: any[] = [
+    {
+      Id: 43,
+      Name: "Josei"
+    },
+    {
+      Id: 15,
+      Name: "Kids"
+    },
+    {
+      Id: 42,
+      Name: "Seinen"
+    },
+    {
+      Id: 25,
+      Name: "Shoujo"
+    },
+    {
+      Id: 27,
+      Name: "Shounen"
+    }
+  ];
 
-  constructor(private formBuilder: FormBuilder, private quizService: QuizService, private router: Router, private backendService: BackendService , private messageService: MessageService) { }
+  constructor(private formBuilder: FormBuilder, private quizService: QuizService, private router: Router, private http: HttpClient) { }
 
   ngOnInit(): void {
     const storedGenreData = this.quizService.getGenreFormData();
 
-    this.getGenres();
+    this.http.get<any[]>('../../../assets/types.json').subscribe(data => {
+      this.types = data;
+    });
 
     this.formGroup = this.formBuilder.group({
       selectedGenres: [],
+      demographic: {}
     });
 
     this.formGroup.patchValue({
       selectedGenres: storedGenreData.selectedGenres || [],
+      demographic: storedGenreData.demographic || {}
     });
-  }
-
-  private getGenres() {
-    this.backendService.getGenres()
-      .then(genres => {
-        this.genres = genres;
-        this.isLoading = false;
-      })
-      .catch(error => {
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: "Genres couldn't load" });
-        this.isLoading = false;
-      });
   }
 
   onSaveAndNext(): void {

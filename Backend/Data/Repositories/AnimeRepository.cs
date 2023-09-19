@@ -98,10 +98,20 @@ namespace Backend.Data.Repositories
                 query = query.Where(a => a.Average_episode_duration >= animeFilter.epDur.min*60 && a.Average_episode_duration <= animeFilter.epDur.max*60);
             }
 
-            if (animeFilter.genre != null && animeFilter.genre.selectedGenres?.Any() == true)
+            if (animeFilter.genre != null && (animeFilter.genre.selectedGenres?.Any() == true || animeFilter.genre.demographic?.id != null))
             {
-                var genreIds = animeFilter.genre.selectedGenres.Select(g => g.id);
+                List<int?> genreIds = new List<int?>();
+                if(animeFilter.genre.selectedGenres?.Any() == true)
+                {
+                    genreIds.AddRange(animeFilter.genre.selectedGenres.Select(g => g.id));
+                }
+                if(animeFilter.genre.demographic?.id != null)
+                {
+                    genreIds.Add(animeFilter.genre.demographic.id);
+                }
+
                 query = query.Where(a => a.Genres.Any(g => genreIds.Contains(g.Id)));
+                query = query.Where(a => genreIds.All(gId => a.Genres.Any(aG => aG.Id == gId)));
             }
 
             if (animeFilter.status != null)

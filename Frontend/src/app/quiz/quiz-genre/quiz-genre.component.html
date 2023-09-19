@@ -1,15 +1,50 @@
 <div class="form-container">
-    <h1>What Genres do you like?</h1>
-    <p>Choose as many as you want or just click next if it doesn't matter to you</p>
+  <h1>What type of anime do you like?</h1>
+  <p>
+    Choose Genres, Themes and Demographic or just click next if it doesn't
+    matter to you.
+  </p>
 
-    <p-progressSpinner strokeWidth="4" *ngIf="isLoading"></p-progressSpinner>    
-    <form [formGroup]="formGroup" class="">
-        <p-multiSelect [options]="genres" formControlName="selectedGenres" optionLabel="name" defaultLabel="Select genres" display="chip"></p-multiSelect>
-    </form>
-
-    <div class="buttons">
-        <button (click)="onBack()" pButton pRipple class=" p-button-outlined" label="Back"></button>
-        <button (click)="onSaveAndNext()" pButton pRipple class=" p-button-raised" label="Next"></button>
+  <form [formGroup]="formGroup" class="">
+    <div class="demo">
+      <label for="selectedGenres">Type</label>
+      <p-multiSelect
+        [group]="true"
+        [options]="types"
+        formControlName="selectedGenres"
+        optionLabel="Name"
+        defaultLabel="Select types"
+        display="chip"
+      >
+      </p-multiSelect>
     </div>
+    <div class="demo">
+      <label for="demographic">Demographic</label>
+      <p-dropdown
+        formControlName="demographic"
+        [options]="demo"
+        optionLabel="Name"
+        placeholder="Select demographic"
+        scrollHeight="250px"
+      ></p-dropdown>
+    </div>
+  </form>
+
+  <div class="buttons">
+    <button
+      (click)="onBack()"
+      pButton
+      pRipple
+      class="p-button-outlined"
+      label="Back"
+    ></button>
+    <button
+      (click)="onSaveAndNext()"
+      pButton
+      pRipple
+      class="p-button-raised"
+      label="Next"
+    ></button>
+  </div>
 </div>
 <p-toast></p-toast>

@@ -30,11 +30,23 @@
         p-multiselect {
             width: 100%;
         }
+
+        .demo {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+
+            label {
+                margin-bottom: 0.5rem;
+                width: 100%;
+            }
+        }
     }
 }
+
 ::ng-deep .p-ink {
     display: none;
-  }
+}
 
 .buttons {
     display: flex;
@@ -49,10 +61,12 @@
 
 @media screen and (max-width: 800px) {
     form {
-        width: 100%!important;
+        width: 100% !important;
     }
+
     .buttons {
         gap: 2rem;
+
         button {
             width: 8rem;
         }
@@ -60,5 +74,9 @@
 }
 
 ::ng-deep .p-multiselect-items-wrapper {
-    max-height: 250px!important;
+    max-height: 250px !important;
+}
+
+::ng-deep .p-dropdown.p-component {
+    width: 100%;
 }

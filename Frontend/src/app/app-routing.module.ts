@@ -15,23 +15,25 @@ import { QuizAgeRatingComponent } from './quiz/quiz-age-rating/quiz-age-rating.c
 import { AnimeListComponent } from './anime-list/anime-list.component';
 
 const routes: Routes = [
-  { path: '', component: MainComponent},
-  { path: 'quiz', component: QuizComponent, children: [
-    { path: '', redirectTo: 'media', pathMatch: 'full' },
-    { path: 'media', component: QuizMediaTypeComponent },
-    { path: 'num-ep', component: QuizNummberEpComponent },
-    { path: 'ep-duration', component: QuizEpDurationComponent },
-    { path: 'genre', component: QuizGenreComponent },
-    { path: 'status', component: QuizStatusComponent },
-    { path: 'release-date', component: QuizRealeaseDateComponent },
-    { path: 'source', component: QuizSourceComponent },
-    { path: 'studio', component: QuizStudioComponent },
-    { path: 'age-rating', component: QuizAgeRatingComponent },
-  ]},
-  { path: 'anime-list', component: AnimeListComponent},
-  
+  { path: '', component: MainComponent },
+  {
+    path: 'quiz', component: QuizComponent, children: [
+      { path: '', redirectTo: 'media', pathMatch: 'full' },
+      { path: 'media', component: QuizMediaTypeComponent },
+      { path: 'num-ep', component: QuizNummberEpComponent },
+      { path: 'ep-duration', component: QuizEpDurationComponent },
+      { path: 'type', component: QuizGenreComponent },
+      { path: 'status', component: QuizStatusComponent },
+      { path: 'release-date', component: QuizRealeaseDateComponent },
+      { path: 'source', component: QuizSourceComponent },
+      { path: 'studio', component: QuizStudioComponent },
+      { path: 'age-rating', component: QuizAgeRatingComponent },
+    ]
+  },
+  { path: 'anime-list', component: AnimeListComponent },
+
   { path: '404', component: NotFoundComponent },
-  { path: '**', redirectTo: '404' }  
+  { path: '**', redirectTo: '404' }
 ];
 
 @NgModule({

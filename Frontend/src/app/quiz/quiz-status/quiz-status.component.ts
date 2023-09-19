@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup} from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { QuizService } from '../../quiz.service';
 import { Router } from '@angular/router';
 
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class QuizStatusComponent implements OnInit {
   formGroup!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private quizService: QuizService, private router: Router) {}
+  constructor(private formBuilder: FormBuilder, private quizService: QuizService, private router: Router) { }
 
   ngOnInit(): void {
     const storedStatusData = this.quizService.getStatusFormData();
@@ -21,7 +21,7 @@ export class QuizStatusComponent implements OnInit {
       currently_airing: [],
       not_yet_aired: [],
     });
-    
+
     const everythingChecked = Object.keys(storedStatusData).every((key) => storedStatusData[key].length > 0);
     if (everythingChecked) {
       this.formGroup.patchValue({
@@ -30,7 +30,7 @@ export class QuizStatusComponent implements OnInit {
         not_yet_aired: [],
       });
     }
-    else{
+    else {
       this.formGroup.patchValue({
         finished_airing: storedStatusData.finished_airing || [],
         currently_airing: storedStatusData.currently_airing || [],
@@ -42,12 +42,12 @@ export class QuizStatusComponent implements OnInit {
   onSaveAndNext(): void {
     const formValue = this.formGroup.value;
     const anyChecked = Object.keys(formValue).some((key) => formValue[key].length > 0);
-  
+
     if (!anyChecked) {
       const allTrueValues: { [key: string]: string[] } = {};
       Object.keys(formValue).forEach((key) => {
-      allTrueValues[key] = [key];
-    });
+        allTrueValues[key] = [key];
+      });
       this.quizService.setStatusFormData(allTrueValues);
     }
     else {
@@ -58,6 +58,6 @@ export class QuizStatusComponent implements OnInit {
   }
 
   onBack(): void {
-    this.router.navigate(['quiz', 'genre']);
+    this.router.navigate(['quiz', 'type']);
   }
 }
