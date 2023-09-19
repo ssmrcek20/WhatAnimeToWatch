@@ -1,35 +1,78 @@
 :host {
     margin-top: auto;
     display: flex;
-    gap: 3em;
+    justify-content: center;
 }
 
-img {
-    width: 50%;
-    border-radius: 30px;
-}
+#freepik_stories-404-error {}
 
-.content {
+.pageNptFound {
     display: flex;
     flex-direction: column;
     width: 50%;
     gap: 2em;
     justify-content: center;
+
+    p {
+        font-size: x-large;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    button {
+        width: 17rem;
+        align-self: center;
+    }
+
+    @media (max-width: 800px) {
+        width: 100%;
+    }
 }
 
-h1 {
-    font-size: 4rem;
-    font-weight: bold;
-    text-align: center;
-    margin: 0px;
+svg#freepik_stories-404-error:not(.animated) .animable {
+    opacity: 0;
 }
 
-p {
-    font-size: large;
-    text-align: center;
+svg#freepik_stories-404-error.animated #freepik--error-404--inject-17 {
+    animation: 6s Infinite linear floating;
+    animation-delay: 1s;
 }
 
-button {
-    width: 15rem;
-    align-self: center;
+svg#freepik_stories-404-error.animated #freepik--Plants--inject-17 {
+    animation: 3s Infinite linear floating;
+    animation-delay: 0s;
+}
+
+svg#freepik_stories-404-error.animated #freepik--speech-bubble--inject-17 {
+    animation: 1s 1 forwards cubic-bezier(0.36, -0.01, 0.5, 1.38) slideDown,
+        6s Infinite linear floating;
+    animation-delay: 0s, 1s;
+}
+
+@keyframes floating {
+    0% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+@keyframes slideDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

@@ -110,8 +110,8 @@ namespace Backend.Data.Repositories
                     genreIds.Add(animeFilter.genre.demographic.id);
                 }
 
-                query = query.Where(a => a.Genres.Any(g => genreIds.Contains(g.Id)));
-                query = query.Where(a => genreIds.All(gId => a.Genres.Any(aG => aG.Id == gId)));
+                int selectedGenreCount = genreIds.Count;
+                query = query.Where(a => a.Genres.Count(g => genreIds.Contains(g.Id)) == selectedGenreCount);
             }
 
             if (animeFilter.status != null)
