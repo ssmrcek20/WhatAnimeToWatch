@@ -1,11 +1,13 @@
 @import "primeicons/primeicons.css";
 
 
-html, body { 
+html,
+body {
   height: 100%;
   scroll-behavior: smooth;
 }
-body { 
+
+body {
   margin: 0;
   font-family: var(--font-family);
   font-weight: normal;
@@ -14,8 +16,8 @@ body {
 }
 
 button {
-  cursor: pointer; 
-  font-weight: 700!important;
+  cursor: pointer;
+  font-weight: 700 !important;
 }
 
 .card {
@@ -32,16 +34,19 @@ app-root {
   margin: 0 15%;
   min-height: 100vh;
 }
+
 @media screen and (max-width: 1400px) {
   app-root {
     margin: 0 12%;
   }
 }
+
 @media screen and (max-width: 1200px) {
   app-root {
     margin: 0 6%;
   }
 }
+
 @media screen and (max-width: 1000px) {
   app-root {
     margin: 0;
@@ -51,30 +56,38 @@ app-root {
 @media screen and (max-width: 800px) {
   app-root {
     margin: 3%;
+
     .image {
       display: none;
     }
-    .content{
-      width: 100%!important;
-      margin-left: 0rem!important;
-      button{
+
+    .content {
+      width: 100% !important;
+      margin-left: 0rem !important;
+
+      button {
         width: 100%;
       }
     }
+
     main {
-      width:100%;
-      app-not-found{
+      width: 100%;
+
+      app-not-found {
         width: 100%;
         margin: auto;
       }
-      app-main{
+
+      app-main {
         width: 100%;
         margin: auto;
       }
     }
+
     img {
       display: none;
     }
+
     h1 {
       text-align: center;
     }
@@ -83,6 +96,7 @@ app-root {
       display: none;
     }
   }
+
   @media screen and (max-width: 400px) {
     app-root {
       margin: 0%;

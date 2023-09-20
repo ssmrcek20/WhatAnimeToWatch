@@ -1,20 +1,46 @@
-<div class="form-container">
-    <h1>How long episodes do you want to watch?</h1>
-    <p>Write minimum and maximum duration episode should last in <b>minutes</b></p>
+<div pFocusTrap class="form-container">
+  <h1>How long episodes do you want to watch?</h1>
+  <p>
+    Write minimum and maximum duration episode should last in <b>minutes</b>.
+  </p>
 
-    <form [formGroup]="formGroup" class="">
-        <div class="numbers">
-            <label for="min">Minimum duration</label>
-            <p-inputNumber (click)="selectAllText($event)" inputId="min" formControlName="min" [min]="1" [max]="180"></p-inputNumber>
-        </div>
-        <div class="numbers">
-            <label for="max">Maximum duration</label>
-            <p-inputNumber (click)="selectAllText($event)" inputId="max" formControlName="max" [min]="1" [max]="180"></p-inputNumber>
-        </div>
-    </form>
-
-    <div class="buttons">
-        <button (click)="onBack()" pButton pRipple class=" p-button-outlined" label="Back"></button>
-        <button (click)="onSaveAndNext()" pButton pRipple class=" p-button-raised" label="Next"></button>
+  <form [formGroup]="formGroup" class="">
+    <div class="numbers">
+      <label for="min">Minimum duration</label>
+      <p-inputNumber
+        (click)="selectAllText($event)"
+        inputId="min"
+        formControlName="min"
+        [min]="1"
+        [max]="180"
+      ></p-inputNumber>
     </div>
+    <div class="numbers">
+      <label for="max">Maximum duration</label>
+      <p-inputNumber
+        (click)="selectAllText($event)"
+        inputId="max"
+        formControlName="max"
+        [min]="1"
+        [max]="180"
+      ></p-inputNumber>
+    </div>
+  </form>
+
+  <div class="buttons">
+    <button
+      (click)="onBack()"
+      pButton
+      pRipple
+      class="p-button-outlined"
+      label="Back"
+    ></button>
+    <button
+      (click)="onSaveAndNext()"
+      pButton
+      pRipple
+      class="p-button-raised"
+      label="Next"
+    ></button>
+  </div>
 </div>

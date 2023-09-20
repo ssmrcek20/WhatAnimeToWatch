@@ -1,20 +1,47 @@
-<div class="form-container">
-    <h1>How many episodes do you want to watch?</h1>
-    <p>If you want to get anime that have <b>unknown number of episodes</b> because it is currently airing <b>leave minimum as 0</b></p>
+<div pFocusTrap class="form-container">
+  <h1>How many episodes do you want to watch?</h1>
+  <p>
+    If you want to get anime that have <b>unknown number of episodes</b> because
+    it is currently airing <b>leave minimum as 0</b>.
+  </p>
 
-    <form [formGroup]="formGroup" class="">
-        <div class="numbers">
-            <label for="min">Minimum number of episodes</label>
-            <p-inputNumber (click)="selectAllText($event)" inputId="min" formControlName="min" [min]="0" [max]="2000"></p-inputNumber>
-        </div>
-        <div class="numbers">
-            <label for="max">Maximum number of episodes</label>
-            <p-inputNumber (click)="selectAllText($event)" inputId="max" formControlName="max" [min]="0" [max]="2000"></p-inputNumber>
-        </div>
-    </form>
-
-    <div class="buttons">
-        <button (click)="onBack()" pButton pRipple class=" p-button-outlined" label="Back"></button>
-        <button (click)="onSaveAndNext()" pButton pRipple class=" p-button-raised" label="Next"></button>
+  <form [formGroup]="formGroup" class="">
+    <div class="numbers">
+      <label for="min">Minimum number of episodes</label>
+      <p-inputNumber
+        (click)="selectAllText($event)"
+        inputId="min"
+        formControlName="min"
+        [min]="0"
+        [max]="2000"
+      ></p-inputNumber>
     </div>
+    <div class="numbers">
+      <label for="max">Maximum number of episodes</label>
+      <p-inputNumber
+        (click)="selectAllText($event)"
+        inputId="max"
+        formControlName="max"
+        [min]="0"
+        [max]="2000"
+      ></p-inputNumber>
+    </div>
+  </form>
+
+  <div class="buttons">
+    <button
+      (click)="onBack()"
+      pButton
+      pRipple
+      class="p-button-outlined"
+      label="Back"
+    ></button>
+    <button
+      (click)="onSaveAndNext()"
+      pButton
+      pRipple
+      class="p-button-raised"
+      label="Next"
+    ></button>
+  </div>
 </div>

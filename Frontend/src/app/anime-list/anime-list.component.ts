@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { BackendService } from '../backend.service';
 import { QuizService } from '../quiz.service';
 import { MessageService } from 'primeng/api';
@@ -33,6 +33,8 @@ export class AnimeListComponent implements OnInit {
   rating: string | undefined = "";
   duration: string | undefined = "";
   animeURL: string | undefined = "";
+
+  @ViewChild('exitDialog') exitDialog!: ElementRef;
 
   constructor(private quizService: QuizService, private backendService: BackendService, private messageService: MessageService, private datePipe: DatePipe) { }
 
@@ -150,6 +152,10 @@ export class AnimeListComponent implements OnInit {
     this.animeURL = "https://myanimelist.net/anime/" + anime.id;
 
     this.status = this.showStatus(anime);
+
+    setTimeout(() => {
+      this.exitDialog.nativeElement.focus();
+    }, 1);
   }
 
   showStatus(anime: Anime): string {

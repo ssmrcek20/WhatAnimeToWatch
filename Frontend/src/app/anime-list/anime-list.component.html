@@ -1,5 +1,5 @@
 <p-toast></p-toast>
-<p-progressSpinner strokeWidth="4" *ngIf="isLoading"></p-progressSpinner>  
+<p-progressSpinner strokeWidth="4" *ngIf="isLoading"></p-progressSpinner>
 
 <p-dataView
   [value]="animeList"
@@ -9,15 +9,27 @@
 >
   <ng-template pTemplate="gridItem" let-anime>
     <div class="anime-card">
-      <div class="anime-image">
-        <div *ngIf="showStatus(anime) != ''" class="status-banner">{{showStatus(anime)}}</div>
-        <img [src]="anime.main_picture?.medium" [alt]="anime.title" class="anime-img" (click)="showAnimeInfo(anime)" />
+      <div
+        tabindex="0"
+        class="anime-image"
+        (keydown.enter)="showAnimeInfo(anime)"
+      >
+        <div *ngIf="showStatus(anime) != ''" class="status-banner">
+          {{ showStatus(anime) }}
+        </div>
+        <img
+          [src]="anime.main_picture?.medium"
+          [alt]="anime.title"
+          class="anime-img"
+          (click)="showAnimeInfo(anime)"
+        />
       </div>
       <div class="anime-title">{{ anime.title }}</div>
     </div>
   </ng-template>
 </p-dataView>
-<p-paginator *ngIf="showPaginator"
+<p-paginator
+  *ngIf="showPaginator"
   [totalRecords]="totalPages"
   [rows]="36"
   [pageLinkSize]="pageLinkSize"
@@ -25,41 +37,59 @@
   [alwaysShow]="false"
 ></p-paginator>
 
+<p-dialog
+  [(visible)]="visible"
+  [modal]="true"
+  [breakpoints]="{ '1400px': '75vw', '1000px': '100vw' }"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <ng-template pTemplate="header">
+    <div class="header-dialog">
+      <span class="title">{{ header }}</span>
+      <img class="rating-img" src="{{ rating }}" />
+    </div>
+  </ng-template>
 
+  <div class="dialog-table">
+    <div class="media-duration">
+      {{ mediaType }} • {{ numEpisodes }}, {{ duration }}
+    </div>
+    <div class="mean">
+      <span class="pi pi-star-fill"></span>
+      <span class="score"> {{ meanScore }}</span>
+    </div>
 
+    <div class="studio-date">{{ studios }} • {{ startDate }}</div>
 
-<p-dialog [(visible)]="visible" [modal]="true" [breakpoints]="{'1400px': '75vw', '1000px': '100vw'}" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
-<ng-template pTemplate="header">
-  <div class="header-dialog">
-    <span class="title">{{header}}</span>
-    <img class="rating-img" src={{rating}}>
+    <div *ngIf="status != ''" class="status-banner">{{ status }}</div>
+    <img [src]="image" [alt]="header" class="anime-img-details" />
+    <div class="synopsis">{{ synopsis }}</div>
+
+    <div class="genres">
+      <ng-container *ngFor="let genre of genres">
+        <p-chip [label]="genre"></p-chip>
+      </ng-container>
+    </div>
   </div>
-</ng-template>
 
-<div class="dialog-table">
-  <div class="media-duration">{{mediaType}} • {{numEpisodes}}, {{duration}}</div>
-  <div class="mean">
-    <span  class="pi pi-star-fill"></span>
-    <span class="score"> {{meanScore}}</span>
-  </div>
-  
-  <div class="studio-date">{{studios}} • {{startDate}}</div>
-  
-  <div *ngIf="status != ''" class="status-banner">{{status}}</div>
-  <img [src]="image" [alt]="header" class="anime-img-details">
-  <div class="synopsis">{{synopsis}}</div>
-  
-  <div class="genres">
-    <ng-container *ngFor="let genre of genres">
-      <p-chip [label]="genre"></p-chip>
-    </ng-container>
-  </div>
-</div>
-
-<ng-template pTemplate="footer">
-  <div class="footer-dialog">
-    <p-button icon="pi pi-external-link" (click)="openMAL()" label="More info" styleClass="p-button-text"></p-button>
-    <p-button icon="pi pi-check" (click)="visible = false" label="Ok" styleClass="p-button-text"></p-button>
-  </div>
-</ng-template>
+  <ng-template pTemplate="footer">
+    <div class="footer-dialog">
+      <p-button
+        icon="pi pi-external-link"
+        (click)="openMAL()"
+        label="More info"
+        styleClass="p-button-text"
+      ></p-button>
+      <button
+        pButton
+        icon="pi pi-check"
+        (click)="visible = false"
+        label="Ok"
+        styleClass="p-button-text"
+        #exitDialog
+      ></button>
+    </div>
+  </ng-template>
 </p-dialog>
