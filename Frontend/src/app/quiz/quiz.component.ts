@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from '../interfaces/MenuItems';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-quiz',
@@ -7,9 +8,20 @@ import { MenuItem } from '../interfaces/MenuItems';
   styleUrls: ['./quiz.component.scss']
 })
 export class QuizComponent implements OnInit {
-  items: MenuItem[] | undefined;
+  items: MenuItem[] = [];
+  progress = 0;
+  currentQuestionIndex: number = 0;
 
-  ngOnInit() {
+  constructor(private router: Router) {
+    router.events.subscribe((val) => {
+      if (val instanceof NavigationEnd) {
+        this.updateProgress();
+      }
+    });
+  }
+
+
+  ngOnInit(): void {
     this.items = [
       {
         label: 'Media Type',
@@ -48,5 +60,15 @@ export class QuizComponent implements OnInit {
         routerLink: 'age-rating'
       }
     ];
+  }
+
+  updateProgress() {
+    const currentRoute = this.router.url.split('/').pop();
+    this.currentQuestionIndex = this.items.findIndex(item => item.routerLink === currentRoute);
+
+    if (this.currentQuestionIndex >= 0) {
+      const totalQuestions = this.items.length;
+      this.progress = Math.round((this.currentQuestionIndex / totalQuestions) * 100);
+    }
   }
 }

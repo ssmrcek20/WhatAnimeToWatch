@@ -25,6 +25,7 @@ import { DataViewModule } from 'primeng/dataview';
 import { PaginatorModule } from 'primeng/paginator';
 import { DialogModule } from 'primeng/dialog';
 import { ChipModule } from 'primeng/chip';
+import { ProgressBarModule } from 'primeng/progressbar';
 
 import { HeaderComponent } from './header/header.component';
 import { MainComponent } from './main/main.component';
@@ -85,6 +86,7 @@ import { DatePipe } from '@angular/common';
     PaginatorModule,
     DialogModule,
     ChipModule,
+    ProgressBarModule,
   ],
   providers: [
     MessageService,
