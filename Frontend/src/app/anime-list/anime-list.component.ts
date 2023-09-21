@@ -4,6 +4,7 @@ import { QuizService } from '../quiz.service';
 import { MessageService } from 'primeng/api';
 import { Anime } from '../interfaces/Anime';
 import { DatePipe } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-anime-list',
@@ -18,6 +19,8 @@ export class AnimeListComponent implements OnInit {
   message: string = "Loading...";
   pageLinkSize = 5;
   showPaginator: boolean = false;
+  first = 0;
+  showFirstLastIcon = true;
 
   visible: boolean = false;
   header: string | undefined = "";
@@ -36,7 +39,7 @@ export class AnimeListComponent implements OnInit {
 
   @ViewChild('exitDialog') exitDialog!: ElementRef;
 
-  constructor(private quizService: QuizService, private backendService: BackendService, private messageService: MessageService, private datePipe: DatePipe) { }
+  constructor(private quizService: QuizService, private backendService: BackendService, private messageService: MessageService, private datePipe: DatePipe, private router: Router, private route: ActivatedRoute) { }
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event): void {
@@ -44,8 +47,14 @@ export class AnimeListComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    await this.loadAnime(this.currentPage);
     this.checkScreenSize();
+
+    this.route.queryParams.subscribe(async (queryParams) => {
+      const page = queryParams['page'] || 1;
+      this.currentPage = parseInt(page, 10);
+      await this.loadAnime(this.currentPage);
+      this.first = (this.currentPage - 1) * 36;
+    });
   }
 
   private async loadAnime(page: number) {
@@ -75,14 +84,19 @@ export class AnimeListComponent implements OnInit {
   async onPageChange(event: any): Promise<void> {
     this.currentPage = event.page + 1;
     window.scrollTo(0, 0);
-    await this.loadAnime(this.currentPage);
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { page: this.currentPage },
+      queryParamsHandling: 'merge',
+    });
   }
 
   checkScreenSize(): void {
     const screenWidth = window.innerWidth;
 
     if (screenWidth <= 650) {
-      this.pageLinkSize = 1;
+      this.pageLinkSize = 3;
+      this.showFirstLastIcon = false;
     }
     else {
       this.pageLinkSize = 5;
