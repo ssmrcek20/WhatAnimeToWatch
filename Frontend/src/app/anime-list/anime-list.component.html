@@ -76,12 +76,17 @@
 
   <ng-template pTemplate="footer">
     <div class="footer-dialog">
-      <p-button
+      <a
+        pButton
         icon="pi pi-external-link"
-        (click)="openMAL()"
         label="More info"
+        class="without-underline"
+        id="more-info"
         styleClass="p-button-text"
-      ></p-button>
+        [href]="animeURL"
+        target="_blank"
+        rel="noopener noreferrer"
+      ></a>
       <button
         pButton
         icon="pi pi-check"

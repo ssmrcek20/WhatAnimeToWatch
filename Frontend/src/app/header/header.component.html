@@ -1,19 +1,55 @@
-<button id="logo" pButton pRipple class="p-button-text " routerLink="" (click)="resetQuiz()">
-    <img alt="logo" src="../../assets/icon/whatanimetowatch.svg" />
-    <span class="ml-2 font-bold" style="justify-self: center;">WhatAnimeToWatch</span>
-</button>
+<a
+  id="logo"
+  pButton
+  pRipple
+  class="p-button-text"
+  routerLink=""
+  (click)="resetQuiz()"
+>
+  <img alt="logo" src="../../assets/icon/whatanimetowatch.svg" />
+  <span>WhatAnimeToWatch</span>
+</a>
 
 <span class="example-spacer"></span>
 
-<button pButton pRipple class="p-button-text nav" label="Quiz" routerLink="quiz" (click)="resetQuiz()"></button>
+<a
+  pButton
+  pRipple
+  class="p-button-text nav without-underline"
+  label="Quiz"
+  routerLink="quiz"
+  (click)="resetQuiz()"
+></a>
 
-<button pButton pRipple class="p-button-text nav" label="Anime List" routerLink="anime-list" (click)="resetQuiz()"></button>
+<a
+  pButton
+  pRipple
+  class="p-button-text nav without-underline"
+  label="Anime List"
+  routerLink="anime-list"
+  (click)="resetQuiz()"
+></a>
 
-<button pButton pRipple class="p-button-text nav" label="Import" [disabled]="true"></button>
+<button
+  pButton
+  pRipple
+  class="p-button-text nav without-underline"
+  label="Import"
+  [disabled]="true"
+></button>
 
-<button pButton pRipple class=" p-button-sm p-button-rounded p-button-outlined nav small-icon pi pi-moon" id="themeButton" (click)="toggleTheme()"></button>
-
+<button
+  pButton
+  pRipple
+  class="p-button-sm p-button-rounded p-button-outlined nav small-icon pi pi-moon"
+  id="themeButton"
+  (click)="toggleTheme()"
+></button>
 
 <p-menu #menu [model]="items" [popup]="true"></p-menu>
-<button pButton pRipple (click)="menu.toggle($event)" class="p-button-sm pi pi-bars nav"></button>
-
+<button
+  pButton
+  pRipple
+  (click)="menu.toggle($event)"
+  class="p-button-sm pi pi-bars nav"
+></button>

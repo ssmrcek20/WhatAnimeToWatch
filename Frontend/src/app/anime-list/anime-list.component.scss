@@ -1,7 +1,7 @@
 ::ng-deep .p-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
-    grid-gap: 2rem; 
+    grid-gap: 2rem;
 
     .anime-card {
 
@@ -9,11 +9,11 @@
             position: relative;
             width: 100%;
             height: 0;
-            padding-bottom: calc(318 / 225 * 100%); 
+            padding-bottom: calc(318 / 225 * 100%);
             overflow: hidden;
             box-shadow: var(--box-shadow);
             border-radius: 1rem;
-            transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+            transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
 
             &:hover {
                 box-shadow: var(--box-shadow-hover);
@@ -53,6 +53,7 @@
 ::ng-deep app-anime-list {
     display: grid;
 }
+
 p-progressSpinner {
     justify-self: center;
 }
@@ -69,6 +70,7 @@ p-progressSpinner {
     ::ng-deep .p-grid {
         grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
         grid-gap: 1rem;
+
         img {
             display: block;
         }
@@ -78,7 +80,7 @@ p-progressSpinner {
 .dialog-table {
     display: grid;
     grid-template-areas:
-        "duration-media mean" 
+        "duration-media mean"
         "date-studios date-studios"
         "image synopsis"
         "genre genre";
@@ -86,29 +88,29 @@ p-progressSpinner {
     grid-template-columns: 1fr 2fr;
     gap: 1rem;
 
-    .mean{
+    .mean {
         display: flex;
         justify-content: flex-end;
         align-items: center;
 
-        .pi{
+        .pi {
             font-size: 1.3rem;
             margin-right: 0.5rem;
             color: gold;
         }
 
-        .score{
+        .score {
             font-size: 1.3rem;
             font-weight: bold;
         }
     }
 
-    .studio-date{
+    .studio-date {
         grid-area: date-studios;
         font-weight: bold;
     }
 
-    .media-duration{
+    .media-duration {
         grid-area: duration-media;
         font-weight: bold;
         align-self: end;
@@ -133,19 +135,21 @@ p-progressSpinner {
         overflow-x: auto;
         max-width: 100%;
         align-items: center;
-        & > * {
-            margin: 0.5rem; 
+
+        &>* {
+            margin: 0.5rem;
             white-space: nowrap;
-          }
+        }
     }
 
     @media screen and (max-width: 600px) {
-        grid-template-areas: 
-            "duration-media mean" 
+        grid-template-areas:
+            "duration-media mean"
             "date-studios date-studios"
             "synopsis synopsis"
             "genre genre";
         grid-template-columns: 1fr 1fr;
+
         img {
             display: none;
         }
@@ -164,11 +168,16 @@ p-progressSpinner {
     .rating-img {
         height: 1.3rem;
         margin-left: 0.5rem;
-        display: inline-block!important;
+        display: inline-block !important;
     }
 }
 
 .footer-dialog {
     display: flex;
     justify-content: space-between;
+
+    #more-info:hover {
+        background-color: var(--primary-color) !important;
+        box-shadow: var(--box-shadow);
+    }
 }

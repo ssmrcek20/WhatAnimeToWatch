@@ -78,6 +78,14 @@
   box-sizing: border-box;
 }
 
+a {
+  font-weight: bold !important;
+}
+
+a:hover {
+  background-color: rgba(113, 84, 243, 0.1) !important;
+}
+
 .p-component {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";

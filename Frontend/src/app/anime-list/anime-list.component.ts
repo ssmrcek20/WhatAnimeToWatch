@@ -168,8 +168,4 @@ export class AnimeListComponent implements OnInit {
         return '';
     }
   }
-
-  openMAL(): void {
-    window.open(this.animeURL, "_blank");
-  }
 }
