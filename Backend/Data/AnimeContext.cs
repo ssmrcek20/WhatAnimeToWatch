@@ -19,5 +19,7 @@ namespace Backend.Data
         public DbSet<Backend.Model.Genre> Genre { get; set; } = default!;
 
         public DbSet<Backend.Model.Studio> Studio { get; set; } = default!;
+
+        public DbSet<Backend.Model.Node> Node { get; set; } = default!;
     }
 }

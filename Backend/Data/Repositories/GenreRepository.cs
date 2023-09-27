@@ -12,10 +12,10 @@ namespace Backend.Data.Repositories
             _context=context;
         }
 
-        public async Task<List<Genre>> GenreEditAsync(MyAnimeListApi.Data anime)
+        public async Task<List<Genre>> GenreEditAsync(Anime anime)
         {
             var newGenres = new List<Genre>();
-            foreach (var genre in anime.A.Genres)
+            foreach (var genre in anime.Genres)
             {
                 var existingGenre = _context.Genre.FirstOrDefault(g => g.Id == genre.Id);
                 if (existingGenre != null)

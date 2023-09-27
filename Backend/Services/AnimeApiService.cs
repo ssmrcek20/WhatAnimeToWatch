@@ -4,24 +4,27 @@ using System.Text.Json;
 using System.Net;
 using System.Text.Json.Serialization;
 using Backend.ViewModels;
+using Backend.Model;
 
 namespace Backend.Services
 {
     public class AnimeApiService
     {
-        private const string topAnimeUrl = "https://api.myanimelist.net/v2/anime/ranking?ranking_type=all&limit=500&offset=4500&fields=id,title,main_picture,alternative_titles,start_date,end_date,synopsis,mean,rank,popularity,num_list_users,num_scoring_users,nsfw,created_at,updated_at,media_type,status,genres,my_list_status,num_episodes,start_season,broadcast,source,average_episode_duration,rating,pictures,background,related_anime,related_manga,recommendations,studios,statistics";
+        private const string malUrl = "https://api.myanimelist.net/v2/anime/";
+        private const string topAnimeUrl = "ranking?ranking_type=all&limit=500&offset=";
+        private const string detailsAnimeUrl = "?fields=id,title,main_picture,alternative_titles,start_date,end_date,synopsis,mean,rank,popularity,num_list_users,num_scoring_users,nsfw,created_at,updated_at,media_type,status,genres,my_list_status,num_episodes,start_season,broadcast,source,average_episode_duration,rating,pictures,background,related_anime,related_manga,recommendations,studios,statistics";
         private readonly HttpClient _httpClient;
         private readonly string _apiKey;
 
         public AnimeApiService(HttpClient httpClient, string apiKey) {
             _httpClient=httpClient;
             _apiKey=apiKey;
+            _httpClient.DefaultRequestHeaders.Add("X-MAL-CLIENT-ID", _apiKey);
         }
 
-        public async Task<List<MyAnimeListApi.Data>> FetchAnimeDataAsync()
+        public async Task<List<MyAnimeListApi.Data>> FetchAnimeDataAsync(int offset)
         {
-            _httpClient.DefaultRequestHeaders.Add("X-MAL-CLIENT-ID", _apiKey);
-            var response = await _httpClient.GetAsync(topAnimeUrl);
+            var response = await _httpClient.GetAsync(malUrl+topAnimeUrl+offset);
 
             if (response.IsSuccessStatusCode)
             {
@@ -59,6 +62,32 @@ namespace Backend.Services
             {
                 throw new Exception($"An error occurred while fetching anime data: {response.StatusCode}");
             }
+        }
+
+        public async Task<Anime> FetchAnimeDetailsDataAsync(int id)
+        {
+            var response = await _httpClient.GetAsync(malUrl+ id + detailsAnimeUrl);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var responseData = await response.Content.ReadAsStringAsync();
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true,
+                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+                    IgnoreReadOnlyProperties = true,
+                };
+                var apiResponse = JsonSerializer.Deserialize<Anime>(responseData, options);
+
+                if (apiResponse != null)
+                {
+                    return apiResponse;
+                }
+                throw new Exception("Anime data not found.");
+            }
+
+            ThrowError(response);
+            return null;
         }
     }
 }

@@ -12,10 +12,10 @@ namespace Backend.Data.Repositories
             _context=context;
         }
 
-        public async Task<List<Studio>> StudioEditAsync(MyAnimeListApi.Data anime)
+        public async Task<List<Studio>> StudioEditAsync(Anime anime)
         {
             var newStudio = new List<Studio>();
-            foreach (var studio in anime.A.Studios)
+            foreach (var studio in anime.Studios)
             {
                 var existingStudio = _context.Studio.FirstOrDefault(g => g.Id == studio.Id);
                 if (existingStudio != null)

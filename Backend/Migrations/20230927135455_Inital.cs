@@ -8,7 +8,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Backend.Migrations
 {
     /// <inheritdoc />
-    public partial class FirstMigration : Migration
+    public partial class Inital : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -70,6 +70,19 @@ namespace Backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Node",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Title = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Node", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "StartSeason",
                 columns: table => new
                 {
@@ -123,7 +136,10 @@ namespace Backend.Migrations
                     BroadcastId = table.Column<int>(type: "integer", nullable: true),
                     Source = table.Column<string>(type: "text", nullable: true),
                     Average_episode_duration = table.Column<int>(type: "integer", nullable: true),
-                    Rating = table.Column<string>(type: "text", nullable: true)
+                    Rating = table.Column<string>(type: "text", nullable: true),
+                    Background = table.Column<string>(type: "text", nullable: true),
+                    Start = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    End = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -198,6 +214,57 @@ namespace Backend.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Recommendations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    NodeId = table.Column<int>(type: "integer", nullable: true),
+                    Num_recommendations = table.Column<int>(type: "integer", nullable: true),
+                    AnimeId = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Recommendations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Recommendations_Anime_AnimeId",
+                        column: x => x.AnimeId,
+                        principalTable: "Anime",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Recommendations_Node_NodeId",
+                        column: x => x.NodeId,
+                        principalTable: "Node",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RelatedAnime",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    NodeId = table.Column<int>(type: "integer", nullable: true),
+                    Relation_type = table.Column<string>(type: "text", nullable: true),
+                    Relation_type_formatted = table.Column<string>(type: "text", nullable: true),
+                    AnimeId = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RelatedAnime", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RelatedAnime_Anime_AnimeId",
+                        column: x => x.AnimeId,
+                        principalTable: "Anime",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_RelatedAnime_Node_NodeId",
+                        column: x => x.NodeId,
+                        principalTable: "Node",
+                        principalColumn: "Id");
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Anime_Alternative_titlesId",
                 table: "Anime",
@@ -227,6 +294,26 @@ namespace Backend.Migrations
                 name: "IX_AnimeStudio_StudiosId",
                 table: "AnimeStudio",
                 column: "StudiosId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Recommendations_AnimeId",
+                table: "Recommendations",
+                column: "AnimeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Recommendations_NodeId",
+                table: "Recommendations",
+                column: "NodeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RelatedAnime_AnimeId",
+                table: "RelatedAnime",
+                column: "AnimeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RelatedAnime_NodeId",
+                table: "RelatedAnime",
+                column: "NodeId");
         }
 
         /// <inheritdoc />
@@ -239,13 +326,22 @@ namespace Backend.Migrations
                 name: "AnimeStudio");
 
             migrationBuilder.DropTable(
+                name: "Recommendations");
+
+            migrationBuilder.DropTable(
+                name: "RelatedAnime");
+
+            migrationBuilder.DropTable(
                 name: "Genre");
+
+            migrationBuilder.DropTable(
+                name: "Studio");
 
             migrationBuilder.DropTable(
                 name: "Anime");
 
             migrationBuilder.DropTable(
-                name: "Studio");
+                name: "Node");
 
             migrationBuilder.DropTable(
                 name: "AlternativeTitles");

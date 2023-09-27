@@ -28,14 +28,12 @@ namespace Backend.Controllers
     public class AnimesController : ControllerBase
     {
         private readonly AnimeContext _context;
-        private readonly HttpClient _httpClient;
         private readonly string _apiKey;
         private readonly IWebHostEnvironment _env;
 
-        public AnimesController(AnimeContext context, HttpClient httpClient, string apiKey, IWebHostEnvironment env)
+        public AnimesController(AnimeContext context, string apiKey, IWebHostEnvironment env)
         {
             _context = context;
-            _httpClient=httpClient;
             _apiKey=apiKey;
             _env=env;
         }
@@ -84,12 +82,9 @@ namespace Backend.Controllers
 
         // GET: api/Animes/MediaType/tv
         [HttpGet("MediaType/{name}")]
+        [ServiceFilter(typeof(ApiKeyAuthFilter))]
         public async Task<ActionResult<List<Anime>>> GetAnimeMediaType(string name)
         {
-            if (!_env.IsDevelopment())
-            {
-                return Forbid(); // Return 403 Forbidden if not in development mode
-            }
             if (_context.Anime == null)
             {
                 return NotFound();
@@ -128,95 +123,123 @@ namespace Backend.Controllers
 
         // POST: api/Animes
         [HttpPost]
+        [ServiceFilter(typeof(ApiKeyAuthFilter))]
         public async Task<ActionResult<int>> PostAnime()
         {
-            if (!_env.IsDevelopment())
-            {
-                return Forbid(); // Return 403 Forbidden if not in development mode
-            }
-
             if (_context.Anime == null)
             {
                 return Problem("Entity set 'AnimeContext.Anime'  is null.");
             }
 
-            List<Anime> animeList = new List<Anime>();
-            List<MyAnimeListApi.Data> animes;
-            try
+            int counter = 0;
+            for (int i = 0; i < 5000; i+=500)
             {
-                var service = new AnimeApiService(_httpClient, _apiKey);
-                animes = await service.FetchAnimeDataAsync();
-            }
-            catch(Exception e)
-            {
-                return Problem(e.Message);
-            }
-
-            var animeRepo = new AnimeRepository(_context);
-            foreach (var anime in animes)
-            {
-                if (!await animeRepo.AnimeExists(anime.A.Id))
+                List<Anime> animeList = new List<Anime>();
+                List<MyAnimeListApi.Data> animes;
+                try
                 {
-                    var genreRepo = new GenreRepository(_context);
-                    var newGenres = await genreRepo.GenreEditAsync(anime);
-                    anime.A.Genres.Clear();
-                    anime.A.Genres.AddRange(newGenres);
-
-                    var studioRepo = new StudioRepository(_context);
-                    var newStudios = await studioRepo.StudioEditAsync(anime);
-                    anime.A.Studios.Clear();
-                    anime.A.Studios.AddRange(newStudios);
-
-                    anime.A.Created_at = anime.A.Created_at?.ToUniversalTime();
-                    anime.A.Updated_at = anime.A.Updated_at?.ToUniversalTime();
-
-                    anime.A.Start = ConvertStartDate(anime);
-
-                    anime.A.End = ConvertEndDate(anime);
-
-                    animeList.Add(anime.A);
+                    var httpClient = new HttpClient();
+                    var service = new AnimeApiService(httpClient, _apiKey);
+                    animes = await service.FetchAnimeDataAsync(i);
                 }
+                catch (Exception e)
+                {
+                    return Problem(e.Message);
+                }
+
+                var animeRepo = new AnimeRepository(_context);
+                foreach (var anime in animes)
+                {
+                    if (!await animeRepo.AnimeExists(anime.A.Id))
+                    {
+                        Anime animeDetails;
+                        try
+                        {
+                            var httpClient = new HttpClient();
+                            var service = new AnimeApiService(httpClient, _apiKey);
+                            animeDetails = await service.FetchAnimeDetailsDataAsync(anime.A.Id);
+                        }
+                        catch (Exception e)
+                        {
+                            return Problem(e.Message);
+                        }
+
+                        var genreRepo = new GenreRepository(_context);
+                        var newGenres = await genreRepo.GenreEditAsync(animeDetails);
+                        animeDetails.Genres.Clear();
+                        animeDetails.Genres.AddRange(newGenres);
+
+                        var studioRepo = new StudioRepository(_context);
+                        var newStudios = await studioRepo.StudioEditAsync(animeDetails);
+                        animeDetails.Studios.Clear();
+                        animeDetails.Studios.AddRange(newStudios);
+
+                        animeDetails.Created_at = animeDetails.Created_at?.ToUniversalTime();
+                        animeDetails.Updated_at = animeDetails.Updated_at?.ToUniversalTime();
+
+                        animeDetails.Start = ConvertStartDate(animeDetails);
+
+                        animeDetails.End = ConvertEndDate(animeDetails);
+
+                        var nodeRepo = new NodeRepository(_context);
+                        foreach (var relatedAnime in animeDetails.Related_anime)
+                        {
+                            var newNode = await nodeRepo.NodeEditRelatedAsync(relatedAnime);
+                            relatedAnime.Node = newNode;
+                        }
+
+                        foreach (var recAnime in animeDetails.Recommendations)
+                        {
+                            var newNode = await nodeRepo.NodeEditRecAsync(recAnime);
+                            recAnime.Node = newNode;
+                        }
+
+                        animeList.Add(animeDetails);
+                    }
+                }
+
+                await animeRepo.AddAnimeAsync(animeList);
+                counter += animeList.Count;
             }
 
-            await animeRepo.AddAnimeAsync(animeList);
-            return Ok(animeList.Count);
+            return Ok(counter);
         }
 
-        private static DateTime? ConvertStartDate(MyAnimeListApi.Data anime)
+        private static DateTime? ConvertStartDate(Anime anime)
         {
-            if (!string.IsNullOrEmpty(anime.A.Start_date))
+            if (!string.IsNullOrEmpty(anime.Start_date))
             {
-                if (DateTime.TryParseExact(anime.A.Start_date, "yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out DateTime yearDate))
+                if (DateTime.TryParseExact(anime.Start_date, "yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out DateTime yearDate))
                 {
-                    return yearDate;
+                    return DateTime.SpecifyKind(yearDate, DateTimeKind.Utc);
                 }
-                else if (DateTime.TryParseExact(anime.A.Start_date, "yyyy-MM", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out DateTime mouthDate))
+                else if (DateTime.TryParseExact(anime.Start_date, "yyyy-MM", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out DateTime mouthDate))
                 {
-                    return mouthDate;
+                    return DateTime.SpecifyKind(mouthDate, DateTimeKind.Utc);
                 }
-                else if (DateTime.TryParseExact(anime.A.Start_date, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out DateTime fullDate))
+                else if (DateTime.TryParseExact(anime.Start_date, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out DateTime fullDate))
                 {
-                    return fullDate;
+                    return DateTime.SpecifyKind(fullDate, DateTimeKind.Utc);
                 }
             }
             return null;
         }
 
-        private static DateTime? ConvertEndDate(MyAnimeListApi.Data anime)
+        private static DateTime? ConvertEndDate(Anime anime)
         {
-            if (!string.IsNullOrEmpty(anime.A.End_date))
+            if (!string.IsNullOrEmpty(anime.End_date))
             {
-                if (DateTime.TryParseExact(anime.A.End_date, "yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out DateTime yearDate))
+                if (DateTime.TryParseExact(anime.End_date, "yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out DateTime yearDate))
                 {
-                    return yearDate;
+                    return DateTime.SpecifyKind(yearDate, DateTimeKind.Utc);
                 }
-                else if (DateTime.TryParseExact(anime.A.End_date, "yyyy-MM", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out DateTime mouthDate))
+                else if (DateTime.TryParseExact(anime.End_date, "yyyy-MM", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out DateTime mouthDate))
                 {
-                    return mouthDate;
+                    return DateTime.SpecifyKind(mouthDate, DateTimeKind.Utc);
                 }
-                else if (DateTime.TryParseExact(anime.A.End_date, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out DateTime fullDate))
+                else if (DateTime.TryParseExact(anime.End_date, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out DateTime fullDate))
                 {
-                    return fullDate;
+                    return DateTime.SpecifyKind(fullDate, DateTimeKind.Utc);
                 }
             }
             return null;

@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Backend.Migrations
 {
     [DbContext(typeof(AnimeContext))]
-    [Migration("20230803124902_FirstMigration")]
-    partial class FirstMigration
+    [Migration("20230927135455_Inital")]
+    partial class Inital
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -92,10 +92,16 @@ namespace Backend.Migrations
                     b.Property<int?>("Average_episode_duration")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Background")
+                        .HasColumnType("text");
+
                     b.Property<int?>("BroadcastId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime?>("Created_at")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("End")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("End_date")
@@ -133,6 +139,9 @@ namespace Backend.Migrations
 
                     b.Property<string>("Source")
                         .HasColumnType("text");
+
+                    b.Property<DateTime?>("Start")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Start_date")
                         .HasColumnType("text");
@@ -217,6 +226,77 @@ namespace Backend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("MainPicture");
+                });
+
+            modelBuilder.Entity("Backend.Model.Node", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Title")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Node");
+                });
+
+            modelBuilder.Entity("Backend.Model.Recommendations", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("AnimeId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("NodeId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("Num_recommendations")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnimeId");
+
+                    b.HasIndex("NodeId");
+
+                    b.ToTable("Recommendations");
+                });
+
+            modelBuilder.Entity("Backend.Model.RelatedAnime", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("AnimeId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("NodeId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Relation_type")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Relation_type_formatted")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnimeId");
+
+                    b.HasIndex("NodeId");
+
+                    b.ToTable("RelatedAnime");
                 });
 
             modelBuilder.Entity("Backend.Model.StartSeason", b =>
@@ -309,6 +389,39 @@ namespace Backend.Migrations
                     b.Navigation("Main_picture");
 
                     b.Navigation("Start_season");
+                });
+
+            modelBuilder.Entity("Backend.Model.Recommendations", b =>
+                {
+                    b.HasOne("Backend.Model.Anime", null)
+                        .WithMany("Recommendations")
+                        .HasForeignKey("AnimeId");
+
+                    b.HasOne("Backend.Model.Node", "Node")
+                        .WithMany()
+                        .HasForeignKey("NodeId");
+
+                    b.Navigation("Node");
+                });
+
+            modelBuilder.Entity("Backend.Model.RelatedAnime", b =>
+                {
+                    b.HasOne("Backend.Model.Anime", null)
+                        .WithMany("Related_anime")
+                        .HasForeignKey("AnimeId");
+
+                    b.HasOne("Backend.Model.Node", "Node")
+                        .WithMany()
+                        .HasForeignKey("NodeId");
+
+                    b.Navigation("Node");
+                });
+
+            modelBuilder.Entity("Backend.Model.Anime", b =>
+                {
+                    b.Navigation("Recommendations");
+
+                    b.Navigation("Related_anime");
                 });
 #pragma warning restore 612, 618
         }

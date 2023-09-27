@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Backend.Data;
+using Backend;
 
 var ProductionPolicy = "ProductionPolicy";
 var DevelopmentPolicy = "DevelopmentPolicy";
@@ -45,6 +46,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient();
+
+builder.Services.AddScoped<ApiKeyAuthFilter>();
 
 var app = builder.Build();
 
