@@ -7,6 +7,7 @@ using NuGet.Protocol;
 using System.Diagnostics;
 using System.Drawing.Printing;
 using System.Globalization;
+using static Azure.Core.HttpHeader;
 using static Backend.ViewModels.AnimeFilters;
 using static NuGet.Packaging.PackagingConstants;
 
@@ -290,6 +291,21 @@ namespace Backend.Data.Repositories
             }
 
             return mediaTypes;
+        }
+
+        public async Task UpdateAnimeAsync(List<Anime> animes)
+        {
+            foreach (var anime in animes)
+            {
+                var existingAnime = await _context.Anime.FindAsync(anime.Id);
+
+                if (existingAnime != null)
+                {
+                    _context.Entry(existingAnime).CurrentValues.SetValues(anime);
+                }
+            }
+
+            await _context.SaveChangesAsync();
         }
     }
 }

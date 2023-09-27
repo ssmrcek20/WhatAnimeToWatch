@@ -109,7 +109,7 @@ namespace Backend.Controllers
             {
                 return NotFound();
             }
-            
+
             var animeRepo = new AnimeRepository(_context);
             var data = await animeRepo.GetFilteredAnimeAsync(animeFilter, page);
 
@@ -144,7 +144,7 @@ namespace Backend.Controllers
                 }
                 catch (Exception e)
                 {
-                    return Problem(e.Message);
+                    return Problem(e.Message + "first");
                 }
 
                 var animeRepo = new AnimeRepository(_context);
@@ -161,7 +161,7 @@ namespace Backend.Controllers
                         }
                         catch (Exception e)
                         {
-                            return Problem(e.Message);
+                            return Problem(e.Message + "second");
                         }
 
                         var genreRepo = new GenreRepository(_context);
@@ -243,6 +243,91 @@ namespace Backend.Controllers
                 }
             }
             return null;
+        }
+
+        // PUT: api/Animes
+        [HttpPut]
+        [ServiceFilter(typeof(ApiKeyAuthFilter))]
+        public async Task<ActionResult<int>> PutAnime()
+        {
+            if (_context.Anime == null)
+            {
+                return Problem("Entity set 'AnimeContext.Anime'  is null.");
+            }
+
+            List<Anime> newAnimeList = new List<Anime>();
+            List<Anime> oldAnimeList = new List<Anime>();
+            List<MyAnimeListApi.Data> animes;
+            try
+            {
+                var httpClient = new HttpClient();
+                var service = new AnimeApiService(httpClient, _apiKey);
+                animes = await service.FetchAnimeDataSeasonAsync();
+            }
+            catch (Exception e)
+            {
+                return Problem(e.Message);
+            }
+
+            var animeRepo = new AnimeRepository(_context);
+            foreach (var anime in animes)
+            {
+                Anime animeDetails;
+                try
+                {
+                    var httpClient = new HttpClient();
+                    var service = new AnimeApiService(httpClient, _apiKey);
+                    animeDetails = await service.FetchAnimeDetailsDataAsync(anime.A.Id);
+                }
+                catch (Exception e)
+                {
+                    return Problem(e.Message);
+                }
+
+                var genreRepo = new GenreRepository(_context);
+                var newGenres = await genreRepo.GenreEditAsync(animeDetails);
+                animeDetails.Genres.Clear();
+                animeDetails.Genres.AddRange(newGenres);
+
+                var studioRepo = new StudioRepository(_context);
+                var newStudios = await studioRepo.StudioEditAsync(animeDetails);
+                animeDetails.Studios.Clear();
+                animeDetails.Studios.AddRange(newStudios);
+
+                animeDetails.Created_at = animeDetails.Created_at?.ToUniversalTime();
+                animeDetails.Updated_at = animeDetails.Updated_at?.ToUniversalTime();
+
+                animeDetails.Start = ConvertStartDate(animeDetails);
+
+                animeDetails.End = ConvertEndDate(animeDetails);
+
+                var nodeRepo = new NodeRepository(_context);
+                foreach (var relatedAnime in animeDetails.Related_anime)
+                {
+                    var newNode = await nodeRepo.NodeEditRelatedAsync(relatedAnime);
+                    relatedAnime.Node = newNode;
+                }
+
+                foreach (var recAnime in animeDetails.Recommendations)
+                {
+                    var newNode = await nodeRepo.NodeEditRecAsync(recAnime);
+                    recAnime.Node = newNode;
+                }
+
+                if (!await animeRepo.AnimeExists(anime.A.Id))
+                {
+                    newAnimeList.Add(animeDetails);
+                } else
+                {
+                    oldAnimeList.Add(animeDetails);
+                }
+
+            }
+
+            await animeRepo.AddAnimeAsync(newAnimeList);
+            await animeRepo.UpdateAnimeAsync(oldAnimeList);
+
+            return Ok("New Anime: "+newAnimeList.Count + "\nUpdated Anime: "+oldAnimeList.Count);
         }
 
         // DELETE: api/Animes/5
