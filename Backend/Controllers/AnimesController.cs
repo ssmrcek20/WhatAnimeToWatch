@@ -144,7 +144,7 @@ namespace Backend.Controllers
                 }
                 catch (Exception e)
                 {
-                    return Problem(e.Message + "first");
+                    return Problem(e.Message + " first");
                 }
 
                 var animeRepo = new AnimeRepository(_context);
@@ -157,11 +157,12 @@ namespace Backend.Controllers
                         {
                             var httpClient = new HttpClient();
                             var service = new AnimeApiService(httpClient, _apiKey);
+                            await Task.Delay(TimeSpan.FromMilliseconds(500));
                             animeDetails = await service.FetchAnimeDetailsDataAsync(anime.A.Id);
                         }
                         catch (Exception e)
                         {
-                            return Problem(e.Message + "second");
+                            return Problem(e.Message + " - " + e.Data);
                         }
 
                         var genreRepo = new GenreRepository(_context);
