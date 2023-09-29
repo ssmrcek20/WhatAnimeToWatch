@@ -13,6 +13,7 @@ import { QuizSourceComponent } from './quiz/quiz-source/quiz-source.component';
 import { QuizStudioComponent } from './quiz/quiz-studio/quiz-studio.component';
 import { QuizAgeRatingComponent } from './quiz/quiz-age-rating/quiz-age-rating.component';
 import { AnimeListComponent } from './anime-list/anime-list.component';
+import { ReportComponent } from './report/report.component';
 
 const routes: Routes = [
   { path: '', component: MainComponent },
@@ -31,6 +32,7 @@ const routes: Routes = [
     ]
   },
   { path: 'anime-list', component: AnimeListComponent },
+  { path: 'feedback', component: ReportComponent },
 
   { path: '404', component: NotFoundComponent },
   { path: '**', redirectTo: '404' }

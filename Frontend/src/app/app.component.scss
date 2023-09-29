@@ -5,12 +5,15 @@ app-header {
 
 footer {
     display: flex;
-    flex-direction: column;
-    height: 8em;
     align-items: center;
     justify-content: center;
+
     a {
         font-weight: 700;
+    }
+
+    .example-spacer {
+        flex: 1 1 auto;
     }
 }
 

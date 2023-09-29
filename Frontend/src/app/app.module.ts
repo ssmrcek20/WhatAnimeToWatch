@@ -44,6 +44,7 @@ import { QuizStudioComponent } from './quiz/quiz-studio/quiz-studio.component';
 import { QuizAgeRatingComponent } from './quiz/quiz-age-rating/quiz-age-rating.component';
 import { AnimeListComponent } from './anime-list/anime-list.component';
 import { DatePipe } from '@angular/common';
+import { ReportComponent } from './report/report.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { DatePipe } from '@angular/common';
     QuizStudioComponent,
     QuizAgeRatingComponent,
     AnimeListComponent,
+    ReportComponent,
   ],
   imports: [
     BrowserModule,
