@@ -7,43 +7,18 @@
   <form [formGroup]="formGroup" class="">
     <div class="dates">
       <label for="years">Years range</label>
-      <p-calendar
-        (ngModelChange)="checkYear()"
-        [readonlyInput]="true"
-        dateFormat="yy"
-        [minDate]="minDate"
-        [maxDate]="maxDate"
-        selectionMode="range"
-        view="year"
-        formControlName="years"
-        [showIcon]="true"
-      ></p-calendar>
+      <p-calendar (ngModelChange)="checkYear()" [readonlyInput]="true" dateFormat="yy" [minDate]="minDate"
+        [maxDate]="maxDate" selectionMode="range" view="year" formControlName="years" [showIcon]="true"></p-calendar>
     </div>
     <div class="dates">
       <label for="season">Season</label>
-      <p-dropdown
-        formControlName="season"
-        [options]="source"
-        placeholder="Select Season"
-        scrollHeight="210px"
-      ></p-dropdown>
+      <p-dropdown [showClear]="true" formControlName="season" [options]="source" placeholder="Select Season"
+        scrollHeight="210px"></p-dropdown>
     </div>
   </form>
 
   <div class="buttons">
-    <button
-      (click)="onBack()"
-      pButton
-      pRipple
-      class="p-button-outlined"
-      label="Back"
-    ></button>
-    <button
-      (click)="onSaveAndNext()"
-      pButton
-      pRipple
-      class="p-button-raised"
-      label="Next"
-    ></button>
+    <button (click)="onBack()" pButton pRipple class="p-button-outlined" label="Back"></button>
+    <button (click)="onSaveAndNext()" pButton pRipple class="p-button-raised" label="Next"></button>
   </div>
 </div>

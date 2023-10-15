@@ -8,43 +8,20 @@
   <form [formGroup]="formGroup" class="">
     <div class="demo">
       <label for="selectedGenres">Type</label>
-      <p-multiSelect
-        [group]="true"
-        [options]="types"
-        formControlName="selectedGenres"
-        optionLabel="Name"
-        defaultLabel="Select types"
-        display="chip"
-      >
+      <p-multiSelect [group]="true" [options]="types" formControlName="selectedGenres" optionLabel="Name"
+        defaultLabel="Select types" display="chip">
       </p-multiSelect>
     </div>
     <div class="demo">
       <label for="demographic">Demographic</label>
-      <p-dropdown
-        formControlName="demographic"
-        [options]="demo"
-        optionLabel="Name"
-        placeholder="Select demographic"
-        scrollHeight="250px"
-      ></p-dropdown>
+      <p-dropdown [showClear]="true" formControlName="demographic" [options]="demo" optionLabel="Name"
+        placeholder="Select demographic" scrollHeight="250px"></p-dropdown>
     </div>
   </form>
 
   <div class="buttons">
-    <button
-      (click)="onBack()"
-      pButton
-      pRipple
-      class="p-button-outlined"
-      label="Back"
-    ></button>
-    <button
-      (click)="onSaveAndNext()"
-      pButton
-      pRipple
-      class="p-button-raised"
-      label="Next"
-    ></button>
+    <button (click)="onBack()" pButton pRipple class="p-button-outlined" label="Back"></button>
+    <button (click)="onSaveAndNext()" pButton pRipple class="p-button-raised" label="Next"></button>
   </div>
 </div>
 <p-toast></p-toast>
