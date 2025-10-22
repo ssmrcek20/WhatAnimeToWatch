@@ -20,7 +20,7 @@ COPY . .
 RUN ng build
 
 # Create a new image with a smaller base
-FROM nginx:1.24.0-alpine
+FROM nginx:1.26.3-alpine
 
 # Copy the built Angular app from the build image
 COPY --from=build /app/dist/frontend /usr/share/nginx/html
